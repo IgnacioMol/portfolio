@@ -17,7 +17,7 @@ interface Particle {
 }
 
 const LINK_DISTANCE = 140;
-const MOUSE_RADIUS = 160;
+const MOUSE_RADIUS = 50;
 const ATTRACTION_STRENGTH = 0.2;
 const GLOW_EASE = 0.12;
 const NORMAL_SPEED = 0.5;
