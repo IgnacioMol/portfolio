@@ -16,6 +16,13 @@ interface Particle {
   glow: number;
 }
 
+interface Meteor {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+}
+
 const LINK_DISTANCE = 140;
 const MOUSE_RADIUS = 50;
 const ATTRACTION_STRENGTH = 0.1;
@@ -43,6 +50,16 @@ const ASTEROID_MIN_SPEED = 0.08;
 const ASTEROID_ATTRACTION_RADIUS = 170;
 const ASTEROID_ATTRACTION_STRENGTH = 0.0025;
 
+const METEOR_MAX_CONCURRENT = 2;
+const METEOR_SPEED_MIN = 7;
+const METEOR_SPEED_MAX = 12;
+const METEOR_SPAWN_INTERVAL_MIN_FRAMES = 120; // ~2s at 60fps
+const METEOR_SPAWN_INTERVAL_MAX_FRAMES = 420; // ~7s at 60fps
+const METEOR_DIAGONAL_JITTER_DEG = 20;
+const METEOR_TRAIL_LENGTH = 90;
+const METEOR_HEAD_RADIUS = 1.8;
+const METEOR_BOUNDS_MARGIN = 200;
+
 @Component({
   selector: 'app-particle-background',
   standalone: true,
@@ -56,6 +73,8 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
   private ctx!: CanvasRenderingContext2D;
   private particles: Particle[] = [];
   private asteroids: Particle[] = [];
+  private meteors: Meteor[] = [];
+  private meteorSpawnTimer = 0;
   private adjacency: number[][] = [];
   private width = 0;
   private height = 0;
@@ -187,6 +206,7 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
     this.asteroids = Array.from({ length: this.targetAsteroidCount() }, () =>
       this.createAsteroid()
     );
+    this.meteorSpawnTimer = this.randomMeteorSpawnInterval();
   }
 
   private createParticle(): Particle {
@@ -242,6 +262,7 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
         this.wrap(a);
       }
       this.resolveAsteroidCollisions();
+      this.updateMeteors();
       this.frameCount++;
     }
 
@@ -249,6 +270,7 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
     this.drawLinks(pairs);
     this.drawParticles();
     this.drawAsteroids();
+    this.drawMeteors();
 
     if (!this.reducedMotion && this.frameCount % CLUSTER_NUDGE_INTERVAL_FRAMES === 0) {
       this.maybeNudgeClusters();
@@ -476,6 +498,101 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
     for (const a of asteroids) {
       ctx.beginPath();
       ctx.arc(a.x, a.y, a.radius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  private randomMeteorSpawnInterval(): number {
+    return (
+      METEOR_SPAWN_INTERVAL_MIN_FRAMES +
+      Math.random() * (METEOR_SPAWN_INTERVAL_MAX_FRAMES - METEOR_SPAWN_INTERVAL_MIN_FRAMES)
+    );
+  }
+
+  private createMeteor(): Meteor {
+    // Always one of the four diagonals (with some jitter), never a
+    // near-horizontal or near-vertical pass.
+    const baseAnglesDeg = [45, 135, 225, 315];
+    const baseAngleDeg = baseAnglesDeg[Math.floor(Math.random() * baseAnglesDeg.length)];
+    const jitterDeg = (Math.random() * 2 - 1) * METEOR_DIAGONAL_JITTER_DEG;
+    const angle = ((baseAngleDeg + jitterDeg) * Math.PI) / 180;
+
+    const dirX = Math.cos(angle);
+    const dirY = Math.sin(angle);
+    const speed = METEOR_SPEED_MIN + Math.random() * (METEOR_SPEED_MAX - METEOR_SPEED_MIN);
+
+    // Offset the crossing line perpendicular to its direction, so meteors
+    // don't all cut through the exact center of the screen.
+    const perpX = -dirY;
+    const perpY = dirX;
+    const spread = Math.min(this.width, this.height) * 0.3;
+    const perpOffset = (Math.random() * 2 - 1) * spread;
+    const centerX = this.width / 2 + perpX * perpOffset;
+    const centerY = this.height / 2 + perpY * perpOffset;
+
+    // Start well outside the screen, behind the direction of travel, so it
+    // flies in, crosses the visible area, and keeps going straight out.
+    const startX = centerX - dirX * METEOR_BOUNDS_MARGIN;
+    const startY = centerY - dirY * METEOR_BOUNDS_MARGIN;
+
+    return { x: startX, y: startY, vx: dirX * speed, vy: dirY * speed };
+  }
+
+  private updateMeteors(): void {
+    this.meteorSpawnTimer--;
+    if (this.meteorSpawnTimer <= 0) {
+      if (this.meteors.length < METEOR_MAX_CONCURRENT) {
+        this.meteors.push(this.createMeteor());
+      }
+      this.meteorSpawnTimer = this.randomMeteorSpawnInterval();
+    }
+
+    for (let i = this.meteors.length - 1; i >= 0; i--) {
+      const m = this.meteors[i];
+      m.x += m.vx;
+      m.y += m.vy;
+      if (this.isMeteorOutOfBounds(m)) {
+        // Meteors fly straight through and off the screen — no wrap-around.
+        this.meteors.splice(i, 1);
+      }
+    }
+  }
+
+  private isMeteorOutOfBounds(m: Meteor): boolean {
+    return (
+      m.x < -METEOR_BOUNDS_MARGIN ||
+      m.x > this.width + METEOR_BOUNDS_MARGIN ||
+      m.y < -METEOR_BOUNDS_MARGIN ||
+      m.y > this.height + METEOR_BOUNDS_MARGIN
+    );
+  }
+
+  private drawMeteors(): void {
+    const { ctx, meteors } = this;
+    for (const m of meteors) {
+      const speed = Math.hypot(m.vx, m.vy);
+      if (speed === 0) {
+        continue;
+      }
+      const dirX = m.vx / speed;
+      const dirY = m.vy / speed;
+      const tailX = m.x - dirX * METEOR_TRAIL_LENGTH;
+      const tailY = m.y - dirY * METEOR_TRAIL_LENGTH;
+
+      const gradient = ctx.createLinearGradient(tailX, tailY, m.x, m.y);
+      gradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
+      gradient.addColorStop(1, 'rgba(255, 255, 255, 0.9)');
+
+      ctx.strokeStyle = gradient;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(tailX, tailY);
+      ctx.lineTo(m.x, m.y);
+      ctx.stroke();
+
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+      ctx.beginPath();
+      ctx.arc(m.x, m.y, METEOR_HEAD_RADIUS, 0, Math.PI * 2);
       ctx.fill();
     }
   }
