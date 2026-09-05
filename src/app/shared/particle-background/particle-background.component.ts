@@ -21,6 +21,25 @@ interface Meteor {
   y: number;
   vx: number;
   vy: number;
+  colorRgb: string;
+}
+
+interface AsteroidBody extends Particle {
+  rotation: number;
+  rotationSpeed: number;
+  // Radius multiplier for each vertex around the body, giving it a
+  // jagged, rocky silhouette instead of a perfect circle.
+  shapePoints: number[];
+}
+
+interface Nebula {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  radius: number;
+  colorRgb: string;
+  alpha: number;
 }
 
 interface Star {
@@ -79,6 +98,10 @@ const ASTEROID_NORMAL_SPEED = 0.3;
 const ASTEROID_MIN_SPEED = 0.08;
 const ASTEROID_ATTRACTION_RADIUS = 170;
 const ASTEROID_ATTRACTION_STRENGTH = 0.0025;
+const ASTEROID_ROTATION_SPEED_MAX = 0.02;
+const ASTEROID_SHAPE_VERTICES_MIN = 7;
+const ASTEROID_SHAPE_VERTICES_MAX = 9;
+const ASTEROID_SHAPE_JAGGEDNESS = 0.3; // +/- fraction of radius per vertex
 
 const METEOR_MAX_CONCURRENT = 2;
 const METEOR_SPEED_MIN = 7;
@@ -89,6 +112,12 @@ const METEOR_DIAGONAL_JITTER_DEG = 20;
 const METEOR_TRAIL_LENGTH = 90;
 const METEOR_HEAD_RADIUS = 1.8;
 const METEOR_BOUNDS_MARGIN = 200;
+const METEOR_COLOR_PALETTE = [
+  '255, 255, 255', // white
+  '190, 220, 255', // icy blue
+  '255, 230, 180', // warm gold
+  '200, 255, 210', // pale green
+];
 
 const STAR_AREA = 5500;
 const MIN_STARS = 60;
@@ -125,6 +154,20 @@ const EMBER_RADIUS_MIN = 1;
 const EMBER_RADIUS_MAX = 2.4;
 const EMBER_DRAG = 0.94;
 
+const NEBULA_COUNT_MIN = 2;
+const NEBULA_COUNT_MAX = 4;
+const NEBULA_RADIUS_MIN_FACTOR = 0.3; // relative to min(width, height)
+const NEBULA_RADIUS_MAX_FACTOR = 0.55;
+const NEBULA_SPEED_MIN = 0.015;
+const NEBULA_SPEED_MAX = 0.045;
+const NEBULA_ALPHA_MIN = 0.05;
+const NEBULA_ALPHA_MAX = 0.11;
+const NEBULA_COLOR_PALETTE = [
+  '99, 91, 255', // indigo
+  '255, 99, 200', // magenta
+  '80, 200, 220', // teal
+];
+
 @Component({
   selector: 'app-particle-background',
   standalone: true,
@@ -137,10 +180,11 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
 
   private ctx!: CanvasRenderingContext2D;
   private particles: Particle[] = [];
-  private asteroids: Particle[] = [];
+  private asteroids: AsteroidBody[] = [];
   private meteors: Meteor[] = [];
   private meteorSpawnTimer = 0;
   private stars: Star[] = [];
+  private nebulae: Nebula[] = [];
   private ripples: Ripple[] = [];
   private embers: Ember[] = [];
   private supernovaTimer = 0;
@@ -248,6 +292,7 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
       this.createAsteroid()
     );
     this.stars = this.createStars();
+    this.nebulae = this.createNebulae();
   }
 
   private targetParticleCount(): number {
@@ -260,10 +305,10 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
     return Math.max(MIN_ASTEROIDS, Math.min(MAX_ASTEROIDS, desired));
   }
 
-  private resizeGroup(
-    group: Particle[],
+  private resizeGroup<T extends Particle>(
+    group: T[],
     targetCount: number,
-    factory: () => Particle
+    factory: () => T
   ): void {
     if (group.length === 0) {
       return;
@@ -301,9 +346,16 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
     };
   }
 
-  private createAsteroid(): Particle {
+  private createAsteroid(): AsteroidBody {
     const angle = Math.random() * Math.PI * 2;
     const speed = ASTEROID_MIN_SPEED + Math.random() * 0.2;
+    const vertexCount =
+      ASTEROID_SHAPE_VERTICES_MIN +
+      Math.floor(Math.random() * (ASTEROID_SHAPE_VERTICES_MAX - ASTEROID_SHAPE_VERTICES_MIN + 1));
+    const shapePoints = Array.from(
+      { length: vertexCount },
+      () => 1 - ASTEROID_SHAPE_JAGGEDNESS / 2 + Math.random() * ASTEROID_SHAPE_JAGGEDNESS
+    );
     return {
       x: Math.random() * this.width,
       y: Math.random() * this.height,
@@ -313,6 +365,9 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
         ASTEROID_RADIUS_MIN +
         Math.random() * (ASTEROID_RADIUS_MAX - ASTEROID_RADIUS_MIN),
       glow: 0,
+      rotation: Math.random() * Math.PI * 2,
+      rotationSpeed: (Math.random() * 2 - 1) * ASTEROID_ROTATION_SPEED_MAX,
+      shapePoints,
     };
   }
 
@@ -339,6 +394,7 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
     }
 
     ctx.clearRect(0, 0, width, height);
+    this.drawNebulae();
     this.drawStars();
 
     if (!this.reducedMotion) {
@@ -357,10 +413,12 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
         this.applyBraking(a, ASTEROID_NORMAL_SPEED);
         a.x += a.vx;
         a.y += a.vy;
+        a.rotation += a.rotationSpeed;
         this.wrap(a);
       }
       this.resolveAsteroidCollisions();
       this.updateMeteors();
+      this.updateNebulae();
       this.advanceRipples();
       this.updateEmbers();
       this.updateSupernova();
@@ -527,7 +585,50 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  private wrap(p: Particle): void {
+  private createNebulae(): Nebula[] {
+    const count =
+      NEBULA_COUNT_MIN + Math.floor(Math.random() * (NEBULA_COUNT_MAX - NEBULA_COUNT_MIN + 1));
+    const minDimension = Math.min(this.width, this.height);
+    return Array.from({ length: count }, () => {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = NEBULA_SPEED_MIN + Math.random() * (NEBULA_SPEED_MAX - NEBULA_SPEED_MIN);
+      return {
+        x: Math.random() * this.width,
+        y: Math.random() * this.height,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        radius:
+          minDimension *
+          (NEBULA_RADIUS_MIN_FACTOR +
+            Math.random() * (NEBULA_RADIUS_MAX_FACTOR - NEBULA_RADIUS_MIN_FACTOR)),
+        colorRgb: NEBULA_COLOR_PALETTE[Math.floor(Math.random() * NEBULA_COLOR_PALETTE.length)],
+        alpha: NEBULA_ALPHA_MIN + Math.random() * (NEBULA_ALPHA_MAX - NEBULA_ALPHA_MIN),
+      };
+    });
+  }
+
+  private updateNebulae(): void {
+    for (const n of this.nebulae) {
+      n.x += n.vx;
+      n.y += n.vy;
+      this.wrap(n);
+    }
+  }
+
+  private drawNebulae(): void {
+    const { ctx, nebulae } = this;
+    for (const n of nebulae) {
+      const gradient = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.radius);
+      gradient.addColorStop(0, `rgba(${n.colorRgb}, ${n.alpha})`);
+      gradient.addColorStop(1, `rgba(${n.colorRgb}, 0)`);
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  private wrap(p: { x: number; y: number; radius: number }): void {
     const margin = p.radius * 2;
     if (p.x < -margin) {
       p.x = this.width + margin;
@@ -599,8 +700,21 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
     const { ctx, asteroids } = this;
     ctx.fillStyle = 'rgba(220, 215, 205, 0.9)';
     for (const a of asteroids) {
+      const points = a.shapePoints;
+      const n = points.length;
       ctx.beginPath();
-      ctx.arc(a.x, a.y, a.radius, 0, Math.PI * 2);
+      for (let i = 0; i < n; i++) {
+        const angle = a.rotation + (i / n) * Math.PI * 2;
+        const r = a.radius * points[i];
+        const px = a.x + Math.cos(angle) * r;
+        const py = a.y + Math.sin(angle) * r;
+        if (i === 0) {
+          ctx.moveTo(px, py);
+        } else {
+          ctx.lineTo(px, py);
+        }
+      }
+      ctx.closePath();
       ctx.fill();
     }
   }
@@ -638,7 +752,10 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
     const startX = centerX - dirX * METEOR_BOUNDS_MARGIN;
     const startY = centerY - dirY * METEOR_BOUNDS_MARGIN;
 
-    return { x: startX, y: startY, vx: dirX * speed, vy: dirY * speed };
+    const colorRgb =
+      METEOR_COLOR_PALETTE[Math.floor(Math.random() * METEOR_COLOR_PALETTE.length)];
+
+    return { x: startX, y: startY, vx: dirX * speed, vy: dirY * speed, colorRgb };
   }
 
   private updateMeteors(): void {
@@ -683,8 +800,8 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
       const tailY = m.y - dirY * METEOR_TRAIL_LENGTH;
 
       const gradient = ctx.createLinearGradient(tailX, tailY, m.x, m.y);
-      gradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
-      gradient.addColorStop(1, 'rgba(255, 255, 255, 0.9)');
+      gradient.addColorStop(0, `rgba(${m.colorRgb}, 0)`);
+      gradient.addColorStop(1, `rgba(${m.colorRgb}, 0.9)`);
 
       ctx.strokeStyle = gradient;
       ctx.lineWidth = 1.5;
@@ -693,7 +810,7 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
       ctx.lineTo(m.x, m.y);
       ctx.stroke();
 
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+      ctx.fillStyle = `rgba(${m.colorRgb}, 0.95)`;
       ctx.beginPath();
       ctx.arc(m.x, m.y, METEOR_HEAD_RADIUS, 0, Math.PI * 2);
       ctx.fill();
