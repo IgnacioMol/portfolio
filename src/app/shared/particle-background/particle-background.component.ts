@@ -23,6 +23,21 @@ interface Meteor {
   vy: number;
 }
 
+interface Star {
+  x: number;
+  y: number;
+  radius: number;
+  baseAlpha: number;
+  twinkleSpeed: number;
+  twinklePhase: number;
+}
+
+interface Ripple {
+  x: number;
+  y: number;
+  radius: number;
+}
+
 const LINK_DISTANCE = 140;
 const MOUSE_RADIUS = 50;
 const ATTRACTION_STRENGTH = 0.1;
@@ -60,6 +75,22 @@ const METEOR_TRAIL_LENGTH = 90;
 const METEOR_HEAD_RADIUS = 1.8;
 const METEOR_BOUNDS_MARGIN = 200;
 
+const STAR_AREA = 5500;
+const MIN_STARS = 60;
+const MAX_STARS = 220;
+const STAR_RADIUS_MIN = 0.4;
+const STAR_RADIUS_MAX = 1.1;
+const STAR_BASE_ALPHA_MIN = 0.15;
+const STAR_BASE_ALPHA_MAX = 0.6;
+const STAR_TWINKLE_SPEED_MIN = 0.01;
+const STAR_TWINKLE_SPEED_MAX = 0.04;
+
+const RIPPLE_MAX_RADIUS = 260;
+const RIPPLE_SPEED = 6;
+const RIPPLE_BAND_WIDTH = 18;
+const RIPPLE_STRENGTH = 1.4;
+const RIPPLE_MAX_CONCURRENT = 6;
+
 @Component({
   selector: 'app-particle-background',
   standalone: true,
@@ -75,6 +106,8 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
   private asteroids: Particle[] = [];
   private meteors: Meteor[] = [];
   private meteorSpawnTimer = 0;
+  private stars: Star[] = [];
+  private ripples: Ripple[] = [];
   private adjacency: number[][] = [];
   private width = 0;
   private height = 0;
@@ -91,6 +124,12 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
   };
   private readonly onMouseLeave = () => {
     this.mouse = null;
+  };
+  private readonly onClick = (e: MouseEvent) => {
+    if (this.reducedMotion || this.ripples.length >= RIPPLE_MAX_CONCURRENT) {
+      return;
+    }
+    this.ripples.push({ x: e.clientX, y: e.clientY, radius: 0 });
   };
   private readonly onVisibilityChange = () => {
     this.isVisible = !document.hidden;
@@ -121,6 +160,7 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
       window.addEventListener('mousemove', this.onMouseMove, { passive: true });
       window.addEventListener('mouseout', this.onMouseLeave);
       window.addEventListener('blur', this.onMouseLeave);
+      window.addEventListener('click', this.onClick);
       document.addEventListener('visibilitychange', this.onVisibilityChange);
       this.startLoop();
     });
@@ -134,6 +174,7 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
     window.removeEventListener('mousemove', this.onMouseMove);
     window.removeEventListener('mouseout', this.onMouseLeave);
     window.removeEventListener('blur', this.onMouseLeave);
+    window.removeEventListener('click', this.onClick);
     document.removeEventListener('visibilitychange', this.onVisibilityChange);
   }
 
@@ -170,6 +211,7 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
     this.resizeGroup(this.asteroids, this.targetAsteroidCount(), () =>
       this.createAsteroid()
     );
+    this.stars = this.createStars();
   }
 
   private targetParticleCount(): number {
@@ -237,6 +279,22 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
     };
   }
 
+  private createStars(): Star[] {
+    const desired = Math.round((this.width * this.height) / STAR_AREA);
+    const count = Math.max(MIN_STARS, Math.min(MAX_STARS, desired));
+    return Array.from({ length: count }, () => ({
+      x: Math.random() * this.width,
+      y: Math.random() * this.height,
+      radius: STAR_RADIUS_MIN + Math.random() * (STAR_RADIUS_MAX - STAR_RADIUS_MIN),
+      baseAlpha:
+        STAR_BASE_ALPHA_MIN + Math.random() * (STAR_BASE_ALPHA_MAX - STAR_BASE_ALPHA_MIN),
+      twinkleSpeed:
+        STAR_TWINKLE_SPEED_MIN +
+        Math.random() * (STAR_TWINKLE_SPEED_MAX - STAR_TWINKLE_SPEED_MIN),
+      twinklePhase: Math.random() * Math.PI * 2,
+    }));
+  }
+
   private tick(): void {
     const { ctx, width, height, particles, asteroids } = this;
     if (!ctx || width === 0 || height === 0) {
@@ -244,11 +302,13 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
     }
 
     ctx.clearRect(0, 0, width, height);
+    this.drawStars();
 
     if (!this.reducedMotion) {
       for (const p of particles) {
         this.applyMouseAttraction(p);
         this.applyAsteroidAttraction(p);
+        this.applyRippleForce(p);
         this.applyBraking(p, NORMAL_SPEED);
         p.x += p.vx;
         p.y += p.vy;
@@ -256,6 +316,7 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
       }
       for (const a of asteroids) {
         this.applyMouseAttraction(a);
+        this.applyRippleForce(a);
         this.applyBraking(a, ASTEROID_NORMAL_SPEED);
         a.x += a.vx;
         a.y += a.vy;
@@ -263,6 +324,7 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
       }
       this.resolveAsteroidCollisions();
       this.updateMeteors();
+      this.advanceRipples();
       this.frameCount++;
     }
 
@@ -270,6 +332,7 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
     this.drawLinks(pairs);
     this.drawParticles();
     this.drawAsteroids();
+    this.drawRipples();
     this.drawMeteors();
 
     if (!this.reducedMotion && this.frameCount % CLUSTER_NUDGE_INTERVAL_FRAMES === 0) {
@@ -594,6 +657,59 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
       ctx.beginPath();
       ctx.arc(m.x, m.y, METEOR_HEAD_RADIUS, 0, Math.PI * 2);
       ctx.fill();
+    }
+  }
+
+  private drawStars(): void {
+    const { ctx, stars, frameCount } = this;
+    for (const s of stars) {
+      const twinkle = 0.5 + 0.5 * Math.sin(frameCount * s.twinkleSpeed + s.twinklePhase);
+      const alpha = s.baseAlpha * (0.4 + 0.6 * twinkle);
+      ctx.fillStyle = `rgba(255, 255, 255, ${alpha.toFixed(3)})`;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  private applyRippleForce(p: Particle): void {
+    for (const r of this.ripples) {
+      const dx = p.x - r.x;
+      const dy = p.y - r.y;
+      const dist = Math.hypot(dx, dy);
+      if (dist === 0 || Math.abs(dist - r.radius) > RIPPLE_BAND_WIDTH) {
+        continue;
+      }
+      // The push weakens the further the ring has already expanded.
+      const falloff = 1 - r.radius / RIPPLE_MAX_RADIUS;
+      const force = RIPPLE_STRENGTH * falloff;
+      p.vx += (dx / dist) * force;
+      p.vy += (dy / dist) * force;
+    }
+  }
+
+  private advanceRipples(): void {
+    for (let i = this.ripples.length - 1; i >= 0; i--) {
+      const r = this.ripples[i];
+      r.radius += RIPPLE_SPEED;
+      if (r.radius >= RIPPLE_MAX_RADIUS) {
+        this.ripples.splice(i, 1);
+      }
+    }
+  }
+
+  private drawRipples(): void {
+    const { ctx, ripples } = this;
+    for (const r of ripples) {
+      const alpha = (1 - r.radius / RIPPLE_MAX_RADIUS) * 0.5;
+      if (alpha <= 0) {
+        continue;
+      }
+      ctx.strokeStyle = `rgba(150, 210, 255, ${alpha.toFixed(3)})`;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
+      ctx.stroke();
     }
   }
 }
