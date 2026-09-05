@@ -36,6 +36,21 @@ interface Ripple {
   x: number;
   y: number;
   radius: number;
+  maxRadius: number;
+  speed: number;
+  strength: number;
+  colorRgb: string;
+  lineWidth: number;
+}
+
+interface Ember {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  life: number;
+  maxLife: number;
+  radius: number;
 }
 
 const LINK_DISTANCE = 140;
@@ -90,6 +105,25 @@ const RIPPLE_SPEED = 6;
 const RIPPLE_BAND_WIDTH = 18;
 const RIPPLE_STRENGTH = 1.4;
 const RIPPLE_MAX_CONCURRENT = 6;
+const RIPPLE_COLOR_RGB = '150, 210, 255';
+
+const SUPERNOVA_INTERVAL_MIN_FRAMES = 20 * 60; // ~20s at 60fps
+const SUPERNOVA_INTERVAL_MAX_FRAMES = 50 * 60; // ~50s at 60fps
+const SUPERNOVA_RIPPLE_MAX_RADIUS = 520;
+const SUPERNOVA_RIPPLE_SPEED = 9;
+const SUPERNOVA_RIPPLE_STRENGTH = 6;
+const SUPERNOVA_RIPPLE_COLOR_RGB = '255, 200, 140';
+const SUPERNOVA_RIPPLE_LINE_WIDTH = 3;
+
+const EMBER_COUNT_MIN = 26;
+const EMBER_COUNT_MAX = 42;
+const EMBER_SPEED_MIN = 1.5;
+const EMBER_SPEED_MAX = 5.5;
+const EMBER_LIFETIME_MIN_FRAMES = 40;
+const EMBER_LIFETIME_MAX_FRAMES = 85;
+const EMBER_RADIUS_MIN = 1;
+const EMBER_RADIUS_MAX = 2.4;
+const EMBER_DRAG = 0.94;
 
 @Component({
   selector: 'app-particle-background',
@@ -108,6 +142,8 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
   private meteorSpawnTimer = 0;
   private stars: Star[] = [];
   private ripples: Ripple[] = [];
+  private embers: Ember[] = [];
+  private supernovaTimer = 0;
   private adjacency: number[][] = [];
   private width = 0;
   private height = 0;
@@ -129,7 +165,7 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
     if (this.reducedMotion || this.ripples.length >= RIPPLE_MAX_CONCURRENT) {
       return;
     }
-    this.ripples.push({ x: e.clientX, y: e.clientY, radius: 0 });
+    this.ripples.push(this.createRipple(e.clientX, e.clientY));
   };
   private readonly onVisibilityChange = () => {
     this.isVisible = !document.hidden;
@@ -249,6 +285,7 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
       this.createAsteroid()
     );
     this.meteorSpawnTimer = this.randomMeteorSpawnInterval();
+    this.supernovaTimer = this.randomSupernovaInterval();
   }
 
   private createParticle(): Particle {
@@ -325,6 +362,8 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
       this.resolveAsteroidCollisions();
       this.updateMeteors();
       this.advanceRipples();
+      this.updateEmbers();
+      this.updateSupernova();
       this.frameCount++;
     }
 
@@ -333,6 +372,7 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
     this.drawParticles();
     this.drawAsteroids();
     this.drawRipples();
+    this.drawEmbers();
     this.drawMeteors();
 
     if (!this.reducedMotion && this.frameCount % CLUSTER_NUDGE_INTERVAL_FRAMES === 0) {
@@ -672,6 +712,23 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  private createRipple(
+    x: number,
+    y: number,
+    overrides?: Partial<Pick<Ripple, 'maxRadius' | 'speed' | 'strength' | 'colorRgb' | 'lineWidth'>>
+  ): Ripple {
+    return {
+      x,
+      y,
+      radius: 0,
+      maxRadius: overrides?.maxRadius ?? RIPPLE_MAX_RADIUS,
+      speed: overrides?.speed ?? RIPPLE_SPEED,
+      strength: overrides?.strength ?? RIPPLE_STRENGTH,
+      colorRgb: overrides?.colorRgb ?? RIPPLE_COLOR_RGB,
+      lineWidth: overrides?.lineWidth ?? 1.5,
+    };
+  }
+
   private applyRippleForce(p: Particle): void {
     for (const r of this.ripples) {
       const dx = p.x - r.x;
@@ -681,8 +738,8 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
         continue;
       }
       // The push weakens the further the ring has already expanded.
-      const falloff = 1 - r.radius / RIPPLE_MAX_RADIUS;
-      const force = RIPPLE_STRENGTH * falloff;
+      const falloff = 1 - r.radius / r.maxRadius;
+      const force = r.strength * falloff;
       p.vx += (dx / dist) * force;
       p.vy += (dy / dist) * force;
     }
@@ -691,8 +748,8 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
   private advanceRipples(): void {
     for (let i = this.ripples.length - 1; i >= 0; i--) {
       const r = this.ripples[i];
-      r.radius += RIPPLE_SPEED;
-      if (r.radius >= RIPPLE_MAX_RADIUS) {
+      r.radius += r.speed;
+      if (r.radius >= r.maxRadius) {
         this.ripples.splice(i, 1);
       }
     }
@@ -701,15 +758,103 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
   private drawRipples(): void {
     const { ctx, ripples } = this;
     for (const r of ripples) {
-      const alpha = (1 - r.radius / RIPPLE_MAX_RADIUS) * 0.5;
+      const alpha = (1 - r.radius / r.maxRadius) * 0.5;
       if (alpha <= 0) {
         continue;
       }
-      ctx.strokeStyle = `rgba(150, 210, 255, ${alpha.toFixed(3)})`;
-      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = `rgba(${r.colorRgb}, ${alpha.toFixed(3)})`;
+      ctx.lineWidth = r.lineWidth;
       ctx.beginPath();
       ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
       ctx.stroke();
+    }
+  }
+
+  private randomSupernovaInterval(): number {
+    return (
+      SUPERNOVA_INTERVAL_MIN_FRAMES +
+      Math.random() * (SUPERNOVA_INTERVAL_MAX_FRAMES - SUPERNOVA_INTERVAL_MIN_FRAMES)
+    );
+  }
+
+  private updateSupernova(): void {
+    this.supernovaTimer--;
+    if (this.supernovaTimer <= 0) {
+      this.triggerSupernova();
+      this.supernovaTimer = this.randomSupernovaInterval();
+    }
+  }
+
+  private triggerSupernova(): void {
+    if (this.asteroids.length === 0) {
+      return;
+    }
+    // Pick a random asteroid to go supernova: it's destroyed and replaced
+    // by a fresh one elsewhere, leaving behind a big shockwave and a
+    // shower of fading embers at its former position.
+    const index = Math.floor(Math.random() * this.asteroids.length);
+    const { x, y } = this.asteroids[index];
+    this.asteroids.splice(index, 1);
+    this.asteroids.push(this.createAsteroid());
+
+    this.ripples.push(
+      this.createRipple(x, y, {
+        maxRadius: SUPERNOVA_RIPPLE_MAX_RADIUS,
+        speed: SUPERNOVA_RIPPLE_SPEED,
+        strength: SUPERNOVA_RIPPLE_STRENGTH,
+        colorRgb: SUPERNOVA_RIPPLE_COLOR_RGB,
+        lineWidth: SUPERNOVA_RIPPLE_LINE_WIDTH,
+      })
+    );
+    this.spawnEmbers(x, y);
+  }
+
+  private spawnEmbers(x: number, y: number): void {
+    const count =
+      EMBER_COUNT_MIN + Math.floor(Math.random() * (EMBER_COUNT_MAX - EMBER_COUNT_MIN));
+    for (let i = 0; i < count; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = EMBER_SPEED_MIN + Math.random() * (EMBER_SPEED_MAX - EMBER_SPEED_MIN);
+      this.embers.push({
+        x,
+        y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        life: 0,
+        maxLife:
+          EMBER_LIFETIME_MIN_FRAMES +
+          Math.random() * (EMBER_LIFETIME_MAX_FRAMES - EMBER_LIFETIME_MIN_FRAMES),
+        radius: EMBER_RADIUS_MIN + Math.random() * (EMBER_RADIUS_MAX - EMBER_RADIUS_MIN),
+      });
+    }
+  }
+
+  private updateEmbers(): void {
+    for (let i = this.embers.length - 1; i >= 0; i--) {
+      const e = this.embers[i];
+      e.life++;
+      e.x += e.vx;
+      e.y += e.vy;
+      e.vx *= EMBER_DRAG;
+      e.vy *= EMBER_DRAG;
+      if (e.life >= e.maxLife) {
+        this.embers.splice(i, 1);
+      }
+    }
+  }
+
+  private drawEmbers(): void {
+    const { ctx, embers } = this;
+    for (const e of embers) {
+      const t = e.life / e.maxLife;
+      const alpha = 1 - t;
+      // Cools from bright yellow-white down to a deep red-orange as it fades.
+      const g = Math.max(0, Math.round(230 - 160 * t));
+      const b = Math.max(0, Math.round(160 - 140 * t));
+      ctx.fillStyle = `rgba(255, ${g}, ${b}, ${alpha.toFixed(3)})`;
+      ctx.beginPath();
+      ctx.arc(e.x, e.y, e.radius * (1 - t * 0.4), 0, Math.PI * 2);
+      ctx.fill();
     }
   }
 }
