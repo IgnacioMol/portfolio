@@ -1,5 +1,6 @@
 .hero {
   min-height: calc(100vh - 60px);
+  padding: 3rem 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -40,8 +41,63 @@
   gap: 1rem;
 }
 
+.explore-3d {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: 1.75rem;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.explore-3d:hover {
+  color: var(--accent);
+}
+
+// Pequeño planeta en órbita como icono del botón.
+.explore-3d-orbit {
+  position: relative;
+  width: 1.6rem;
+  height: 1.6rem;
+  border: 1px solid rgba(123, 180, 255, 0.45);
+  border-radius: 50%;
+  animation: explore-orbit 4s linear infinite;
+}
+
+.explore-3d-orbit::before {
+  content: '';
+  position: absolute;
+  inset: 0.5rem;
+  border-radius: 50%;
+  background: #ffcf70;
+  box-shadow: 0 0 8px #ffcf70;
+}
+
+.explore-3d-orbit span {
+  position: absolute;
+  top: -0.2rem;
+  left: 50%;
+  width: 0.4rem;
+  height: 0.4rem;
+  margin-left: -0.2rem;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+@keyframes explore-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .social-icons.hero-social {
-  margin-top: 2.5rem;
+  margin-top: 2rem;
 }
 
 .cv-menu {
@@ -440,5 +496,9 @@
 @media (prefers-reduced-motion: reduce) {
   .featured-skill:hover {
     transform: none;
+  }
+
+  .explore-3d-orbit {
+    animation: none;
   }
 }

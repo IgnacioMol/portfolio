@@ -14,6 +14,7 @@ import { PROJECTS } from '../../data/projects';
 import { I18nService } from '../../i18n/i18n.service';
 import { ActiveSectionService } from '../../shared/active-section.service';
 import { ProjectCardComponent } from '../../shared/project-card/project-card.component';
+import { ViewerService } from '../../shared/solar-viewer/viewer.service';
 import { TechIconComponent } from '../../shared/tech-icon/tech-icon.component';
 
 // TODO: crea un formulario gratuito en https://formspree.io con tu email
@@ -33,6 +34,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   private readonly zone = inject(NgZone);
   private readonly activeSection = inject(ActiveSectionService);
   readonly i18n = inject(I18nService);
+  readonly viewer = inject(ViewerService);
 
   readonly profile = PROFILE;
   readonly cvFiles = CV_FILES;

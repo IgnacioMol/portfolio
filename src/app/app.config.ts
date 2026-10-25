@@ -4,6 +4,7 @@ import {
   withComponentInputBinding,
   withInMemoryScrolling,
   withRouterConfig,
+  withViewTransitions,
 } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -19,6 +20,8 @@ export const appConfig: ApplicationConfig = {
       withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled' }),
       // Permite volver a bajar a una sección aunque ya sea la de la URL actual.
       withRouterConfig({ onSameUrlNavigation: 'reload' }),
+      // Fundido entre páginas en los navegadores que lo soportan.
+      withViewTransitions({ skipInitialTransition: true }),
     ),
   ],
 };

@@ -59,6 +59,7 @@ export interface Content {
     ctaCv: string;
     cvMenu: string;
     ctaContact: string;
+    explore3d: string;
   };
   about: {
     title: string;

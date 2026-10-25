@@ -36,6 +36,10 @@
     }
     <a class="btn btn-ghost" routerLink="/" fragment="contacto">{{ t.hero.ctaContact }}</a>
   </div>
+  <button type="button" class="explore-3d" (click)="viewer.open.set(true)">
+    <span class="explore-3d-orbit" aria-hidden="true"><span></span></span>
+    {{ t.hero.explore3d }} <span aria-hidden="true">&rarr;</span>
+  </button>
   <ul class="social-icons hero-social">
     @for (social of socialLinks; track social.label) {
       <li>
