@@ -27,7 +27,7 @@ export class I18nService {
       const content = this.t();
       const pageTitle = this.pageTitle();
       this.document.documentElement.lang = lang;
-      this.title.setTitle(pageTitle ? `${pageTitle} · Ignacio Molina Gutiérrez` : content.meta.title);
+      this.title.setTitle(pageTitle ? `${pageTitle} · Ignacio Molina Gutierrez` : content.meta.title);
       this.meta.updateTag({ name: 'description', content: content.meta.description });
       if (!this.isBrowser) {
         return;

@@ -1,0 +1,32 @@
+@let p = project();
+<article class="featured-item" [class.reverse]="reverse()">
+  <a class="featured-media" [routerLink]="['/proyectos', p.slug]" tabindex="-1" aria-hidden="true">
+    @if (p.cover) {
+      <img [src]="p.cover.src" alt="" loading="lazy" width="1440" height="900" />
+    } @else {
+      <span class="cover-placeholder featured-placeholder">{{ i18n.localize(p.shortTitle) }}</span>
+    }
+  </a>
+  <div class="featured-body">
+    <p class="featured-meta">{{ i18n.localize(p.context) }} &middot; {{ i18n.localize(p.period) }}</p>
+    <h3><a [routerLink]="['/proyectos', p.slug]">{{ i18n.localize(p.title) }}</a></h3>
+    <p class="muted">{{ i18n.localize(p.summary) }}</p>
+    @if (p.techs.length) {
+      <ul class="tag-list">
+        @for (tech of p.techs.slice(0, 5); track tech) {
+          <li class="tag"><app-tech-icon class="tag-icon" [name]="tech" />{{ tech }}</li>
+        }
+      </ul>
+    }
+    <div class="featured-actions">
+      <a class="btn btn-primary btn-sm" [routerLink]="['/proyectos', p.slug]">
+        {{ t.projects.viewProject }} <span class="arrow" aria-hidden="true">&rarr;</span>
+      </a>
+      @for (link of p.links; track link.url) {
+        <a class="btn btn-secondary btn-sm" [href]="link.url" target="_blank" rel="noopener">
+          {{ t.projects.links[link.kind] }}<span class="sr-only">{{ t.a11y.opensNewTab }}</span>
+        </a>
+      }
+    </div>
+  </div>
+</article>

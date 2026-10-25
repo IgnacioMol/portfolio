@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "Ignacio Molina Gutiérrez · Portfolio",
+    "title": "Ignacio Molina Gutierrez · Portfolio",
     "description": "Ingeniero Multimedia y desarrollador web frontend. Interfaces, aplicaciones interactivas, videojuegos y gráficos."
   },
   "nav": {
@@ -52,14 +52,56 @@
     "ctaText": "Estoy abierto a nuevas oportunidades y colaboraciones. Si tienes un proyecto o una oferta, escríbeme y te responderé lo antes posible.",
     "ctaButton": "Contactar",
     "aboutLink": "Conoce mi trayectoria",
-    "showcase": "Ver el proyecto",
     "eyebrowWork": "Trabajo seleccionado",
     "eyebrowCareer": "Trayectoria",
     "eyebrowStack": "Stack",
     "eyebrowContact": "Contacto",
     "experienceTitle": "Experiencia",
     "experienceSubtitle": "Dónde he trabajado y qué he hecho en cada sitio.",
-    "experienceLink": "Ver trayectoria completa"
+    "experienceLink": "Ver trayectoria completa",
+    "code": {
+      "file": "perfil.ts",
+      "variable": "ignacio",
+      "link": "Ver perfil completo",
+      "entries": [
+        {
+          "key": "rol",
+          "value": "Ingeniero Multimedia"
+        },
+        {
+          "key": "enfoque",
+          "value": "Desarrollo web frontend"
+        },
+        {
+          "key": "ubicación",
+          "value": "Valencia, España"
+        },
+        {
+          "key": "stack",
+          "value": [
+            "Angular",
+            "TypeScript",
+            "React",
+            "p5.js"
+          ]
+        },
+        {
+          "key": "formación",
+          "value": "Máster en Diseño UX/UI · ESAT"
+        },
+        {
+          "key": "idiomas",
+          "value": [
+            "Español",
+            "Inglés B2"
+          ]
+        },
+        {
+          "key": "disponible",
+          "value": true
+        }
+      ]
+    }
   },
   "about": {
     "title": "Sobre mí",
@@ -161,8 +203,7 @@
       "role": "Rol",
       "period": "Periodo",
       "context": "Contexto",
-      "stack": "Stack",
-      "tryDemo": "Probar la demo 3D"
+      "stack": "Stack"
     }
   },
   "skills": {
@@ -322,47 +363,6 @@
     "title": "Página no encontrada",
     "text": "La página que buscas no existe o ha cambiado de dirección.",
     "back": "Volver al inicio"
-  },
-  "viewer": {
-    "title": "Mi escritorio en 3D",
-    "exit": "Salir del 3D",
-    "loading": "Cargando visor 3D…",
-    "goTo": "Ir a la página",
-    "viewProject": "Ver proyecto",
-    "unsupported": "Tu navegador no puede mostrar gráficos 3D (WebGL).",
-    "nodes": {
-      "inicio": {
-        "label": "Ignacio",
-        "description": "El centro del mapa. Ingeniero Multimedia y desarrollador web frontend: explora cada rama para conocer mi perfil."
-      },
-      "sobre-mi": {
-        "label": "Sobre mí",
-        "description": "Quién soy, mi experiencia profesional, mi formación y mis habilidades."
-      },
-      "experiencia": {
-        "label": "Experiencia",
-        "description": "Desarrollador web freelance para el equipo FSUPV y prácticas de desarrollo web en MIP Informática."
-      },
-      "proyectos": {
-        "label": "Proyectos",
-        "description": "Mis proyectos: el generador de patrones orbitales de mi TFG y la plataforma web del equipo FSUPV."
-      },
-      "habilidades": {
-        "label": "Habilidades",
-        "description": "Frontend, backend, móvil, videojuegos, realidad virtual y gráficos. Aquí tienes las tecnologías que más uso."
-      },
-      "formacion": {
-        "label": "Formación",
-        "description": "Grado en Ingeniería Multimedia por la Universitat de València y Máster en Diseño UX/UI en ESAT."
-      },
-      "contacto": {
-        "label": "Contacto",
-        "description": "¿Tienes un proyecto o una oferta? Escríbeme y hablamos."
-      }
-    },
-    "overview": "Vista general",
-    "deskIntro": "Haz clic en cualquier objeto del escritorio para ver de qué trata.",
-    "hint": "Arrastra para girar · rueda para acercar · haz clic en un objeto para explorarlo"
   },
   "footer": {
     "builtWith": "Diseñado y desarrollado con Angular.",

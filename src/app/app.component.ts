@@ -1,19 +1,16 @@
 import { DOCUMENT, ViewportScroller } from '@angular/common';
-import { Component, HostListener, effect, inject } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationStart, Router, RouterLink, RouterLinkActive, RouterOutlet, Scroll } from '@angular/router';
 import { CV_FILES, PROFILE, SOCIAL_LINKS } from './data/profile';
 import { I18nService } from './i18n/i18n.service';
 import { ParticleBackgroundComponent } from './shared/particle-background/particle-background.component';
-import { PortfolioMapComponent } from './shared/portfolio-map/portfolio-map.component';
-import { ViewerNavigation } from './shared/portfolio-map/viewer-navigation';
-import { ViewerService } from './shared/portfolio-map/viewer.service';
 import { ThemeService } from './shared/theme/theme.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, ParticleBackgroundComponent, PortfolioMapComponent],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, ParticleBackgroundComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -31,9 +28,6 @@ export class AppComponent {
   readonly currentYear = new Date().getFullYear();
 
   menuOpen = false;
-  readonly viewerOpen = inject(ViewerService).open;
-  // Elemento que abrió el visor, para devolverle el foco al cerrarlo.
-  private viewerOpener: HTMLElement | null = null;
   private instantJump = false;
 
   constructor() {
@@ -47,13 +41,6 @@ export class AppComponent {
         this.startInstantJump();
       } else if (event instanceof Scroll) {
         this.endInstantJump();
-      }
-    });
-
-    effect(() => {
-      if (this.viewerOpen()) {
-        this.menuOpen = false;
-        this.viewerOpener = this.document.activeElement as HTMLElement | null;
       }
     });
   }
@@ -75,18 +62,6 @@ export class AppComponent {
   skipToContent(event: Event): void {
     event.preventDefault();
     this.document.getElementById('contenido')?.focus();
-  }
-
-  closeViewer(): void {
-    this.viewerOpen.set(false);
-    this.viewerOpener?.focus();
-  }
-
-  navigateFromViewer({ commands, fragment }: ViewerNavigation): void {
-    // Detrás del visor no se ve el recorrido, así que se salta sin animación.
-    this.startInstantJump();
-    this.viewerOpen.set(false);
-    this.router.navigate(commands, { fragment });
   }
 
   @HostListener('document:keydown.escape')

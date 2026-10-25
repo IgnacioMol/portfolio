@@ -5,7 +5,7 @@
 <header class="nav">
   <div class="container nav-inner">
     <a class="nav-brand" routerLink="/" (click)="closeMenu()">
-      <span class="brand-mark" aria-hidden="true">IM</span>
+      <img class="brand-mark" src="logo.svg" alt="" width="32" height="32" />
       <span class="brand-name">{{ profile.firstName }} <span class="brand-surname">{{ profile.lastName }}</span></span>
     </a>
 
@@ -66,14 +66,6 @@
     </div>
   </div>
 </header>
-
-@if (viewerOpen()) {
-  @defer (on immediate) {
-    <app-portfolio-map (closed)="closeViewer()" (navigate)="navigateFromViewer($event)" />
-  } @loading (minimum 300ms) {
-    <div class="viewer-loading" role="status">{{ t.viewer.loading }}</div>
-  }
-}
 
 <main id="contenido" class="main" tabindex="-1">
   <router-outlet />

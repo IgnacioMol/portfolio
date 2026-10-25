@@ -37,25 +37,19 @@
     </div>
   </div>
 
-  <!-- Trabajo real enmarcado como una ventana de navegador. -->
-  @if (showcase.cover; as cover) {
-    <a class="showcase" [routerLink]="['/proyectos', showcase.slug]" appReveal>
-      <span class="showcase-bar" aria-hidden="true"><i></i><i></i><i></i></span>
-      <img
-        [src]="theme.theme() === 'dark' && showcase.coverDark ? showcase.coverDark : cover.src"
-        [alt]="i18n.localize(cover.alt)"
-        width="1440"
-        height="900"
-      />
-      <span class="showcase-caption">
-        <span>
-          <span class="showcase-context">{{ i18n.localize(showcase.context) }}</span>
-          <span class="showcase-title">{{ i18n.localize(showcase.shortTitle) }}</span>
-        </span>
-        <span class="showcase-link">{{ t.home.showcase }} <span class="arrow" aria-hidden="true">&rarr;</span></span>
-      </span>
-    </a>
-  }
+  <!-- Perfil resumido como un objeto TypeScript, en una ventana de editor. -->
+  <figure class="code-card" appReveal>
+    <div class="code-bar">
+      <span class="code-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="code-file">{{ t.home.code.file }}</span>
+    </div>
+    <pre class="code-body"><code><span class="tok-kw">const</span> <span class="tok-var">{{ t.home.code.variable }}</span> <span class="tok-punct">=</span> <span class="tok-punct">{{ '{' }}</span>
+@for (entry of t.home.code.entries; track entry.key) {<span>  <span class="tok-key">{{ entry.key }}</span><span class="tok-punct">:</span> @if (isList(entry.value)) {<span class="tok-punct">[</span>@for (item of entry.value; track item; let last = $last) {<span class="tok-str">"{{ item }}"</span>@if (!last) {<span class="tok-punct">, </span>}}<span class="tok-punct">]</span>} @else if (isBool(entry.value)) {<span class="tok-bool">{{ entry.value }}</span>} @else {<span class="tok-str">"{{ entry.value }}"</span>}<span class="tok-punct">,</span></span>
+}<span class="tok-punct">{{ '}' }}</span><span class="tok-punct">;</span><span class="code-caret" aria-hidden="true"></span></code></pre>
+    <figcaption class="code-footer">
+      <a class="text-link" routerLink="/sobre-mi">{{ t.home.code.link }} <span class="arrow" aria-hidden="true">&rarr;</span></a>
+    </figcaption>
+  </figure>
 </section>
 
 <div class="container">
@@ -81,37 +75,7 @@
 
   <div class="featured">
     @for (project of featuredProjects; track project.slug; let odd = $odd) {
-      <article class="featured-item" [class.reverse]="odd" appReveal>
-        <a class="featured-media" [routerLink]="['/proyectos', project.slug]" tabindex="-1" aria-hidden="true">
-          @if (project.cover) {
-            <img [src]="project.cover.src" alt="" loading="lazy" width="1440" height="900" />
-          } @else {
-            <span class="cover-placeholder featured-placeholder">{{ i18n.localize(project.shortTitle) }}</span>
-          }
-        </a>
-        <div class="featured-body">
-          <p class="featured-meta">{{ i18n.localize(project.context) }} &middot; {{ i18n.localize(project.period) }}</p>
-          <h3><a [routerLink]="['/proyectos', project.slug]">{{ i18n.localize(project.title) }}</a></h3>
-          <p class="muted">{{ i18n.localize(project.summary) }}</p>
-          @if (project.techs.length) {
-            <ul class="tag-list">
-              @for (tech of project.techs.slice(0, 5); track tech) {
-                <li class="tag"><app-tech-icon class="tag-icon" [name]="tech" />{{ tech }}</li>
-              }
-            </ul>
-          }
-          <div class="featured-actions">
-            <a class="btn btn-primary btn-sm" [routerLink]="['/proyectos', project.slug]">
-              {{ t.projects.viewProject }} <span class="arrow" aria-hidden="true">&rarr;</span>
-            </a>
-            @for (link of project.links; track link.url) {
-              <a class="btn btn-secondary btn-sm" [href]="link.url" target="_blank" rel="noopener">
-                {{ t.projects.links[link.kind] }}<span class="sr-only">{{ t.a11y.opensNewTab }}</span>
-              </a>
-            }
-          </div>
-        </div>
-      </article>
+      <app-project-row [project]="project" [reverse]="odd" appReveal />
     }
   </div>
 </section>

@@ -21,7 +21,7 @@ export interface CvFile {
 
 export const PROFILE = {
   firstName: 'Ignacio',
-  lastName: 'Molina Gutiérrez',
+  lastName: 'Molina Gutierrez',
   email: 'igmogu03@gmail.com',
   githubUrl: 'https://github.com/IgnacioMol',
   linkedinUrl: 'https://www.linkedin.com/in/ignacio-molina-ba7334370',

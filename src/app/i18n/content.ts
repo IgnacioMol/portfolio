@@ -29,11 +29,6 @@ export interface TimelineEntry {
   techs?: string[];
 }
 
-export interface ViewerNode {
-  label: string;
-  description: string;
-}
-
 export interface SkillGroup {
   title: string;
   items: string[];
@@ -74,7 +69,12 @@ export interface Content {
     ctaText: string;
     ctaButton: string;
     aboutLink: string;
-    showcase: string;
+    code: {
+      file: string;
+      variable: string;
+      link: string;
+      entries: { key: string; value: string | string[] | boolean }[];
+    };
     eyebrowWork: string;
     eyebrowCareer: string;
     eyebrowStack: string;
@@ -112,7 +112,6 @@ export interface Content {
       close: string;
       projectLinks: string;
       next: string;
-      tryDemo: string;
       factsLabel: string;
       role: string;
       period: string;
@@ -148,18 +147,6 @@ export interface Content {
       success: string;
       error: string;
     };
-  };
-  viewer: {
-    title: string;
-    hint: string;
-    exit: string;
-    loading: string;
-    goTo: string;
-    viewProject: string;
-    unsupported: string;
-    overview: string;
-    deskIntro: string;
-    nodes: Record<'inicio' | 'sobre-mi' | 'experiencia' | 'proyectos' | 'habilidades' | 'formacion' | 'contacto', ViewerNode>;
   };
   footer: { builtWith: string; backToTop: string };
   a11y: { opensNewTab: string; emailLabel: string };

@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "Ignacio Molina Gutiérrez · Portfolio",
+    "title": "Ignacio Molina Gutierrez · Portfolio",
     "description": "Multimedia Engineer and frontend web developer. Interfaces, interactive applications, games and graphics."
   },
   "nav": {
@@ -52,14 +52,56 @@
     "ctaText": "I'm open to new opportunities and collaborations. If you have a project or an offer, drop me a line and I'll get back to you as soon as possible.",
     "ctaButton": "Get in touch",
     "aboutLink": "See my background",
-    "showcase": "View the project",
     "eyebrowWork": "Selected work",
     "eyebrowCareer": "Career",
     "eyebrowStack": "Stack",
     "eyebrowContact": "Contact",
     "experienceTitle": "Experience",
     "experienceSubtitle": "Where I have worked and what I did at each place.",
-    "experienceLink": "See full background"
+    "experienceLink": "See full background",
+    "code": {
+      "file": "profile.ts",
+      "variable": "ignacio",
+      "link": "See full profile",
+      "entries": [
+        {
+          "key": "role",
+          "value": "Multimedia Engineer"
+        },
+        {
+          "key": "focus",
+          "value": "Frontend web development"
+        },
+        {
+          "key": "location",
+          "value": "Valencia, Spain"
+        },
+        {
+          "key": "stack",
+          "value": [
+            "Angular",
+            "TypeScript",
+            "React",
+            "p5.js"
+          ]
+        },
+        {
+          "key": "education",
+          "value": "Master's in UX/UI Design · ESAT"
+        },
+        {
+          "key": "languages",
+          "value": [
+            "Spanish",
+            "English B2"
+          ]
+        },
+        {
+          "key": "available",
+          "value": true
+        }
+      ]
+    }
   },
   "about": {
     "title": "About me",
@@ -161,8 +203,7 @@
       "role": "Role",
       "period": "Period",
       "context": "Context",
-      "stack": "Stack",
-      "tryDemo": "Try the 3D demo"
+      "stack": "Stack"
     }
   },
   "skills": {
@@ -322,47 +363,6 @@
     "title": "Page not found",
     "text": "The page you are looking for does not exist or has moved.",
     "back": "Back to home"
-  },
-  "viewer": {
-    "title": "My desk in 3D",
-    "exit": "Exit 3D",
-    "loading": "Loading 3D viewer…",
-    "goTo": "Go to page",
-    "viewProject": "View project",
-    "unsupported": "Your browser cannot display 3D graphics (WebGL).",
-    "nodes": {
-      "inicio": {
-        "label": "Ignacio",
-        "description": "The centre of the map. Multimedia Engineer and frontend web developer: explore each branch to get to know my profile."
-      },
-      "sobre-mi": {
-        "label": "About me",
-        "description": "Who I am, my professional experience, my education and my skills."
-      },
-      "experiencia": {
-        "label": "Experience",
-        "description": "Freelance web developer for the FSUPV team and web development internship at MIP Informática."
-      },
-      "proyectos": {
-        "label": "Projects",
-        "description": "My projects: the orbital pattern generator from my degree project and the FSUPV team web platform."
-      },
-      "habilidades": {
-        "label": "Skills",
-        "description": "Frontend, backend, mobile, games, virtual reality and graphics. These are the technologies I use most."
-      },
-      "formacion": {
-        "label": "Education",
-        "description": "Bachelor's in Multimedia Engineering at the Universitat de València and Master's in UX/UI Design at ESAT."
-      },
-      "contacto": {
-        "label": "Contact",
-        "description": "Got a project or an offer? Drop me a line and let's talk."
-      }
-    },
-    "overview": "Overview",
-    "deskIntro": "Click any object on the desk to see what it is about.",
-    "hint": "Drag to rotate · scroll to zoom · click an object to explore it"
   },
   "footer": {
     "builtWith": "Designed and built with Angular.",

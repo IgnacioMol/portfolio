@@ -13,16 +13,8 @@
       <p class="eyebrow">{{ i18n.localize(p.context) }}</p>
       <h1>{{ i18n.localize(p.title) }}</h1>
       <p class="lead">{{ i18n.localize(p.summary) }}</p>
-      @if (p.links.length || p.demo3d) {
+      @if (p.links.length) {
         <ul class="detail-links" [attr.aria-label]="t.projects.detail.projectLinks">
-          @if (p.demo3d) {
-            <li>
-              <button type="button" class="btn btn-primary" (click)="viewer.open.set(true)">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 20 7v10l-8 4.5L4 17V7Zm0 9L4 7m8 4.5L20 7m-8 4.5V21.5" /></svg>
-                {{ t.projects.detail.tryDemo }}
-              </button>
-            </li>
-          }
           @for (link of p.links; track link.url; let first = $first) {
             <li>
               <a

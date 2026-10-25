@@ -18,7 +18,7 @@ export interface ProjectData {
   icon: string;
   featured: boolean;
   title: Localized<string>;
-  // Nombre breve para espacios reducidos, como las etiquetas del visor 3D.
+  // Nombre breve para espacios reducidos (portadas sin captura).
   shortTitle: Localized<string>;
   context: Localized<string>;
   role: Localized<string>;
@@ -27,11 +27,7 @@ export interface ProjectData {
   description: Localized<string[]>;
   features: Localized<string[]>;
   techs: string[];
-  // Tiene una demo 3D que se abre en el visor de la propia web.
-  demo3d?: boolean;
   cover?: ProjectImage;
-  // Versión de la portada para el tema oscuro, si la hay.
-  coverDark?: string;
   gallery: ProjectImage[];
   links: ProjectLink[];
 }
