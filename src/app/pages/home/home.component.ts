@@ -159,6 +159,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
             email,
             message,
             title: `${this.t.contact.form.subject} ${name}`,
+            time: new Date().toLocaleString('es-ES', { dateStyle: 'long', timeStyle: 'short', timeZone: 'Europe/Madrid' }),
           },
         }),
       });
