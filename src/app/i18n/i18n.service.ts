@@ -6,6 +6,7 @@ import en from './en.json';
 import es from './es.json';
 
 const TRANSLATIONS: Record<Lang, Content> = { es, en };
+const SPANISH_LOCALES = ['es', 'ca', 'gl', 'eu'];
 // Solo se guarda la elección manual. La clave cambió de 'lang' a 'lang-choice' para
 // ignorar los valores que se guardaban automáticamente en versiones anteriores.
 const STORAGE_KEY = 'lang-choice';
@@ -62,7 +63,9 @@ export class I18nService {
     } catch {
       // Ignorado: se usa el idioma del navegador.
     }
-    // Español si el navegador está en español (es, es-ES, es-MX...); si no, inglés.
-    return (navigator.language ?? '').toLowerCase().startsWith('es') ? 'es' : 'en';
+    // Español si el navegador está en español (es, es-ES, es-MX...) o en otra
+    // lengua de España (catalán/valenciano, gallego, euskera); si no, inglés.
+    const primary = (navigator.language ?? '').toLowerCase().split('-')[0];
+    return SPANISH_LOCALES.includes(primary) ? 'es' : 'en';
   }
 }
