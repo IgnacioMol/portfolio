@@ -1,7 +1,7 @@
 import { DOCUMENT, ViewportScroller } from '@angular/common';
 import { Component, ElementRef, HostListener, computed, effect, inject, viewChild } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { NavigationEnd, NavigationStart, Router, RouterLink, RouterOutlet, Scroll } from '@angular/router';
 import { filter, map } from 'rxjs';
 import { PROFILE, SOCIAL_LINKS } from './data/profile';
 import { I18nService } from './i18n/i18n.service';
@@ -34,6 +34,7 @@ export class AppComponent {
   private readonly viewerButton = viewChild.required<ElementRef<HTMLButtonElement>>('viewerButton');
   // Elemento que abrió el visor, para devolverle el foco al cerrarlo.
   private viewerOpener: HTMLElement | null = null;
+  private instantJump = false;
 
   private readonly url = toSignal(
     this.router.events.pipe(
@@ -52,6 +53,16 @@ export class AppComponent {
   constructor() {
     // Al bajar a una sección, deja hueco para la barra de navegación fija.
     inject(ViewportScroller).setOffset([0, 72]);
+
+    // Al llegar a una sección desde otra página, el scroll suave recorrería
+    // toda la portada con los bloques a medio aparecer: se salta directamente.
+    this.router.events.pipe(takeUntilDestroyed()).subscribe((event) => {
+      if (event instanceof NavigationStart && this.pathOf(event.url) !== this.pathOf(this.router.url)) {
+        this.startInstantJump();
+      } else if (event instanceof Scroll) {
+        this.endInstantJump();
+      }
+    });
 
     effect(() => {
       if (this.viewerOpen()) {
@@ -96,8 +107,35 @@ export class AppComponent {
   }
 
   navigateFromViewer({ commands, fragment }: ViewerNavigation): void {
+    // Detrás del visor no se ve el recorrido, así que se salta sin animación.
+    this.startInstantJump();
     this.viewerOpen.set(false);
     this.router.navigate(commands, { fragment });
+  }
+
+  private startInstantJump(): void {
+    const html = this.document.documentElement;
+    html.style.scrollBehavior = 'auto';
+    html.classList.add('instant-reveal');
+    this.instantJump = true;
+  }
+
+  // El router hace el scroll justo al emitir el evento Scroll; se espera un
+  // poco para que los bloques del destino aparezcan ya sin fundido.
+  private endInstantJump(): void {
+    if (!this.instantJump) {
+      return;
+    }
+    this.instantJump = false;
+    setTimeout(() => {
+      const html = this.document.documentElement;
+      html.style.scrollBehavior = '';
+      html.classList.remove('instant-reveal');
+    }, 200);
+  }
+
+  private pathOf(url: string): string {
+    return url.split(/[?#]/)[0];
   }
 
   @HostListener('document:keydown.escape')

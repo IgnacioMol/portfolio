@@ -17,10 +17,19 @@ import { ProjectCardComponent } from '../../shared/project-card/project-card.com
 import { ViewerService } from '../../shared/solar-viewer/viewer.service';
 import { TechIconComponent } from '../../shared/tech-icon/tech-icon.component';
 
-// TODO: crea un formulario gratuito en https://formspree.io con tu email
-// y sustituye este endpoint por el que te den, con el formato
-// "https://formspree.io/f/xxxxxxxx".
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/TU_FORM_ID';
+// Envío del formulario con EmailJS (https://www.emailjs.com). Los tres
+// identificadores son públicos por diseño: EmailJS limita el uso por dominio.
+// TODO: completa templateId (Email Templates) y publicKey (Account → General).
+const EMAILJS = {
+  endpoint: 'https://api.emailjs.com/api/v1.0/email/send',
+  serviceId: 'service_7qjteeb',
+  templateId: 'TU_TEMPLATE_ID',
+  publicKey: 'TU_PUBLIC_KEY',
+};
+const EMAILJS_CONFIGURED = !EMAILJS.templateId.startsWith('TU_') && !EMAILJS.publicKey.startsWith('TU_');
+// Nadie rellena nombre, email y mensaje en menos tiempo: un envío más rápido
+// es de un bot.
+const MIN_FILL_TIME_MS = 3000;
 
 @Component({
   selector: 'app-home',
@@ -41,11 +50,13 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   readonly socialLinks = SOCIAL_LINKS;
   readonly featuredProjects = PROJECTS.filter((project) => project.featured);
 
-  contactForm = { name: '', email: '', message: '' };
+  // "website" es un campo trampa oculto: si llega relleno, lo ha escrito un bot.
+  contactForm = { name: '', email: '', message: '', website: '' };
   submitting = false;
   submitStatus: 'idle' | 'success' | 'error' = 'idle';
 
   cvMenuOpen = false;
+  private readonly createdAt = Date.now();
 
   private observers: IntersectionObserver[] = [];
 
@@ -83,7 +94,9 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
           }
         }
       },
-      { threshold: 0.12 },
+      // Con un umbral mayor, un bloque que solo asoma por el borde se quedaría
+      // invisible para siempre.
+      { threshold: 0 },
     );
     root.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
 
@@ -116,22 +129,43 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     if (this.submitting) {
       return;
     }
-    this.submitting = true;
     this.submitStatus = 'idle';
 
+    // Antispam: campo trampa relleno o envío demasiado rápido. Se finge éxito
+    // para que el bot no sepa que lo hemos detectado.
+    if (this.contactForm.website || Date.now() - this.createdAt < MIN_FILL_TIME_MS) {
+      this.submitStatus = 'success';
+      this.resetContactForm();
+      return;
+    }
+    if (!EMAILJS_CONFIGURED) {
+      console.warn('EmailJS no está configurado: faltan templateId y publicKey en home.component.ts.');
+      this.submitStatus = 'error';
+      return;
+    }
+
+    this.submitting = true;
     try {
-      const response = await fetch(FORMSPREE_ENDPOINT, {
+      const { name, email, message } = this.contactForm;
+      const response = await fetch(EMAILJS.endpoint, {
         method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(this.contactForm),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          service_id: EMAILJS.serviceId,
+          template_id: EMAILJS.templateId,
+          user_id: EMAILJS.publicKey,
+          template_params: {
+            name,
+            email,
+            message,
+            title: `${this.t.contact.form.subject} ${name}`,
+          },
+        }),
       });
 
       if (response.ok) {
         this.submitStatus = 'success';
-        this.contactForm = { name: '', email: '', message: '' };
+        this.resetContactForm();
       } else {
         this.submitStatus = 'error';
       }
@@ -140,5 +174,9 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     } finally {
       this.submitting = false;
     }
+  }
+
+  private resetContactForm(): void {
+    this.contactForm = { name: '', email: '', message: '', website: '' };
   }
 }

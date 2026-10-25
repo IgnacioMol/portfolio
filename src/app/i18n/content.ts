@@ -112,6 +112,7 @@ export interface Content {
       message: string;
       submit: string;
       sending: string;
+      subject: string;
       success: string;
       error: string;
     };

@@ -298,6 +298,7 @@
       "message": "Message",
       "submit": "Send message",
       "sending": "Sending…",
+      "subject": "Contact from portfolio —",
       "success": "Thanks for your message! I'll get back to you soon.",
       "error": "Something went wrong while sending the message. You can email me directly at"
     }
