@@ -24,7 +24,7 @@ export const PROFILE = {
   lastName: 'Molina Gutierrez',
   email: 'igmogu03@gmail.com',
   githubUrl: 'https://github.com/IgnacioMol',
-  linkedinUrl: 'https://www.linkedin.com/in/ignacio-molina-ba7334370',
+  linkedinUrl: 'https://www.linkedin.com/in/igmogu',
 };
 
 // Los PDF se sirven desde public/cv/. Con un único fichero el botón descarga
