@@ -46,10 +46,11 @@ jobs:
       - name: Build
         run: npm run build -- --base-href=${{ steps.base.outputs.base }}
 
-      - name: Copiar 404.html (fallback SPA)
-        # GitHub Pages no tiene rewrites: servir la app también como página 404
-        # permite que las rutas de Angular Router carguen directamente.
-        run: cp dist/portfolio/browser/index.html dist/portfolio/browser/404.html
+      - name: Crear 404.html
+        # Las páginas conocidas se prerenderizan como HTML propio. Para cualquier
+        # otra ruta, GitHub Pages sirve 404.html: la versión de la app que se
+        # pinta solo en el navegador, que muestra la página "no encontrada".
+        run: cp dist/portfolio/browser/index.csr.html dist/portfolio/browser/404.html
 
       - name: Configurar Pages
         uses: actions/configure-pages@v5

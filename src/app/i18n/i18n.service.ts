@@ -1,5 +1,5 @@
-import { DOCUMENT } from '@angular/common';
-import { Injectable, computed, effect, inject, signal } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { Injectable, PLATFORM_ID, computed, effect, inject, signal } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { Content, Lang, Localized } from './content';
 import en from './en.json';
@@ -13,6 +13,7 @@ export class I18nService {
   private readonly document = inject(DOCUMENT);
   private readonly title = inject(Title);
   private readonly meta = inject(Meta);
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   readonly lang = signal<Lang>(this.initialLang());
   readonly t = computed(() => TRANSLATIONS[this.lang()]);
@@ -28,6 +29,9 @@ export class I18nService {
       this.document.documentElement.lang = lang;
       this.title.setTitle(pageTitle ? `${pageTitle} · Ignacio Molina Gutiérrez` : content.meta.title);
       this.meta.updateTag({ name: 'description', content: content.meta.description });
+      if (!this.isBrowser) {
+        return;
+      }
       try {
         localStorage.setItem(STORAGE_KEY, lang);
       } catch {
@@ -45,6 +49,11 @@ export class I18nService {
   }
 
   private initialLang(): Lang {
+    // Las páginas se prerenderizan en español; el navegador aplica después el
+    // idioma guardado o el suyo.
+    if (!this.isBrowser) {
+      return 'es';
+    }
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored === 'es' || stored === 'en') {

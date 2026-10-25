@@ -1,10 +1,10 @@
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   NgZone,
   OnDestroy,
   ViewChild,
+  afterNextRender,
 } from '@angular/core';
 
 interface Particle {
@@ -82,7 +82,7 @@ const NEBULA_ALPHA_MAX = 0.1;
   templateUrl: './particle-background.component.html',
   styleUrl: './particle-background.component.scss',
 })
-export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
+export class ParticleBackgroundComponent implements OnDestroy {
   @ViewChild('canvas', { static: true })
   private canvasRef!: ElementRef<HTMLCanvasElement>;
 
@@ -115,9 +115,12 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
     }
   };
 
-  constructor(private readonly zone: NgZone) {}
+  constructor(private readonly zone: NgZone) {
+    // Solo en el navegador: al prerenderizar no hay canvas ni ventana.
+    afterNextRender(() => this.init());
+  }
 
-  ngAfterViewInit(): void {
+  private init(): void {
     const canvas = this.canvasRef.nativeElement;
     const ctx = canvas.getContext('2d');
     if (!ctx) {
@@ -155,6 +158,9 @@ export class ParticleBackgroundComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    if (!this.ctx) {
+      return;
+    }
     if (this.rafId !== null) {
       cancelAnimationFrame(this.rafId);
     }
