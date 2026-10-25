@@ -9,7 +9,11 @@
   </a>
   <div class="featured-body">
     <p class="featured-meta">{{ i18n.localize(p.context) }} &middot; {{ i18n.localize(p.period) }}</p>
-    <h3><a [routerLink]="['/proyectos', p.slug]">{{ i18n.localize(p.title) }}</a></h3>
+    @if (headingLevel() === 2) {
+      <h2 class="row-title"><a [routerLink]="['/proyectos', p.slug]">{{ i18n.localize(p.title) }}</a></h2>
+    } @else {
+      <h3 class="row-title"><a [routerLink]="['/proyectos', p.slug]">{{ i18n.localize(p.title) }}</a></h3>
+    }
     <p class="muted">{{ i18n.localize(p.summary) }}</p>
     @if (p.techs.length) {
       <ul class="tag-list">

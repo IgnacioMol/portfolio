@@ -44,6 +44,7 @@ export interface Content {
     closeMenu: string;
     switchLang: string;
     skipToContent: string;
+    footerNav: string;
     cv: string;
     themeLight: string;
     themeDark: string;
@@ -146,7 +147,13 @@ export interface Content {
       optional: string;
       success: string;
       error: string;
+      required: string;
+      emailInvalid: string;
+      messageShort: string;
+      fixErrors: string;
     };
+    copy: string;
+    copied: string;
   };
   footer: { builtWith: string; backToTop: string };
   a11y: { opensNewTab: string; emailLabel: string };

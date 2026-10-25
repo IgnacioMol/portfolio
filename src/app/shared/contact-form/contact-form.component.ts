@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, ElementRef, inject } from '@angular/core';
+import { FormsModule, NgForm, NgModel } from '@angular/forms';
 import { PROFILE } from '../../data/profile';
 import { I18nService } from '../../i18n/i18n.service';
 
@@ -29,24 +29,39 @@ export class ContactFormComponent {
   // "website" es un campo trampa oculto: si llega relleno, lo ha escrito un bot.
   contactForm = { name: '', email: '', subject: '', message: '', website: '' };
   submitting = false;
-  submitStatus: 'idle' | 'success' | 'error' = 'idle';
+  submitStatus: 'idle' | 'invalid' | 'success' | 'error' = 'idle';
+  // Se muestran los errores de todos los campos tras el primer intento de envío.
+  private attempted = false;
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly createdAt = Date.now();
 
   get t() {
     return this.i18n.t();
   }
 
-  async onSubmit(): Promise<void> {
+  showError(control: NgModel): boolean {
+    return !!control.invalid && (this.attempted || !!control.touched);
+  }
+
+  async onSubmit(form: NgForm): Promise<void> {
     if (this.submitting) {
       return;
     }
     this.submitStatus = 'idle';
+    if (form.invalid) {
+      this.attempted = true;
+      this.submitStatus = 'invalid';
+      // Lleva el foco al primer campo con error.
+      setTimeout(() => this.host.nativeElement.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus());
+      return;
+    }
 
     // Antispam: campo trampa relleno o envío demasiado rápido. Se finge éxito
     // para que el bot no sepa que lo hemos detectado.
     if (this.contactForm.website || Date.now() - this.createdAt < MIN_FILL_TIME_MS) {
       this.submitStatus = 'success';
       this.reset();
+      form.resetForm(this.contactForm);
       return;
     }
 
@@ -77,6 +92,8 @@ export class ContactFormComponent {
       if (response.ok) {
         this.submitStatus = 'success';
         this.reset();
+        form.resetForm(this.contactForm);
+        this.attempted = false;
       } else {
         this.submitStatus = 'error';
       }

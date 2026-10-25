@@ -1,38 +1,95 @@
-<form class="contact-form" #contactFormRef="ngForm" (ngSubmit)="onSubmit()">
+<form class="contact-form" #contactFormRef="ngForm" (ngSubmit)="onSubmit(contactFormRef)" novalidate>
   <div class="form-row">
-    <label>
-      {{ t.contact.form.name }}
-      <input type="text" name="name" required [(ngModel)]="contactForm.name" autocomplete="name" />
-    </label>
-    <label>
-      {{ t.contact.form.email }}
-      <input type="email" name="email" required [(ngModel)]="contactForm.email" autocomplete="email" />
-    </label>
+    <div class="field" [class.has-error]="showError(name)">
+      <label for="cf-name">{{ t.contact.form.name }}</label>
+      <input
+        id="cf-name"
+        type="text"
+        name="name"
+        required
+        #name="ngModel"
+        [(ngModel)]="contactForm.name"
+        autocomplete="name"
+        [attr.aria-invalid]="showError(name)"
+        [attr.aria-describedby]="showError(name) ? 'cf-name-error' : null"
+      />
+      @if (showError(name)) {
+        <p class="field-error" id="cf-name-error">{{ t.contact.form.required }}</p>
+      }
+    </div>
+    <div class="field" [class.has-error]="showError(email)">
+      <label for="cf-email">{{ t.contact.form.email }}</label>
+      <input
+        id="cf-email"
+        type="email"
+        name="email"
+        required
+        email
+        #email="ngModel"
+        [(ngModel)]="contactForm.email"
+        autocomplete="email"
+        inputmode="email"
+        [attr.aria-invalid]="showError(email)"
+        [attr.aria-describedby]="showError(email) ? 'cf-email-error' : null"
+      />
+      @if (showError(email)) {
+        <p class="field-error" id="cf-email-error">
+          {{ email.errors?.['required'] ? t.contact.form.required : t.contact.form.emailInvalid }}
+        </p>
+      }
+    </div>
   </div>
-  <label>
-    <span>{{ t.contact.form.subject }} <small class="optional">{{ t.contact.form.optional }}</small></span>
-    <input type="text" name="subject" maxlength="120" [(ngModel)]="contactForm.subject" />
-  </label>
+  <div class="field">
+    <label for="cf-subject">{{ t.contact.form.subject }} <small class="optional">{{ t.contact.form.optional }}</small></label>
+    <input id="cf-subject" type="text" name="subject" maxlength="120" [(ngModel)]="contactForm.subject" />
+  </div>
   <label class="contact-trap" aria-hidden="true">
     Website
     <input type="text" name="website" tabindex="-1" autocomplete="off" [(ngModel)]="contactForm.website" />
   </label>
-  <label>
-    {{ t.contact.form.message }}
-    <textarea name="message" rows="6" required [(ngModel)]="contactForm.message"></textarea>
-  </label>
+  <div class="field" [class.has-error]="showError(message)">
+    <label for="cf-message">{{ t.contact.form.message }}</label>
+    <textarea
+      id="cf-message"
+      name="message"
+      rows="6"
+      required
+      minlength="10"
+      maxlength="4000"
+      #message="ngModel"
+      [(ngModel)]="contactForm.message"
+      [attr.aria-invalid]="showError(message)"
+      [attr.aria-describedby]="showError(message) ? 'cf-message-error' : 'cf-message-count'"
+    ></textarea>
+    <div class="field-foot">
+      @if (showError(message)) {
+        <p class="field-error" id="cf-message-error">
+          {{ message.errors?.['required'] ? t.contact.form.required : t.contact.form.messageShort }}
+        </p>
+      }
+      <span class="field-count" id="cf-message-count">{{ contactForm.message.length }} / 4000</span>
+    </div>
+  </div>
 
-  <button class="btn btn-primary" type="submit" [disabled]="contactFormRef.invalid || submitting">
+  <button class="btn btn-primary" type="submit" [disabled]="submitting" [attr.aria-busy]="submitting">
+    @if (submitting) {
+      <span class="spinner" aria-hidden="true"></span>
+    }
     {{ submitting ? t.contact.form.sending : t.contact.form.submit }}
   </button>
 
-  @if (submitStatus === 'success') {
-    <p class="form-status form-status-success" role="status">{{ t.contact.form.success }}</p>
-  }
-  @if (submitStatus === 'error') {
-    <p class="form-status form-status-error" role="status">
-      {{ t.contact.form.error }}
-      <a [href]="'mailto:' + profile.email">{{ profile.email }}</a>.
-    </p>
-  }
+  <div class="form-feedback" role="status" aria-live="polite">
+    @if (submitStatus === 'invalid') {
+      <p class="form-status form-status-error">{{ t.contact.form.fixErrors }}</p>
+    }
+    @if (submitStatus === 'success') {
+      <p class="form-status form-status-success">{{ t.contact.form.success }}</p>
+    }
+    @if (submitStatus === 'error') {
+      <p class="form-status form-status-error">
+        {{ t.contact.form.error }}
+        <a [href]="'mailto:' + profile.email">{{ profile.email }}</a>.
+      </p>
+    }
+  </div>
 </form>

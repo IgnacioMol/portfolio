@@ -9,7 +9,7 @@
       <h2>{{ t.contact.infoTitle }}</h2>
       <ul class="info-list">
         @for (social of socialLinks; track social.label) {
-          <li>
+          <li class="info-row">
             <a
               class="info-item"
               appSpotlight
@@ -26,6 +26,17 @@
                 <span class="sr-only">{{ t.a11y.opensNewTab }}</span>
               }
             </a>
+            @if (!social.external) {
+              <button type="button" class="copy-btn" (click)="copyEmail()" [attr.aria-label]="copied() ? t.contact.copied : t.contact.copy">
+                @if (copied()) {
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
+                  <span>{{ t.contact.copied }}</span>
+                } @else {
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2" /><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" /></svg>
+                  <span>{{ t.contact.copy }}</span>
+                }
+              </button>
+            }
           </li>
         }
         <li>
@@ -40,6 +51,7 @@
           </div>
         </li>
       </ul>
+      <p class="sr-only" role="status" aria-live="polite">{{ copied() ? t.contact.copied : '' }}</p>
     </section>
 
     <section class="contact-form-card card" appReveal appSpotlight>

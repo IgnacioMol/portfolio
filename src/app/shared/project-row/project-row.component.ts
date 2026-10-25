@@ -17,6 +17,8 @@ export class ProjectRowComponent {
   readonly project = input.required<ProjectData>();
   // Imagen a la derecha en lugar de a la izquierda (para alternar filas).
   readonly reverse = input(false);
+  // Nivel del título según la jerarquía de la página (h2 bajo el h1 del listado).
+  readonly headingLevel = input<2 | 3>(3);
 
   get t() {
     return this.i18n.t();

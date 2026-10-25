@@ -29,7 +29,8 @@
     "skipToContent": "Saltar al contenido principal",
     "cv": "CV",
     "themeLight": "Cambiar a tema claro",
-    "themeDark": "Cambiar a tema oscuro"
+    "themeDark": "Cambiar a tema oscuro",
+    "footerNav": "Navegación del pie de página"
   },
   "hero": {
     "greeting": "¡Hola! Me llamo",
@@ -354,10 +355,16 @@
       "submit": "Enviar mensaje",
       "sending": "Enviando…",
       "success": "¡Gracias por tu mensaje! Te responderé lo antes posible.",
-      "error": "Ha ocurrido un error al enviar el mensaje. Puedes escribirme directamente a"
+      "error": "Ha ocurrido un error al enviar el mensaje. Puedes escribirme directamente a",
+      "required": "Este campo es obligatorio.",
+      "emailInvalid": "Introduce un email válido, por ejemplo nombre@empresa.com.",
+      "messageShort": "Cuéntame un poco más (mínimo 10 caracteres).",
+      "fixErrors": "Revisa los campos marcados."
     },
     "infoTitle": "Datos de contacto",
-    "formTitle": "Envíame un mensaje"
+    "formTitle": "Envíame un mensaje",
+    "copy": "Copiar email",
+    "copied": "¡Copiado!"
   },
   "notFound": {
     "title": "Página no encontrada",

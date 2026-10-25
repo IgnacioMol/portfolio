@@ -77,7 +77,7 @@
       <p class="footer-name">{{ profile.firstName }} {{ profile.lastName }}</p>
       <p class="footer-meta">&copy; {{ currentYear }} &middot; {{ t.footer.builtWith }}</p>
     </div>
-    <nav class="footer-links" [attr.aria-label]="t.nav.mainNav">
+    <nav class="footer-links" [attr.aria-label]="t.nav.footerNav">
       @for (link of t.nav.links; track link.path) {
         <a [routerLink]="link.path">{{ link.label }}</a>
       }

@@ -163,6 +163,13 @@
 }
 
 @media (max-width: 820px) {
+  // Objetivos táctiles de 44 px en móvil.
+  .icon-btn,
+  .lang-toggle {
+    height: 2.75rem;
+    min-width: 2.75rem;
+  }
+
   .menu-toggle {
     display: grid;
   }

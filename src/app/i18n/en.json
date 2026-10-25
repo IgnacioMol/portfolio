@@ -29,7 +29,8 @@
     "skipToContent": "Skip to main content",
     "cv": "CV",
     "themeLight": "Switch to light theme",
-    "themeDark": "Switch to dark theme"
+    "themeDark": "Switch to dark theme",
+    "footerNav": "Footer navigation"
   },
   "hero": {
     "greeting": "Hi! I'm",
@@ -354,10 +355,16 @@
       "submit": "Send message",
       "sending": "Sending…",
       "success": "Thanks for your message! I'll get back to you soon.",
-      "error": "Something went wrong while sending the message. You can email me directly at"
+      "error": "Something went wrong while sending the message. You can email me directly at",
+      "required": "This field is required.",
+      "emailInvalid": "Enter a valid email, e.g. name@company.com.",
+      "messageShort": "Tell me a bit more (at least 10 characters).",
+      "fixErrors": "Please check the highlighted fields."
     },
     "infoTitle": "Contact details",
-    "formTitle": "Send me a message"
+    "formTitle": "Send me a message",
+    "copy": "Copy email",
+    "copied": "Copied!"
   },
   "notFound": {
     "title": "Page not found",

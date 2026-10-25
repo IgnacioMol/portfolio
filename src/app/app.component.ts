@@ -64,6 +64,14 @@ export class AppComponent {
     this.document.getElementById('contenido')?.focus();
   }
 
+  // Tocar fuera de la barra cierra el menú móvil.
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    if (this.menuOpen && !(event.target as HTMLElement | null)?.closest('.nav')) {
+      this.menuOpen = false;
+    }
+  }
+
   @HostListener('document:keydown.escape')
   onEscape(): void {
     this.menuOpen = false;

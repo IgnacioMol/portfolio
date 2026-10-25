@@ -16,7 +16,7 @@ import { RevealDirective } from '../../shared/reveal.directive';
       </header>
       <div class="featured">
         @for (project of projects; track project.slug; let odd = $odd) {
-          <app-project-row [project]="project" [reverse]="odd" appReveal />
+          <app-project-row [project]="project" [reverse]="odd" [headingLevel]="2" appReveal />
         }
       </div>
     </section>
