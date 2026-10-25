@@ -244,6 +244,10 @@
             autocomplete="email"
           />
         </label>
+        <label>
+          <span>{{ t.contact.form.subject }} <small class="optional">{{ t.contact.form.optional }}</small></span>
+          <input type="text" name="subject" maxlength="120" [(ngModel)]="contactForm.subject" />
+        </label>
         <label class="contact-trap" aria-hidden="true">
           Website
           <input type="text" name="website" tabindex="-1" autocomplete="off" [(ngModel)]="contactForm.website" />

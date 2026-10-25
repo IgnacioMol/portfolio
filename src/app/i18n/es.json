@@ -295,10 +295,11 @@
     "form": {
       "name": "Nombre",
       "email": "Email",
+      "subject": "Asunto",
+      "optional": "(opcional)",
       "message": "Mensaje",
       "submit": "Enviar mensaje",
       "sending": "Enviando…",
-      "subject": "Contacto desde el portfolio —",
       "success": "¡Gracias por tu mensaje! Te responderé lo antes posible.",
       "error": "Ha ocurrido un error al enviar el mensaje. Puedes escribirme directamente a"
     }

@@ -51,7 +51,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   readonly featuredProjects = PROJECTS.filter((project) => project.featured);
 
   // "website" es un campo trampa oculto: si llega relleno, lo ha escrito un bot.
-  contactForm = { name: '', email: '', message: '', website: '' };
+  contactForm = { name: '', email: '', subject: '', message: '', website: '' };
   submitting = false;
   submitStatus: 'idle' | 'success' | 'error' = 'idle';
 
@@ -147,6 +147,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     this.submitting = true;
     try {
       const { name, email, message } = this.contactForm;
+      const subject = this.contactForm.subject.trim();
       const response = await fetch(EMAILJS.endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -158,7 +159,10 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
             name,
             email,
             message,
-            title: `${this.t.contact.form.subject} ${name}`,
+            subject,
+            // Asunto del correo. Va siempre en español porque es para mi bandeja
+            // de entrada, no para el visitante.
+            title: subject ? `Portfolio: ${subject}` : `Contacto desde el portfolio — ${name}`,
             time: new Date().toLocaleString('es-ES', { dateStyle: 'long', timeStyle: 'short', timeZone: 'Europe/Madrid' }),
           },
         }),
@@ -178,6 +182,6 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   }
 
   private resetContactForm(): void {
-    this.contactForm = { name: '', email: '', message: '', website: '' };
+    this.contactForm = { name: '', email: '', subject: '', message: '', website: '' };
   }
 }

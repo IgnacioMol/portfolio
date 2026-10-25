@@ -113,6 +113,7 @@ export interface Content {
       submit: string;
       sending: string;
       subject: string;
+      optional: string;
       success: string;
       error: string;
     };

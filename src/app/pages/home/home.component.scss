@@ -475,6 +475,11 @@
   transform: none;
 }
 
+.optional {
+  opacity: 0.7;
+  font-size: 0.8em;
+}
+
 // Campo trampa antispam: fuera de la vista y del orden de tabulación.
 .contact-trap {
   position: absolute;
