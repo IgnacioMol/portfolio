@@ -99,58 +99,6 @@
   line-height: 1.35;
 }
 
-.explore-3d {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0;
-  border: none;
-  background: none;
-  color: var(--text-muted);
-  font: inherit;
-  font-size: 0.9rem;
-  cursor: pointer;
-}
-
-.explore-3d:hover {
-  color: var(--accent);
-}
-
-// Pequeño planeta en órbita como icono del botón.
-.explore-3d-orbit {
-  position: relative;
-  width: 1.4rem;
-  height: 1.4rem;
-  border: 1px solid var(--border-strong);
-  border-radius: 50%;
-  animation: explore-orbit 5s linear infinite;
-}
-
-.explore-3d-orbit::before {
-  content: '';
-  position: absolute;
-  inset: 0.45rem;
-  border-radius: 50%;
-  background: var(--accent);
-}
-
-.explore-3d-orbit span {
-  position: absolute;
-  top: -0.17rem;
-  left: 50%;
-  width: 0.34rem;
-  height: 0.34rem;
-  margin-left: -0.17rem;
-  border-radius: 50%;
-  background: var(--text-muted);
-}
-
-@keyframes explore-orbit {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 @media (max-width: 900px) {
   .hero {
     grid-template-columns: 1fr;
@@ -307,10 +255,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .explore-3d-orbit {
-    animation: none;
-  }
-
   .featured-media:hover img {
     transform: none;
   }

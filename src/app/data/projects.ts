@@ -3,6 +3,8 @@ import data from './projects.json';
 
 export interface ProjectImage {
   src: string;
+  // Título breve (galerías); el texto alternativo describe la imagen.
+  title?: Localized<string>;
   alt: Localized<string>;
 }
 
@@ -25,6 +27,8 @@ export interface ProjectData {
   description: Localized<string[]>;
   features: Localized<string[]>;
   techs: string[];
+  // Tiene una demo 3D que se abre en el visor de la propia web.
+  demo3d?: boolean;
   cover?: ProjectImage;
   gallery: ProjectImage[];
   links: ProjectLink[];

@@ -39,7 +39,6 @@
     "ctaCv": "Download CV",
     "cvMenu": "Choose the CV language",
     "ctaContact": "Get in touch",
-    "explore3d": "Explore my portfolio in 3D",
     "location": "Meliana · Valencia, Spain"
   },
   "home": {
@@ -153,7 +152,8 @@
       "role": "Role",
       "period": "Period",
       "context": "Context",
-      "stack": "Stack"
+      "stack": "Stack",
+      "tryDemo": "Try the 3D demo"
     }
   },
   "skills": {
@@ -316,15 +316,11 @@
     "back": "Back to home"
   },
   "viewer": {
-    "open": "Open 3D viewer",
-    "title": "Portfolio in 3D",
-    "hint": "Drag to orbit · scroll to zoom · click a node to explore it",
-    "hintTouch": "Drag to orbit · pinch to zoom · tap a node to explore it",
+    "title": "My desk in 3D",
     "exit": "Exit 3D",
     "loading": "Loading 3D viewer…",
     "goTo": "Go to page",
     "viewProject": "View project",
-    "nodesLabel": "Nodes you can explore",
     "unsupported": "Your browser cannot display 3D graphics (WebGL).",
     "nodes": {
       "inicio": {
@@ -356,9 +352,9 @@
         "description": "Got a project or an offer? Drop me a line and let's talk."
       }
     },
-    "back": "Back",
-    "explore": "Explore",
-    "pathLabel": "Path on the map"
+    "overview": "Overview",
+    "deskIntro": "Click any object on the desk to see what it is about.",
+    "hint": "Drag to rotate · scroll to zoom · click an object to explore it"
   },
   "footer": {
     "builtWith": "Designed and built with Angular.",

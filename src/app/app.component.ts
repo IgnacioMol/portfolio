@@ -1,5 +1,5 @@
 import { DOCUMENT, ViewportScroller } from '@angular/common';
-import { Component, ElementRef, HostListener, effect, inject, viewChild } from '@angular/core';
+import { Component, HostListener, effect, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationStart, Router, RouterLink, RouterLinkActive, RouterOutlet, Scroll } from '@angular/router';
 import { CV_FILES, PROFILE, SOCIAL_LINKS } from './data/profile';
@@ -32,7 +32,6 @@ export class AppComponent {
 
   menuOpen = false;
   readonly viewerOpen = inject(ViewerService).open;
-  private readonly viewerButton = viewChild.required<ElementRef<HTMLButtonElement>>('viewerButton');
   // Elemento que abrió el visor, para devolverle el foco al cerrarlo.
   private viewerOpener: HTMLElement | null = null;
   private instantJump = false;
@@ -78,13 +77,9 @@ export class AppComponent {
     this.document.getElementById('contenido')?.focus();
   }
 
-  openViewer(): void {
-    this.viewerOpen.set(true);
-  }
-
   closeViewer(): void {
     this.viewerOpen.set(false);
-    (this.viewerOpener ?? this.viewerButton().nativeElement).focus();
+    this.viewerOpener?.focus();
   }
 
   navigateFromViewer({ commands, fragment }: ViewerNavigation): void {

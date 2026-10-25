@@ -4,7 +4,6 @@ import { CV_FILES, PROFILE, SOCIAL_LINKS } from '../../data/profile';
 import { PROJECTS } from '../../data/projects';
 import { I18nService } from '../../i18n/i18n.service';
 import { RevealDirective } from '../../shared/reveal.directive';
-import { ViewerService } from '../../shared/portfolio-map/viewer.service';
 import { TechIconComponent } from '../../shared/tech-icon/tech-icon.component';
 
 @Component({
@@ -16,7 +15,6 @@ import { TechIconComponent } from '../../shared/tech-icon/tech-icon.component';
 })
 export class HomeComponent {
   readonly i18n = inject(I18nService);
-  readonly viewer = inject(ViewerService);
 
   readonly profile = PROFILE;
   readonly cv = CV_FILES[0];

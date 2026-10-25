@@ -1,49 +1,45 @@
-.map-viewer {
+.viewer {
   position: fixed;
   inset: 0;
   z-index: 50;
   background: var(--bg);
   color: var(--text);
-  animation: map-in 0.3s ease;
+  animation: viewer-in 0.3s ease;
 }
 
-@keyframes map-in {
+@keyframes viewer-in {
   from {
     opacity: 0;
   }
 }
 
-.map-stage {
+.viewer-stage {
   position: absolute;
   inset: 0;
   overflow: hidden;
 }
 
-.map-stage canvas {
+.viewer-stage canvas {
   display: block;
   cursor: grab;
   touch-action: none;
 }
 
-.map-stage canvas:active {
+.viewer-stage canvas:active {
   cursor: grabbing;
 }
 
-// Capa de etiquetas de CSS2DRenderer: no debe bloquear el arrastre del lienzo.
-.map-labels {
+// Capa de etiquetas de CSS2DRenderer: no debe bloquear el arrastre del lienzo
+// y su contexto de apilado evita que tape el panel (cada etiqueta lleva z-index).
+.viewer-labels {
   position: absolute;
   top: 0;
   left: 0;
-  // CSS2DRenderer da un z-index a cada etiqueta: este contexto de apilado
-  // evita que queden por encima del panel y de la barra superior.
   z-index: 0;
   pointer-events: none;
 }
 
-.map-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
+.viewer-label {
   padding: 0.3rem 0.65rem;
   border: 1px solid var(--border-strong);
   border-radius: 8px;
@@ -56,55 +52,22 @@
   white-space: nowrap;
   pointer-events: auto;
   cursor: pointer;
-  transition: opacity 0.3s ease, border-color 0.15s ease, color 0.15s ease;
+  transition: border-color 0.15s ease, color 0.15s ease;
 }
 
-.map-label svg {
-  width: 0.95rem;
-  height: 0.95rem;
-  flex-shrink: 0;
-}
-
-.map-label .icon-stroke {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.map-label .icon-fill {
-  fill: currentColor;
-}
-
-.map-label:hover,
-.map-label:focus-visible,
-.map-label.is-active {
+.viewer-label:hover,
+.viewer-label:focus-visible,
+.viewer-label.is-active {
   border-color: var(--accent);
   color: var(--accent);
 }
 
-.map-label-root {
-  padding: 0.4rem 0.85rem;
-  font-size: 0.9rem;
-}
-
-.map-label-item {
-  font-size: 0.72rem;
-  font-weight: 500;
-}
-
-.map-label.is-hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.map-top {
+.viewer-top {
   position: absolute;
-  z-index: 1;
   top: 0;
   left: 0;
   right: 0;
+  z-index: 1;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -113,22 +76,22 @@
   pointer-events: none;
 }
 
-.map-top > * {
+.viewer-top > * {
   pointer-events: auto;
 }
 
-.map-top h2 {
+.viewer-top h2 {
   margin: 0;
   font-size: 1.15rem;
 }
 
-.map-hint {
+.viewer-hint {
   margin: 0.25rem 0 0;
   color: var(--text-muted);
   font-size: 0.85rem;
 }
 
-.map-exit {
+.viewer-exit {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
@@ -144,21 +107,22 @@
   cursor: pointer;
 }
 
-.map-exit:hover {
+.viewer-exit:hover {
   border-color: var(--accent);
   color: var(--accent);
 }
 
-.map-exit svg {
+.viewer-exit svg {
   width: 1rem;
   height: 1rem;
   fill: none;
   stroke: currentColor;
   stroke-width: 2;
   stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
-.map-unsupported {
+.viewer-unsupported {
   position: absolute;
   inset: 0;
   display: grid;
@@ -169,13 +133,13 @@
   text-align: center;
 }
 
-.map-panel {
+.viewer-panel {
   position: absolute;
-  z-index: 1;
   left: 1.5rem;
   bottom: 1.5rem;
+  z-index: 1;
   width: min(380px, calc(100vw - 3rem));
-  max-height: calc(100vh - 8rem);
+  max-height: calc(100vh - 9rem);
   overflow-y: auto;
   padding: 1.25rem 1.35rem;
   border: 1px solid var(--border);
@@ -184,118 +148,52 @@
   box-shadow: var(--shadow-lg);
 }
 
-.map-path {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-  list-style: none;
-  margin: 0 0 0.75rem;
-  padding: 0;
-  color: var(--text-subtle);
-  font-size: 0.78rem;
-}
-
-.map-path li + li::before {
-  content: '›';
-  margin-right: 0.35rem;
-}
-
-.map-path button {
-  padding: 0;
-  border: none;
-  background: none;
-  color: var(--text-muted);
-  font: inherit;
-  cursor: pointer;
-}
-
-.map-path button:hover {
+.viewer-eyebrow {
+  margin: 0 0 0.35rem;
   color: var(--accent);
-  text-decoration: underline;
-}
-
-.map-path [aria-current] {
-  color: var(--text);
+  font-size: 0.75rem;
   font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
-.map-panel h3 {
+.viewer-panel h3 {
   margin: 0 0 0.4rem;
   font-size: 1.15rem;
 }
 
-.map-panel > p {
+.viewer-description {
   margin: 0 0 1rem;
   color: var(--text-muted);
   font-size: 0.9rem;
   line-height: 1.55;
 }
 
-.map-actions {
+.viewer-panel > .viewer-description:only-child {
+  margin: 0;
+}
+
+.viewer-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
 }
 
-.map-children {
-  margin-top: 1.1rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--border);
-}
-
-.map-children-title {
-  margin: 0 0 0.5rem;
-  color: var(--text-subtle);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.map-children ul {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.map-children button {
-  padding: 0.3rem 0.65rem;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: var(--surface-2);
-  color: var(--text);
-  font: inherit;
-  font-size: 0.8rem;
-  cursor: pointer;
-}
-
-.map-children button:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
 @media (max-width: 760px) {
-  .map-top {
+  .viewer-top {
     padding: 1rem;
   }
 
-  .map-panel {
+  .viewer-panel {
     left: 1rem;
     bottom: 1rem;
     width: calc(100vw - 2rem);
-    max-height: 45vh;
+    max-height: 40vh;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .map-viewer {
+  .viewer {
     animation: none;
-  }
-
-  .map-label {
-    transition: none;
   }
 }

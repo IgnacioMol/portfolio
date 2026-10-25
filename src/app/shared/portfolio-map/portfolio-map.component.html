@@ -1,61 +1,36 @@
-<div class="map-viewer" role="dialog" aria-modal="true" aria-labelledby="map-title">
-  <div class="map-stage" #stage></div>
+<div class="viewer" role="dialog" aria-modal="true" aria-labelledby="viewer-title">
+  <div class="viewer-stage" #stage></div>
 
-  <header class="map-top">
+  <header class="viewer-top">
     <div>
-      <h2 id="map-title">{{ t.viewer.title }}</h2>
+      <h2 id="viewer-title">{{ t.viewer.title }}</h2>
       @if (supported) {
-        <p class="map-hint">{{ touch ? t.viewer.hintTouch : t.viewer.hint }}</p>
+        <p class="viewer-hint">{{ t.viewer.hint }}</p>
       }
     </div>
-    <button #exitButton type="button" class="map-exit" (click)="closed.emit()">
+    <button #exitButton type="button" class="viewer-exit" (click)="closed.emit()">
       {{ t.viewer.exit }}
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
     </button>
   </header>
 
   @if (!supported) {
-    <p class="map-unsupported">{{ t.viewer.unsupported }}</p>
+    <p class="viewer-unsupported">{{ t.viewer.unsupported }}</p>
   }
 
-  @if (active(); as info) {
-    <aside class="map-panel" aria-live="polite">
-      <nav [attr.aria-label]="t.viewer.pathLabel">
-        <ol class="map-path">
-          @for (id of path(); track id; let last = $last) {
-            <li>
-              @if (last) {
-                <span aria-current="location">{{ label(id) }}</span>
-              } @else {
-                <button type="button" (click)="select(id)">{{ label(id) }}</button>
-              }
-            </li>
-          }
-        </ol>
-      </nav>
-      <h3>{{ info.label.text }}</h3>
-      <p>{{ info.description }}</p>
-      <div class="map-actions">
+  <aside class="viewer-panel" aria-live="polite">
+    @if (active(); as info) {
+      <p class="viewer-eyebrow">{{ info.eyebrow }}</p>
+      <h3>{{ info.label }}</h3>
+      <p class="viewer-description">{{ info.description }}</p>
+      <div class="viewer-actions">
         <button type="button" class="btn btn-primary btn-sm" (click)="go(info.navigation)">
           {{ info.action }} <span aria-hidden="true">&rarr;</span>
         </button>
-        @if (path().length > 1) {
-          <button type="button" class="btn btn-secondary btn-sm" (click)="back()">
-            <span aria-hidden="true">&larr;</span> {{ t.viewer.back }}
-          </button>
-        }
+        <button type="button" class="btn btn-secondary btn-sm" (click)="select(null)">{{ t.viewer.overview }}</button>
       </div>
-
-      @if (children().length) {
-        <div class="map-children">
-          <p class="map-children-title">{{ t.viewer.explore }}</p>
-          <ul [attr.aria-label]="t.viewer.nodesLabel">
-            @for (id of children(); track id) {
-              <li><button type="button" (click)="select(id)">{{ label(id) }}</button></li>
-            }
-          </ul>
-        </div>
-      }
-    </aside>
-  }
+    } @else {
+      <p class="viewer-description">{{ t.viewer.deskIntro }}</p>
+    }
+  </aside>
 </div>

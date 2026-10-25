@@ -61,7 +61,6 @@ export interface Content {
     ctaCv: string;
     cvMenu: string;
     ctaContact: string;
-    explore3d: string;
     location: string;
   };
   home: {
@@ -104,6 +103,7 @@ export interface Content {
       close: string;
       projectLinks: string;
       next: string;
+      tryDemo: string;
       factsLabel: string;
       role: string;
       period: string;
@@ -141,19 +141,15 @@ export interface Content {
     };
   };
   viewer: {
-    open: string;
     title: string;
     hint: string;
-    hintTouch: string;
     exit: string;
     loading: string;
     goTo: string;
     viewProject: string;
-    nodesLabel: string;
-    back: string;
-    explore: string;
-    pathLabel: string;
     unsupported: string;
+    overview: string;
+    deskIntro: string;
     nodes: Record<'inicio' | 'sobre-mi' | 'experiencia' | 'proyectos' | 'habilidades' | 'formacion' | 'contacto', ViewerNode>;
   };
   footer: { builtWith: string; backToTop: string };

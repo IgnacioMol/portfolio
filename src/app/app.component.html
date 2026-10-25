@@ -31,18 +31,6 @@
         {{ t.nav.cv }}
       </a>
       <button
-        #viewerButton
-        class="icon-btn"
-        type="button"
-        (click)="openViewer()"
-        [attr.aria-label]="t.viewer.open"
-        [attr.title]="t.viewer.open"
-      >
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 2.5 20 7v10l-8 4.5L4 17V7Zm0 9L4 7m8 4.5L20 7m-8 4.5V21.5" />
-        </svg>
-      </button>
-      <button
         class="icon-btn"
         type="button"
         (click)="theme.toggle()"
