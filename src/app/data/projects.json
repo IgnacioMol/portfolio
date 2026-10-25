@@ -15,6 +15,10 @@
       "es": "Trabajo Fin de Grado · 9/10",
       "en": "Final Degree Project · 9/10"
     },
+    "role": {
+      "es": "Diseño y desarrollo completo (proyecto individual)",
+      "en": "End-to-end design and development (solo project)"
+    },
     "period": {
       "es": "Sep. 2025 – Jul. 2026",
       "en": "Sep. 2025 – Jul. 2026"
@@ -113,6 +117,10 @@
     "context": {
       "es": "Desarrollo full stack · Formula Student UPV",
       "en": "Full stack development · Formula Student UPV"
+    },
+    "role": {
+      "es": "Desarrollador web freelance · full stack",
+      "en": "Freelance web developer · full stack"
     },
     "period": {
       "es": "Proyecto actual",

@@ -1,11 +1,67 @@
 @use 'styles/components';
 
-:root {
-  --bg: #0a0e17;
-  --text: #eef2fb;
-  --text-muted: #9aa7c2;
-  --accent: #7bb4ff;
-  --border: #232c40;
+// Paleta en dos temas. El tema activo lo fija un script en index.html antes de
+// pintar (data-theme en <html>) y después ThemeService.
+:root,
+:root[data-theme='light'] {
+  color-scheme: light;
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --surface-2: #f1f3f6;
+  --text: #0f172a;
+  --text-muted: #526075;
+  --text-subtle: #7a8699;
+  --accent: #1d4ed8;
+  --accent-hover: #1e40af;
+  --accent-soft: rgba(29, 78, 216, 0.08);
+  --on-accent: #ffffff;
+  --border: #e2e6ec;
+  --border-strong: #cdd3dc;
+  --success: #15803d;
+  --danger: #b91c1c;
+  --shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 16px rgba(15, 23, 42, 0.06);
+  --shadow-lg: 0 2px 6px rgba(15, 23, 42, 0.05), 0 18px 40px rgba(15, 23, 42, 0.1);
+  --nav-bg: rgba(246, 247, 249, 0.82);
+
+  // Fondo animado (canales RGB para poder variar la opacidad en el canvas).
+  --bg-dot-rgb: 71, 85, 105;
+  --bg-link-rgb: 29, 78, 216;
+  --bg-glow-rgb: 29, 78, 216;
+  --bg-nebula-1: 99, 102, 241;
+  --bg-nebula-2: 14, 165, 233;
+  --bg-nebula-3: 168, 85, 247;
+  --bg-nebula-alpha: 0.6;
+  --bg-intensity: 0.55;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #0b1120;
+  --surface: #111a2c;
+  --surface-2: #162036;
+  --text: #e7ecf4;
+  --text-muted: #9aa6b9;
+  --text-subtle: #6f7c91;
+  --accent: #6aa5ff;
+  --accent-hover: #8dbaff;
+  --accent-soft: rgba(106, 165, 255, 0.12);
+  --on-accent: #0b1120;
+  --border: #1f2a3f;
+  --border-strong: #2c3a55;
+  --success: #4ade80;
+  --danger: #f87171;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 18px 40px rgba(0, 0, 0, 0.45);
+  --nav-bg: rgba(11, 17, 32, 0.78);
+
+  --bg-dot-rgb: 190, 210, 245;
+  --bg-link-rgb: 120, 170, 255;
+  --bg-glow-rgb: 140, 230, 170;
+  --bg-nebula-1: 99, 91, 255;
+  --bg-nebula-2: 80, 200, 220;
+  --bg-nebula-3: 255, 99, 200;
+  --bg-nebula-alpha: 1;
+  --bg-intensity: 1;
 }
 
 * {
@@ -32,15 +88,23 @@ body {
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 a {
   color: inherit;
 }
 
+img {
+  max-width: 100%;
+}
+
 ::selection {
-  background: rgba(123, 180, 255, 0.35);
+  background: var(--accent-soft);
   color: var(--text);
 }
 
@@ -66,7 +130,7 @@ a {
 // Transición entre páginas (withViewTransitions).
 ::view-transition-old(root),
 ::view-transition-new(root) {
-  animation-duration: 0.25s;
+  animation-duration: 0.2s;
 }
 
 @media (prefers-reduced-motion: reduce) {

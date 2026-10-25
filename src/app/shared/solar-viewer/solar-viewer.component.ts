@@ -22,6 +22,17 @@ import { ViewerNavigation } from './viewer-navigation';
 type SectionId = 'inicio' | 'sobre-mi' | 'experiencia' | 'proyectos' | 'habilidades' | 'formacion' | 'contacto';
 
 const PROJECT_PREFIX = 'proyecto:';
+
+// Página (y sección) a la que lleva cada planeta.
+const SECTION_PAGES: Record<SectionId, ViewerNavigation> = {
+  inicio: { commands: ['/'] },
+  'sobre-mi': { commands: ['/sobre-mi'] },
+  experiencia: { commands: ['/sobre-mi'], fragment: 'experiencia' },
+  proyectos: { commands: ['/proyectos'] },
+  habilidades: { commands: ['/sobre-mi'], fragment: 'habilidades' },
+  formacion: { commands: ['/sobre-mi'], fragment: 'formacion' },
+  contacto: { commands: ['/contacto'] },
+};
 const MOON_COLORS = ['#ffd36b', '#ff6b7d', '#8be9fd', '#c3f584'];
 
 // Cada sección es un planeta; la distancia a la estrella sigue el orden de la
@@ -104,7 +115,7 @@ export class SolarViewerComponent implements OnDestroy {
       label: node.label,
       description: node.description,
       action: t.goTo,
-      navigation: { commands: ['/'], fragment: id } as ViewerNavigation,
+      navigation: SECTION_PAGES[id as SectionId],
     };
   });
 

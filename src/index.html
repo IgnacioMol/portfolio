@@ -4,7 +4,8 @@
   <meta charset="utf-8">
   <title>Ignacio Molina Gutiérrez · Portfolio</title>
   <meta name="description" content="Ingeniero Multimedia y desarrollador web frontend. Interfaces, aplicaciones interactivas, videojuegos y gráficos.">
-  <meta name="theme-color" content="#0a0e17">
+  <meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b1120" media="(prefers-color-scheme: dark)">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ignaciomol.github.io/portfolio/">
   <meta property="og:site_name" content="Ignacio Molina Gutiérrez">
@@ -22,6 +23,23 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <script>
+    // Aplica el tema guardado (o el del sistema) antes de pintar, para evitar
+    // un parpadeo del tema equivocado.
+    (function () {
+      var theme = 'light';
+      try {
+        var stored = localStorage.getItem('theme');
+        theme = stored === 'light' || stored === 'dark'
+          ? stored
+          : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      } catch (e) {}
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
 </head>
 <body>
   <app-root></app-root>

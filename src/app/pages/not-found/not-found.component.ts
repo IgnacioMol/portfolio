@@ -7,7 +7,7 @@ import { I18nService } from '../../i18n/i18n.service';
   standalone: true,
   imports: [RouterLink],
   template: `
-    <section class="page-section not-found">
+    <section class="container page-section not-found">
       <p class="not-found-code" aria-hidden="true">404</p>
       <h1>{{ t.notFound.title }}</h1>
       <p class="section-subtitle">{{ t.notFound.text }}</p>
@@ -30,6 +30,7 @@ import { I18nService } from '../../i18n/i18n.service';
       line-height: 1;
       color: transparent;
       -webkit-text-stroke: 2px var(--accent);
+      letter-spacing: -0.04em;
     }
 
     h1 {

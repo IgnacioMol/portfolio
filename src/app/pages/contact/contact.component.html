@@ -1,0 +1,49 @@
+<div class="container page-section">
+  <header class="page-header" appReveal>
+    <h1>{{ t.contact.title }}</h1>
+    <p class="lead">{{ t.contact.text }}</p>
+  </header>
+
+  <div class="contact-grid">
+    <section class="contact-info" appReveal>
+      <h2>{{ t.contact.infoTitle }}</h2>
+      <ul class="info-list">
+        @for (social of socialLinks; track social.label) {
+          <li>
+            <a
+              class="info-item"
+              [href]="social.href"
+              [attr.target]="social.external ? '_blank' : null"
+              [attr.rel]="social.external ? 'noopener' : null"
+            >
+              <span class="info-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path [attr.d]="social.path" /></svg></span>
+              <span>
+                <span class="info-label">{{ social.label }}</span>
+                <span class="info-value">{{ social.external ? social.href.replace('https://', '').replace('www.', '') : profile.email }}</span>
+              </span>
+              @if (social.external) {
+                <span class="sr-only">{{ t.a11y.opensNewTab }}</span>
+              }
+            </a>
+          </li>
+        }
+        <li>
+          <div class="info-item">
+            <span class="info-icon">
+              <svg class="stroke" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z" /><circle cx="12" cy="9.5" r="2.5" /></svg>
+            </span>
+            <span>
+              <span class="info-label">{{ t.contact.locationLabel }}</span>
+              <span class="info-value">{{ t.contact.location }}</span>
+            </span>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <section class="contact-form-card card" appReveal>
+      <h2>{{ t.contact.formTitle }}</h2>
+      <app-contact-form />
+    </section>
+  </div>
+</div>

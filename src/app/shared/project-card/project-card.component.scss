@@ -9,13 +9,14 @@
   height: 100%;
   padding: 0;
   overflow: hidden;
-  transition: transform 0.2s ease, border-color 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .project-card:hover,
 .project-card:focus-within {
-  transform: translateY(-4px);
-  border-color: rgba(123, 180, 255, 0.45);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
 }
 
 .project-cover {
@@ -24,10 +25,7 @@
   aspect-ratio: 16 / 9;
   overflow: hidden;
   border-bottom: 1px solid var(--border);
-  background:
-    radial-gradient(circle at 30% 30%, rgba(123, 180, 255, 0.25), transparent 60%),
-    radial-gradient(circle at 75% 80%, rgba(199, 120, 255, 0.18), transparent 55%),
-    #0e1424;
+  background: var(--surface-2);
 }
 
 .project-cover img {
@@ -36,16 +34,13 @@
   object-fit: cover;
   // Las capturas tienen el lienzo a la izquierda y el panel a la derecha.
   object-position: 20% 50%;
-  transition: transform 0.4s ease;
 }
 
-.project-card:hover .project-cover img {
-  transform: scale(1.04);
-}
-
-.project-cover-icon {
-  font-size: 3.5rem;
-  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.5));
+.project-cover-placeholder {
+  color: var(--text-subtle);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .project-body {
@@ -61,10 +56,18 @@
   justify-content: space-between;
   align-items: baseline;
   gap: 0.25rem 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.card-context {
+  margin: 0;
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 600;
 }
 
 .card-period {
-  color: var(--text-muted);
+  color: var(--text-subtle);
   font-size: 0.8rem;
 }
 
@@ -89,8 +92,13 @@
   outline-offset: 3px;
 }
 
-.tag-more {
+.project-summary {
+  margin: 0 0 1rem;
   color: var(--text-muted);
+}
+
+.tag-more {
+  color: var(--text-subtle);
 }
 
 .project-actions {
@@ -100,10 +108,6 @@
   gap: 0.5rem 1.25rem;
   margin-top: auto;
   padding-top: 1.25rem;
-}
-
-.project-actions .card-link {
-  margin: 0;
 }
 
 .project-external {
@@ -122,10 +126,6 @@
 @media (prefers-reduced-motion: reduce) {
   .project-card:hover,
   .project-card:focus-within {
-    transform: none;
-  }
-
-  .project-card:hover .project-cover img {
     transform: none;
   }
 }

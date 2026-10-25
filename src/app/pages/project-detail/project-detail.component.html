@@ -1,6 +1,6 @@
 @let p = project();
 @if (p) {
-  <article class="page-section project-detail">
+  <article class="container page-section project-detail">
     <nav class="breadcrumb" [attr.aria-label]="t.projects.detail.breadcrumb">
       <ol>
         <li><a routerLink="/">{{ t.projects.detail.home }}</a></li>
@@ -10,10 +10,9 @@
     </nav>
 
     <header class="detail-header">
-      <p class="card-tag">{{ i18n.localize(p.context) }}</p>
+      <p class="eyebrow">{{ i18n.localize(p.context) }}</p>
       <h1>{{ i18n.localize(p.title) }}</h1>
-      <p class="detail-period">{{ i18n.localize(p.period) }}</p>
-      <p class="detail-summary">{{ i18n.localize(p.summary) }}</p>
+      <p class="lead">{{ i18n.localize(p.summary) }}</p>
       @if (p.links.length) {
         <ul class="detail-links" [attr.aria-label]="t.projects.detail.projectLinks">
           @for (link of p.links; track link.url; let first = $first) {
@@ -21,7 +20,7 @@
               <a
                 class="btn"
                 [class.btn-primary]="first"
-                [class.btn-ghost]="!first"
+                [class.btn-secondary]="!first"
                 [href]="link.url"
                 target="_blank"
                 rel="noopener"
@@ -35,6 +34,33 @@
       }
     </header>
 
+    <dl class="facts card" [attr.aria-label]="t.projects.detail.factsLabel">
+      <div>
+        <dt>{{ t.projects.detail.role }}</dt>
+        <dd>{{ i18n.localize(p.role) }}</dd>
+      </div>
+      <div>
+        <dt>{{ t.projects.detail.period }}</dt>
+        <dd>{{ i18n.localize(p.period) }}</dd>
+      </div>
+      <div>
+        <dt>{{ t.projects.detail.context }}</dt>
+        <dd>{{ i18n.localize(p.context) }}</dd>
+      </div>
+      @if (p.techs.length) {
+        <div class="facts-stack">
+          <dt>{{ t.projects.detail.stack }}</dt>
+          <dd>
+            <ul class="tag-list">
+              @for (tech of p.techs; track tech) {
+                <li class="tag"><app-tech-icon class="tag-icon" [name]="tech" />{{ tech }}</li>
+              }
+            </ul>
+          </dd>
+        </div>
+      }
+    </dl>
+
     @if (p.cover) {
       <figure class="detail-cover">
         <button type="button" class="image-button" (click)="openImage(p.cover)">
@@ -43,7 +69,7 @@
         </button>
       </figure>
     } @else {
-      <div class="detail-cover detail-cover-placeholder" aria-hidden="true">{{ p.icon }}</div>
+      <div class="detail-cover detail-cover-placeholder" aria-hidden="true">{{ i18n.localize(p.shortTitle) }}</div>
     }
 
     <div class="detail-grid">
@@ -67,16 +93,6 @@
         }
       </div>
 
-      @if (p.techs.length) {
-        <aside class="detail-side card">
-          <h2>{{ t.projects.detail.technologies }}</h2>
-          <ul class="tech-list">
-            @for (tech of p.techs; track tech) {
-              <li><app-tech-icon class="tech-list-icon" [name]="tech" />{{ tech }}</li>
-            }
-          </ul>
-        </aside>
-      }
     </div>
 
     @if (p.gallery.length) {
@@ -96,7 +112,7 @@
     }
 
     <nav class="detail-pager" [attr.aria-label]="t.projects.title">
-      <a class="card-link" routerLink="/proyectos"><span aria-hidden="true">&larr;</span> {{ t.projects.detail.back }}</a>
+      <a class="text-link" routerLink="/proyectos"><span aria-hidden="true">&larr;</span> {{ t.projects.detail.back }}</a>
       @if (next(); as nextProject) {
         <a class="pager-next" [routerLink]="['/proyectos', nextProject.slug]">
           <span class="pager-label">{{ t.projects.detail.next }}</span>

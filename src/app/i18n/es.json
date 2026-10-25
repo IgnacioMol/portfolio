@@ -6,35 +6,30 @@
   "nav": {
     "links": [
       {
-        "label": "Sobre mí",
-        "href": "#sobre-mi"
+        "label": "Inicio",
+        "path": "/"
       },
       {
-        "label": "Experiencia",
-        "href": "#experiencia"
+        "label": "Sobre mí",
+        "path": "/sobre-mi"
       },
       {
         "label": "Proyectos",
-        "href": "#proyectos"
-      },
-      {
-        "label": "Habilidades",
-        "href": "#habilidades"
-      },
-      {
-        "label": "Formación",
-        "href": "#formacion"
+        "path": "/proyectos"
       },
       {
         "label": "Contacto",
-        "href": "#contacto"
+        "path": "/contacto"
       }
     ],
     "mainNav": "Navegación principal",
     "openMenu": "Abrir menú",
     "closeMenu": "Cerrar menú",
     "switchLang": "Cambiar idioma a inglés",
-    "skipToContent": "Saltar al contenido principal"
+    "skipToContent": "Saltar al contenido principal",
+    "cv": "CV",
+    "themeLight": "Cambiar a tema claro",
+    "themeDark": "Cambiar a tema oscuro"
   },
   "hero": {
     "greeting": "¡Hola! Me llamo",
@@ -43,8 +38,20 @@
     "ctaProjects": "Ver proyectos",
     "ctaCv": "Descargar CV",
     "cvMenu": "Elige el idioma del CV",
-    "ctaContact": "Contacto",
-    "explore3d": "Explora mi portfolio en 3D"
+    "ctaContact": "Contactar",
+    "explore3d": "Explora mi portfolio en 3D",
+    "location": "Meliana · Valencia, España"
+  },
+  "home": {
+    "featuredTitle": "Proyectos destacados",
+    "featuredSubtitle": "Una selección de los proyectos en los que he trabajado.",
+    "skillsTitle": "Habilidades principales",
+    "skillsSubtitle": "Las tecnologías que más utilizo en mi día a día.",
+    "allSkills": "Ver todas las habilidades",
+    "ctaTitle": "¿Trabajamos juntos?",
+    "ctaText": "Estoy abierto a nuevas oportunidades y colaboraciones. Si tienes un proyecto o una oferta, escríbeme y te responderé lo antes posible.",
+    "ctaButton": "Contactar",
+    "aboutLink": "Conoce mi trayectoria"
   },
   "about": {
     "title": "Sobre mí",
@@ -82,7 +89,8 @@
         "level": "B2",
         "detail": "Cambridge CAE"
       }
-    ]
+    ],
+    "lead": "Ingeniero Multimedia especializado en desarrollo frontend, con experiencia en backend, aplicaciones móviles, videojuegos y realidad virtual."
   },
   "experience": {
     "title": "Experiencia",
@@ -140,7 +148,12 @@
       "enlarge": "Ampliar imagen:",
       "close": "Cerrar",
       "projectLinks": "Enlaces del proyecto",
-      "next": "Siguiente proyecto"
+      "next": "Siguiente proyecto",
+      "factsLabel": "Ficha del proyecto",
+      "role": "Rol",
+      "period": "Periodo",
+      "context": "Contexto",
+      "stack": "Stack"
     }
   },
   "skills": {
@@ -165,7 +178,6 @@
     "groups": [
       {
         "title": "Frontend",
-        "icon": "🖥️",
         "items": [
           "HTML",
           "CSS",
@@ -181,7 +193,6 @@
       },
       {
         "title": "Backend & Bases de datos",
-        "icon": "🗄️",
         "items": [
           "PHP",
           "Laravel",
@@ -195,7 +206,6 @@
       },
       {
         "title": "Aplicaciones móviles",
-        "icon": "📱",
         "items": [
           "Android Studio",
           "Kotlin",
@@ -204,7 +214,6 @@
       },
       {
         "title": "UX/UI & Desarrollo web",
-        "icon": "🎨",
         "items": [
           "Figma",
           "WordPress",
@@ -214,7 +223,6 @@
       },
       {
         "title": "Videojuegos & Realidad virtual",
-        "icon": "🎮",
         "items": [
           "Unity",
           "C#",
@@ -225,7 +233,6 @@
       },
       {
         "title": "Gráficos & Generación procedural",
-        "icon": "✨",
         "items": [
           "p5.js",
           "GLSL",
@@ -235,7 +242,6 @@
       },
       {
         "title": "Otros lenguajes",
-        "icon": "⌨️",
         "items": [
           "C++",
           "Python"
@@ -243,7 +249,6 @@
       },
       {
         "title": "Herramientas & Control de versiones",
-        "icon": "🛠️",
         "items": [
           "Git",
           "GitHub",
@@ -253,7 +258,6 @@
       },
       {
         "title": "Gestión de proyectos",
-        "icon": "📋",
         "items": [
           "Jira",
           "Microsoft Project",
@@ -288,8 +292,8 @@
     ]
   },
   "contact": {
-    "title": "¿Hablamos?",
-    "text": "Si tienes un proyecto en mente, una oportunidad profesional o simplemente quieres conocer más sobre mi trabajo, escríbeme y te responderé lo antes posible.",
+    "title": "Contacto",
+    "text": "¿Tienes un proyecto en mente, una oportunidad profesional o quieres saber más sobre mi trabajo? Escríbeme y te responderé lo antes posible.",
     "locationLabel": "Ubicación",
     "location": "Meliana · Valencia, España",
     "form": {
@@ -302,7 +306,9 @@
       "sending": "Enviando…",
       "success": "¡Gracias por tu mensaje! Te responderé lo antes posible.",
       "error": "Ha ocurrido un error al enviar el mensaje. Puedes escribirme directamente a"
-    }
+    },
+    "infoTitle": "Datos de contacto",
+    "formTitle": "Envíame un mensaje"
   },
   "notFound": {
     "title": "Página no encontrada",
@@ -317,7 +323,7 @@
     "exit": "Salir del 3D",
     "loading": "Cargando visor 3D…",
     "overview": "Vista general",
-    "goTo": "Ir a la sección",
+    "goTo": "Ir a la página",
     "viewProject": "Ver proyecto",
     "nodesLabel": "Planetas del sistema",
     "unsupported": "Tu navegador no puede mostrar gráficos 3D (WebGL).",
@@ -353,7 +359,7 @@
     }
   },
   "footer": {
-    "builtWith": "Hecho con Angular y mucho café.",
+    "builtWith": "Diseñado y desarrollado con Angular.",
     "backToTop": "Volver arriba"
   },
   "a11y": {

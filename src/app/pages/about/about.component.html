@@ -1,0 +1,101 @@
+<div class="container page-section">
+  <header class="about-header" appReveal>
+    <div>
+      <p class="eyebrow">{{ t.hero.role }}</p>
+      <h1>{{ t.about.title }}</h1>
+    </div>
+    <div class="about-intro">
+      <p class="about-lead">{{ t.about.lead }}</p>
+      @for (paragraph of t.about.paragraphs; track $index) {
+        <p class="muted">{{ paragraph }}</p>
+      }
+      <div class="about-actions">
+        @for (cv of cvFiles; track cv.lang) {
+          <a class="btn btn-primary" [href]="cv.href" [attr.hreflang]="cv.lang" download>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 19h14" /></svg>
+            {{ t.hero.ctaCv }}@if (cvFiles.length > 1) { ({{ cv.label }})}
+          </a>
+        }
+        <a class="btn btn-secondary" routerLink="/contacto">{{ t.hero.ctaContact }}</a>
+      </div>
+    </div>
+  </header>
+
+  <section id="experiencia" class="about-row">
+    <h2 appReveal>{{ t.experience.title }}</h2>
+    <ol class="entries">
+      @for (job of t.experience.entries; track job.title) {
+        <li class="entry" appReveal>
+          <div class="entry-head">
+            <h3>{{ job.title }}</h3>
+            <span class="entry-period">{{ job.period }}</span>
+          </div>
+          <p class="entry-org">{{ job.org }} &middot; {{ job.location }}</p>
+          <ul class="bullets">
+            @for (point of job.highlights; track $index) {
+              <li>{{ point }}</li>
+            }
+          </ul>
+          @if (job.techs?.length) {
+            <ul class="tag-list entry-tags">
+              @for (tech of job.techs; track tech) {
+                <li class="tag"><app-tech-icon class="tag-icon" [name]="tech" />{{ tech }}</li>
+              }
+            </ul>
+          }
+        </li>
+      }
+    </ol>
+  </section>
+
+  <section id="formacion" class="about-row">
+    <h2 appReveal>{{ t.education.title }}</h2>
+    <ol class="entries">
+      @for (entry of t.education.entries; track entry.title) {
+        <li class="entry" appReveal>
+          <div class="entry-head">
+            <h3>{{ entry.title }}</h3>
+            <span class="entry-period">
+              @if (entry.current) {
+                <span class="badge">{{ t.education.currentLabel }}</span>
+              }
+              {{ entry.period }}
+            </span>
+          </div>
+          <p class="entry-org">{{ entry.org }} &middot; {{ entry.location }}</p>
+          @if (entry.highlights.length) {
+            <ul class="bullets">
+              @for (point of entry.highlights; track $index) {
+                <li>{{ point }}</li>
+              }
+            </ul>
+          }
+        </li>
+      }
+    </ol>
+  </section>
+
+  <section id="habilidades" class="about-row">
+    <h2 appReveal>{{ t.skills.title }}</h2>
+    <dl class="skill-list" appReveal>
+      @for (group of t.skills.groups; track $index) {
+        <div>
+          <dt>{{ group.title }}</dt>
+          <dd>{{ group.items.join(' · ') }}</dd>
+        </div>
+      }
+    </dl>
+  </section>
+
+  <section id="idiomas" class="about-row">
+    <h2 appReveal>{{ t.about.languagesTitle }}</h2>
+    <dl class="skill-list" appReveal>
+      @for (language of t.about.languages; track language.name) {
+        <div>
+          <dt>{{ language.name }}</dt>
+          <dd>{{ language.level }}@if (language.detail) { · {{ language.detail }}}</dd>
+        </div>
+      }
+    </dl>
+  </section>
+</div>

@@ -2,62 +2,82 @@
 
 <a class="skip-link" href="#contenido" (click)="skipToContent($event)">{{ t.nav.skipToContent }}</a>
 
-<nav class="nav" [attr.aria-label]="t.nav.mainNav">
-  <div class="nav-inner">
+<header class="nav">
+  <div class="container nav-inner">
     <a class="nav-brand" routerLink="/" (click)="closeMenu()">
-      <span class="brand-mark">IM</span>
-      <span class="brand-name">{{ profile.firstName }}</span>
+      <span class="brand-mark" aria-hidden="true">IM</span>
+      <span class="brand-name">{{ profile.firstName }} <span class="brand-surname">{{ profile.lastName }}</span></span>
     </a>
 
-    <div class="nav-links" id="nav-links" [class.open]="menuOpen">
-      @for (link of t.nav.links; track link.href) {
+    <nav class="nav-links" id="nav-links" [class.open]="menuOpen" [attr.aria-label]="t.nav.mainNav">
+      @for (link of t.nav.links; track link.path) {
         <a
-          routerLink="/"
-          [fragment]="link.href.slice(1)"
-          [class.active]="link.href === '#' + activeSection()"
-          [attr.aria-current]="link.href === '#' + activeSection() ? 'location' : null"
+          [routerLink]="link.path"
+          routerLinkActive="active"
+          ariaCurrentWhenActive="page"
+          [routerLinkActiveOptions]="{ exact: link.path === '/' }"
           (click)="closeMenu()"
         >{{ link.label }}</a>
       }
-    </div>
+      <a class="nav-cv-mobile btn btn-primary btn-sm" [href]="cv.href" [attr.hreflang]="cv.lang" download>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 19h14" /></svg>
+        {{ t.hero.ctaCv }}
+      </a>
+    </nav>
 
     <div class="nav-actions">
+      <a class="nav-cv btn btn-primary btn-sm" [href]="cv.href" [attr.hreflang]="cv.lang" download>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 19h14" /></svg>
+        {{ t.nav.cv }}
+      </a>
       <button
         #viewerButton
-        class="viewer-toggle"
+        class="icon-btn"
         type="button"
         (click)="openViewer()"
         [attr.aria-label]="t.viewer.open"
         [attr.title]="t.viewer.open"
       >
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M12 2.5 20 7v10l-8 4.5L4 17V7Zm0 9L4 7m8 4.5L20 7m-8 4.5V21.5" />
         </svg>
-        <span>3D</span>
       </button>
       <button
-        class="lang-toggle"
+        class="icon-btn"
         type="button"
-        (click)="i18n.toggle()"
-        [attr.aria-label]="t.nav.switchLang"
+        (click)="theme.toggle()"
+        [attr.aria-label]="theme.theme() === 'dark' ? t.nav.themeLight : t.nav.themeDark"
+        [attr.title]="theme.theme() === 'dark' ? t.nav.themeLight : t.nav.themeDark"
       >
-        <span [class.on]="i18n.lang() === 'es'">ES</span>
-        <span class="lang-sep">/</span>
-        <span [class.on]="i18n.lang() === 'en'">EN</span>
+        @if (theme.theme() === 'dark') {
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+          </svg>
+        } @else {
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z" /></svg>
+        }
+      </button>
+      <button class="lang-toggle" type="button" (click)="i18n.toggle()" [attr.aria-label]="t.nav.switchLang">
+        {{ i18n.lang() === 'es' ? 'EN' : 'ES' }}
       </button>
       <button
-        class="menu-toggle"
+        class="icon-btn menu-toggle"
         type="button"
         (click)="toggleMenu()"
         aria-controls="nav-links"
         [attr.aria-expanded]="menuOpen"
         [attr.aria-label]="menuOpen ? t.nav.closeMenu : t.nav.openMenu"
       >
-        <span></span><span></span><span></span>
+        @if (menuOpen) {
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
+        } @else {
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+        }
       </button>
     </div>
   </div>
-</nav>
+</header>
 
 @if (viewerOpen()) {
   @defer (on immediate) {
@@ -67,13 +87,21 @@
   }
 }
 
-<div class="page">
-  <main id="contenido" tabindex="-1">
-    <router-outlet />
-  </main>
+<main id="contenido" class="main" tabindex="-1">
+  <router-outlet />
+</main>
 
-  <footer class="footer">
-    <p>&copy; {{ currentYear }} {{ profile.firstName }} {{ profile.lastName }} &middot; {{ t.footer.builtWith }}</p>
+<footer class="footer">
+  <div class="container footer-inner">
+    <div>
+      <p class="footer-name">{{ profile.firstName }} {{ profile.lastName }}</p>
+      <p class="footer-meta">&copy; {{ currentYear }} &middot; {{ t.footer.builtWith }}</p>
+    </div>
+    <nav class="footer-links" [attr.aria-label]="t.nav.mainNav">
+      @for (link of t.nav.links; track link.path) {
+        <a [routerLink]="link.path">{{ link.label }}</a>
+      }
+    </nav>
     <ul class="social-icons">
       @for (social of socialLinks; track social.label) {
         <li>
@@ -88,6 +116,5 @@
         </li>
       }
     </ul>
-    <a class="back-to-top" href="#inicio" (click)="backToTop($event)">{{ t.footer.backToTop }} <span aria-hidden="true">&uarr;</span></a>
-  </footer>
-</div>
+  </div>
+</footer>

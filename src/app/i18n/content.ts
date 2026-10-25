@@ -5,7 +5,7 @@ export type Localized<T> = Record<Lang, T>;
 
 export interface NavLink {
   label: string;
-  href: string;
+  path: string;
 }
 
 export interface Highlight {
@@ -36,7 +36,6 @@ export interface ViewerNode {
 
 export interface SkillGroup {
   title: string;
-  icon: string;
   items: string[];
 }
 
@@ -50,6 +49,9 @@ export interface Content {
     closeMenu: string;
     switchLang: string;
     skipToContent: string;
+    cv: string;
+    themeLight: string;
+    themeDark: string;
   };
   hero: {
     greeting: string;
@@ -60,9 +62,22 @@ export interface Content {
     cvMenu: string;
     ctaContact: string;
     explore3d: string;
+    location: string;
+  };
+  home: {
+    featuredTitle: string;
+    featuredSubtitle: string;
+    skillsTitle: string;
+    skillsSubtitle: string;
+    allSkills: string;
+    ctaTitle: string;
+    ctaText: string;
+    ctaButton: string;
+    aboutLink: string;
   };
   about: {
     title: string;
+    lead: string;
     paragraphs: string[];
     highlights: Highlight[];
     languagesTitle: string;
@@ -89,6 +104,11 @@ export interface Content {
       close: string;
       projectLinks: string;
       next: string;
+      factsLabel: string;
+      role: string;
+      period: string;
+      context: string;
+      stack: string;
     };
   };
   notFound: { title: string; text: string; back: string };
@@ -106,6 +126,8 @@ export interface Content {
     text: string;
     locationLabel: string;
     location: string;
+    infoTitle: string;
+    formTitle: string;
     form: {
       name: string;
       email: string;

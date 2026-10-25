@@ -19,6 +19,7 @@ export interface ProjectData {
   // Nombre breve para espacios reducidos, como las etiquetas del visor 3D.
   shortTitle: Localized<string>;
   context: Localized<string>;
+  role: Localized<string>;
   period: Localized<string>;
   summary: Localized<string>;
   description: Localized<string[]>;

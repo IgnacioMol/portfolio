@@ -2,20 +2,21 @@ import { Component, OnDestroy, effect, inject } from '@angular/core';
 import { PROJECTS } from '../../data/projects';
 import { I18nService } from '../../i18n/i18n.service';
 import { ProjectCardComponent } from '../../shared/project-card/project-card.component';
+import { RevealDirective } from '../../shared/reveal.directive';
 
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [ProjectCardComponent],
+  imports: [ProjectCardComponent, RevealDirective],
   template: `
-    <section class="page-section">
-      <header class="page-header">
+    <section class="container page-section">
+      <header class="page-header" appReveal>
         <h1>{{ t.projects.title }}</h1>
-        <p class="section-subtitle">{{ t.projects.subtitle }}</p>
+        <p class="lead">{{ t.projects.subtitle }}</p>
       </header>
-      <div class="cards projects">
+      <div class="cards">
         @for (project of projects; track project.slug) {
-          <app-project-card [project]="project" />
+          <app-project-card [project]="project" appReveal />
         }
       </div>
     </section>

@@ -6,35 +6,30 @@
   "nav": {
     "links": [
       {
-        "label": "About",
-        "href": "#sobre-mi"
+        "label": "Home",
+        "path": "/"
       },
       {
-        "label": "Experience",
-        "href": "#experiencia"
+        "label": "About",
+        "path": "/sobre-mi"
       },
       {
         "label": "Projects",
-        "href": "#proyectos"
-      },
-      {
-        "label": "Skills",
-        "href": "#habilidades"
-      },
-      {
-        "label": "Education",
-        "href": "#formacion"
+        "path": "/proyectos"
       },
       {
         "label": "Contact",
-        "href": "#contacto"
+        "path": "/contacto"
       }
     ],
     "mainNav": "Main navigation",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "switchLang": "Switch language to Spanish",
-    "skipToContent": "Skip to main content"
+    "skipToContent": "Skip to main content",
+    "cv": "CV",
+    "themeLight": "Switch to light theme",
+    "themeDark": "Switch to dark theme"
   },
   "hero": {
     "greeting": "Hi! I'm",
@@ -43,8 +38,20 @@
     "ctaProjects": "View projects",
     "ctaCv": "Download CV",
     "cvMenu": "Choose the CV language",
-    "ctaContact": "Contact",
-    "explore3d": "Explore my portfolio in 3D"
+    "ctaContact": "Get in touch",
+    "explore3d": "Explore my portfolio in 3D",
+    "location": "Meliana · Valencia, Spain"
+  },
+  "home": {
+    "featuredTitle": "Featured projects",
+    "featuredSubtitle": "A selection of projects I have worked on.",
+    "skillsTitle": "Core skills",
+    "skillsSubtitle": "The technologies I use most day to day.",
+    "allSkills": "See all skills",
+    "ctaTitle": "Let's work together",
+    "ctaText": "I'm open to new opportunities and collaborations. If you have a project or an offer, drop me a line and I'll get back to you as soon as possible.",
+    "ctaButton": "Get in touch",
+    "aboutLink": "See my background"
   },
   "about": {
     "title": "About me",
@@ -82,7 +89,8 @@
         "level": "B2",
         "detail": "Cambridge CAE"
       }
-    ]
+    ],
+    "lead": "Multimedia Engineer specialised in frontend development, with experience in backend, mobile apps, video games and virtual reality."
   },
   "experience": {
     "title": "Experience",
@@ -140,7 +148,12 @@
       "enlarge": "Enlarge image:",
       "close": "Close",
       "projectLinks": "Project links",
-      "next": "Next project"
+      "next": "Next project",
+      "factsLabel": "Project facts",
+      "role": "Role",
+      "period": "Period",
+      "context": "Context",
+      "stack": "Stack"
     }
   },
   "skills": {
@@ -165,7 +178,6 @@
     "groups": [
       {
         "title": "Frontend",
-        "icon": "🖥️",
         "items": [
           "HTML",
           "CSS",
@@ -181,7 +193,6 @@
       },
       {
         "title": "Backend & Databases",
-        "icon": "🗄️",
         "items": [
           "PHP",
           "Laravel",
@@ -195,7 +206,6 @@
       },
       {
         "title": "Mobile apps",
-        "icon": "📱",
         "items": [
           "Android Studio",
           "Kotlin",
@@ -204,7 +214,6 @@
       },
       {
         "title": "UX/UI & Web development",
-        "icon": "🎨",
         "items": [
           "Figma",
           "WordPress",
@@ -214,7 +223,6 @@
       },
       {
         "title": "Games & Virtual reality",
-        "icon": "🎮",
         "items": [
           "Unity",
           "C#",
@@ -225,7 +233,6 @@
       },
       {
         "title": "Graphics & Procedural generation",
-        "icon": "✨",
         "items": [
           "p5.js",
           "GLSL",
@@ -235,7 +242,6 @@
       },
       {
         "title": "Other languages",
-        "icon": "⌨️",
         "items": [
           "C++",
           "Python"
@@ -243,7 +249,6 @@
       },
       {
         "title": "Tools & Version control",
-        "icon": "🛠️",
         "items": [
           "Git",
           "GitHub",
@@ -253,7 +258,6 @@
       },
       {
         "title": "Project management",
-        "icon": "📋",
         "items": [
           "Jira",
           "Microsoft Project",
@@ -288,8 +292,8 @@
     ]
   },
   "contact": {
-    "title": "Let's talk",
-    "text": "If you have a project in mind, a job opportunity or just want to know more about my work, drop me a line and I'll get back to you as soon as possible.",
+    "title": "Contact",
+    "text": "Have a project in mind, a job opportunity or want to know more about my work? Drop me a line and I'll get back to you as soon as possible.",
     "locationLabel": "Location",
     "location": "Meliana · Valencia, Spain",
     "form": {
@@ -302,7 +306,9 @@
       "sending": "Sending…",
       "success": "Thanks for your message! I'll get back to you soon.",
       "error": "Something went wrong while sending the message. You can email me directly at"
-    }
+    },
+    "infoTitle": "Contact details",
+    "formTitle": "Send me a message"
   },
   "notFound": {
     "title": "Page not found",
@@ -317,7 +323,7 @@
     "exit": "Exit 3D",
     "loading": "Loading 3D viewer…",
     "overview": "Overview",
-    "goTo": "Go to section",
+    "goTo": "Go to page",
     "viewProject": "View project",
     "nodesLabel": "Planets in the system",
     "unsupported": "Your browser cannot display 3D graphics (WebGL).",
@@ -353,7 +359,7 @@
     }
   },
   "footer": {
-    "builtWith": "Built with Angular and plenty of coffee.",
+    "builtWith": "Designed and built with Angular.",
     "backToTop": "Back to top"
   },
   "a11y": {

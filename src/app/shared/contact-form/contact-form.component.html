@@ -1,0 +1,38 @@
+<form class="contact-form" #contactFormRef="ngForm" (ngSubmit)="onSubmit()">
+  <div class="form-row">
+    <label>
+      {{ t.contact.form.name }}
+      <input type="text" name="name" required [(ngModel)]="contactForm.name" autocomplete="name" />
+    </label>
+    <label>
+      {{ t.contact.form.email }}
+      <input type="email" name="email" required [(ngModel)]="contactForm.email" autocomplete="email" />
+    </label>
+  </div>
+  <label>
+    <span>{{ t.contact.form.subject }} <small class="optional">{{ t.contact.form.optional }}</small></span>
+    <input type="text" name="subject" maxlength="120" [(ngModel)]="contactForm.subject" />
+  </label>
+  <label class="contact-trap" aria-hidden="true">
+    Website
+    <input type="text" name="website" tabindex="-1" autocomplete="off" [(ngModel)]="contactForm.website" />
+  </label>
+  <label>
+    {{ t.contact.form.message }}
+    <textarea name="message" rows="6" required [(ngModel)]="contactForm.message"></textarea>
+  </label>
+
+  <button class="btn btn-primary" type="submit" [disabled]="contactFormRef.invalid || submitting">
+    {{ submitting ? t.contact.form.sending : t.contact.form.submit }}
+  </button>
+
+  @if (submitStatus === 'success') {
+    <p class="form-status form-status-success" role="status">{{ t.contact.form.success }}</p>
+  }
+  @if (submitStatus === 'error') {
+    <p class="form-status form-status-error" role="status">
+      {{ t.contact.form.error }}
+      <a [href]="'mailto:' + profile.email">{{ profile.email }}</a>.
+    </p>
+  }
+</form>

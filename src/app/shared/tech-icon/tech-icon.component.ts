@@ -1,9 +1,11 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
+import { ThemeService } from '../theme/theme.service';
 import { TECH_ICONS } from './tech-icons';
 
-// Por debajo de esta luminancia el color de marca no se distingue sobre el
-// fondo oscuro, así que se usa el color del texto.
-const MIN_LUMINANCE = 0.12;
+// Fuera de estos márgenes el color de marca no se distingue sobre el fondo
+// (casi negro en tema oscuro, casi blanco en tema claro): se usa el del texto.
+const MIN_LUMINANCE_DARK = 0.12;
+const MAX_LUMINANCE_LIGHT = 0.75;
 
 function luminance(hex: string): number {
   const [r, g, b] = [0, 2, 4].map((i) => {
@@ -39,6 +41,7 @@ function luminance(hex: string): number {
   `,
 })
 export class TechIconComponent {
+  private readonly theme = inject(ThemeService);
   readonly name = input.required<string>();
 
   readonly icon = computed(() => TECH_ICONS[this.name()]);
@@ -47,7 +50,10 @@ export class TechIconComponent {
     if (!icon) {
       return null;
     }
-    return luminance(icon.hex) < MIN_LUMINANCE ? 'var(--text)' : '#' + icon.hex;
+    const value = luminance(icon.hex);
+    const unreadable =
+      this.theme.theme() === 'dark' ? value < MIN_LUMINANCE_DARK : value > MAX_LUMINANCE_LIGHT;
+    return unreadable ? 'var(--text)' : '#' + icon.hex;
   });
 }
 

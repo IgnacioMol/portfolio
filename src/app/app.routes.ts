@@ -4,6 +4,10 @@ import { HomeComponent } from './pages/home/home.component';
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   {
+    path: 'sobre-mi',
+    loadComponent: () => import('./pages/about/about.component').then((m) => m.AboutComponent),
+  },
+  {
     path: 'proyectos',
     loadComponent: () => import('./pages/projects/projects.component').then((m) => m.ProjectsComponent),
   },
@@ -11,6 +15,10 @@ export const routes: Routes = [
     path: 'proyectos/:slug',
     loadComponent: () =>
       import('./pages/project-detail/project-detail.component').then((m) => m.ProjectDetailComponent),
+  },
+  {
+    path: 'contacto',
+    loadComponent: () => import('./pages/contact/contact.component').then((m) => m.ContactComponent),
   },
   {
     path: '**',
