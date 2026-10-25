@@ -5,7 +5,13 @@
 <header class="nav">
   <div class="container nav-inner">
     <a class="nav-brand" routerLink="/" (click)="closeMenu()">
-      <img class="brand-mark" src="logo.svg" alt="" width="32" height="32" />
+      <img
+        class="brand-mark"
+        [src]="theme.theme() === 'dark' ? 'logo-dark.svg' : 'logo-light.svg'"
+        alt=""
+        width="44"
+        height="38"
+      />
       <span class="brand-name">{{ profile.firstName }} <span class="brand-surname">{{ profile.lastName }}</span></span>
     </a>
 

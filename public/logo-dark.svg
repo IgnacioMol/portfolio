@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="330 70 580 500" role="img" aria-label="IMG">
+  <title>Ignacio Molina Gutierrez</title>
+  <style>.ink { fill: #ffffff; }</style>
+  <defs>
+    <linearGradient id="ring" x1="380" y1="0" x2="870" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22b8f0"/>
+      <stop offset="0.45" stop-color="#2563eb"/>
+      <stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="accentM" x1="440" y1="240" x2="560" y2="370" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2fd4f5"/>
+      <stop offset="1" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="accentM2" x1="622" y1="300" x2="665" y2="425" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8b5cf6"/>
+      <stop offset="1" stop-color="#4f46e5"/>
+    </linearGradient>
+    <linearGradient id="accentG" x1="742" y1="0" x2="860" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22b8f0"/>
+      <stop offset="0.5" stop-color="#2563eb"/>
+      <stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Anillo partido y "circuitos" -->
+  <g fill="none" stroke="url(#ring)" stroke-width="10.5" stroke-linecap="round">
+    <path d="M452 186 A230 230 0 0 1 798 165"/>
+    <path d="M806 178 A230 230 0 0 1 833 218"/>
+    <path d="M800 458 A230 230 0 0 1 455 478"/>
+    <path d="M446 466 A230 230 0 0 1 422 430"/>
+    <path d="M368 181 H425 L478 236" stroke-width="5"/>
+    <path d="M869 455 H829 L801 429" stroke-width="5"/>
+  </g>
+  <g fill="none" stroke-width="5">
+    <circle cx="357" cy="181" r="10.5" stroke="#22b8f0"/>
+    <circle cx="880" cy="455" r="10.5" stroke="#7c3aed"/>
+  </g>
+
+  <!-- I -->
+  <path class="ink" d="M375 256 L418 222 V410 H375 Z"/>
+  <!-- M: trazos laterales y diagonales, con destellos de color -->
+  <path class="ink" d="M440 410 V235 L555 322 L665 232 V383 L622 424 V302 L555 368 L482 313 V410 Z"/>
+  <path fill="url(#accentM)" d="M440 235 L555 322 L555 368 L482 313 V300 Z" opacity="0.95"/>
+  <path fill="url(#accentM2)" d="M622 302 L665 270 V383 L622 424 Z"/>
+  <!-- G -->
+  <path class="ink" d="M745 235 H890 L853 277 H750 C727 277 712 297 712 322 C712 348 727 368 750 368 H818 L833 353 V345 H855 V312 H880 V377 L836 410 H750 C703 410 672 372 672 322 C672 272 703 235 745 235 Z"/>
+  <path fill="url(#accentG)" d="M742 345 L775 312 H855 V345 Z"/>
+</svg>

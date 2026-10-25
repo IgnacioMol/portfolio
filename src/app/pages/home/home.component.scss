@@ -15,12 +15,17 @@
 .hero::before {
   content: '';
   position: absolute;
-  inset: -10% -20% auto;
+  top: -4rem;
+  left: 50%;
   z-index: -1;
-  height: 120%;
+  // Todo el ancho de la ventana: si la caja acabase antes, se vería un corte.
+  width: 100vw;
+  height: calc(100% + 4rem);
+  transform: translateX(-50%);
+  // Elipses con tamaño fijo que se desvanecen por completo dentro de la caja.
   background:
-    radial-gradient(ellipse 50% 60% at 75% 40%, var(--accent-soft), transparent 70%),
-    radial-gradient(ellipse 40% 50% at 15% 30%, var(--accent-soft), transparent 70%);
+    radial-gradient(620px 440px at 68% 42%, var(--accent-soft), transparent 70%),
+    radial-gradient(520px 380px at 25% 30%, var(--accent-soft), transparent 70%);
   pointer-events: none;
 }
 
