@@ -6,7 +6,9 @@ import en from './en.json';
 import es from './es.json';
 
 const TRANSLATIONS: Record<Lang, Content> = { es, en };
-const STORAGE_KEY = 'lang';
+// Solo se guarda la elección manual. La clave cambió de 'lang' a 'lang-choice' para
+// ignorar los valores que se guardaban automáticamente en versiones anteriores.
+const STORAGE_KEY = 'lang-choice';
 
 @Injectable({ providedIn: 'root' })
 export class I18nService {
@@ -29,14 +31,6 @@ export class I18nService {
       this.document.documentElement.lang = lang;
       this.title.setTitle(pageTitle ? `${pageTitle} · Ignacio Molina Gutierrez` : content.meta.title);
       this.meta.updateTag({ name: 'description', content: content.meta.description });
-      if (!this.isBrowser) {
-        return;
-      }
-      try {
-        localStorage.setItem(STORAGE_KEY, lang);
-      } catch {
-        // Sin acceso a localStorage (modo privado, etc.): no se recuerda el idioma.
-      }
     });
   }
 
@@ -44,8 +38,14 @@ export class I18nService {
     return value[this.lang()];
   }
 
+  // Elegido a mano: se recuerda. Si no, se sigue el idioma del navegador.
   toggle(): void {
     this.lang.update((lang) => (lang === 'es' ? 'en' : 'es'));
+    try {
+      localStorage.setItem(STORAGE_KEY, this.lang());
+    } catch {
+      // Sin acceso a localStorage (modo privado, etc.): no se recuerda el idioma.
+    }
   }
 
   private initialLang(): Lang {
@@ -62,6 +62,7 @@ export class I18nService {
     } catch {
       // Ignorado: se usa el idioma del navegador.
     }
-    return navigator.language?.toLowerCase().startsWith('es') === false ? 'en' : 'es';
+    // Español si el navegador está en español (es, es-ES, es-MX...); si no, inglés.
+    return (navigator.language ?? '').toLowerCase().startsWith('es') ? 'es' : 'en';
   }
 }

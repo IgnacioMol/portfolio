@@ -11,7 +11,14 @@
       }
       <div class="about-actions">
         @for (cv of cvFiles; track cv.lang) {
-          <a class="btn btn-primary" [href]="cv.href" [attr.hreflang]="cv.lang" download>
+          <a
+            class="btn"
+            [class.btn-primary]="cv.lang === i18n.lang()"
+            [class.btn-secondary]="cv.lang !== i18n.lang()"
+            [href]="cv.href"
+            [attr.hreflang]="cv.lang"
+            download
+          >
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 19h14" /></svg>
             {{ t.hero.ctaCv }}@if (cvFiles.length > 1) { ({{ cv.label }})}
           </a>

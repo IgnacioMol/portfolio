@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { CV_FILES, PROFILE, SOCIAL_LINKS } from '../../data/profile';
+import { PROFILE, SOCIAL_LINKS, cvFor } from '../../data/profile';
 import { PROJECTS } from '../../data/projects';
 import { I18nService } from '../../i18n/i18n.service';
 import { ProjectRowComponent } from '../../shared/project-row/project-row.component';
@@ -19,7 +19,10 @@ export class HomeComponent {
   readonly i18n = inject(I18nService);
 
   readonly profile = PROFILE;
-  readonly cv = CV_FILES[0];
+  // CV en el idioma activo de la web.
+  get cv() {
+    return cvFor(this.i18n.lang());
+  }
   readonly socialLinks = SOCIAL_LINKS;
   readonly featuredProjects = PROJECTS.filter((project) => project.featured);
 

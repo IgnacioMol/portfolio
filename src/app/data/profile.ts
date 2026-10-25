@@ -27,11 +27,16 @@ export const PROFILE = {
   linkedinUrl: 'https://www.linkedin.com/in/igmogu',
 };
 
-// Los PDF se sirven desde public/cv/. Con un único fichero el botón descarga
-// directamente; con varios, muestra un menú para elegir el idioma.
+// Los PDF se sirven desde public/cv/.
 export const CV_FILES: CvFile[] = [
   { lang: 'es', label: 'Español', href: 'cv/CV_Ignacio_Molina_Gutierrez_ES.pdf' },
+  { lang: 'en', label: 'English', href: 'cv/CV_Ignacio_Molina_Gutierrez_EN.pdf' },
 ];
+
+// CV en el idioma que está viendo el visitante (o el primero, si no existe).
+export function cvFor(lang: string): CvFile {
+  return CV_FILES.find((cv) => cv.lang === lang) ?? CV_FILES[0];
+}
 
 export const SOCIAL_LINKS: SocialLink[] = [
   { label: 'GitHub', href: PROFILE.githubUrl, path: siGithub.path, external: true },

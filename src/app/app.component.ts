@@ -2,7 +2,7 @@ import { DOCUMENT, ViewportScroller } from '@angular/common';
 import { Component, HostListener, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationStart, Router, RouterLink, RouterLinkActive, RouterOutlet, Scroll } from '@angular/router';
-import { CV_FILES, PROFILE, SOCIAL_LINKS } from './data/profile';
+import { PROFILE, SOCIAL_LINKS, cvFor } from './data/profile';
 import { I18nService } from './i18n/i18n.service';
 import { ParticleBackgroundComponent } from './shared/particle-background/particle-background.component';
 import { ThemeService } from './shared/theme/theme.service';
@@ -23,8 +23,10 @@ export class AppComponent {
   title = 'portfolio';
   readonly profile = PROFILE;
   readonly socialLinks = SOCIAL_LINKS;
-  // El CV principal; si hubiera más idiomas, la página "Sobre mí" los ofrece.
-  readonly cv = CV_FILES[0];
+  // CV en el idioma activo de la web.
+  get cv() {
+    return cvFor(this.i18n.lang());
+  }
   readonly currentYear = new Date().getFullYear();
 
   menuOpen = false;
