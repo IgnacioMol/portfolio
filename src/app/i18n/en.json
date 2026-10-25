@@ -318,23 +318,22 @@
   "viewer": {
     "open": "Open 3D viewer",
     "title": "Portfolio in 3D",
-    "hint": "Drag to orbit · scroll to zoom · click a planet to explore it",
-    "hintTouch": "Drag to orbit · pinch to zoom · tap a planet to explore it",
+    "hint": "Drag to orbit · scroll to zoom · click a node to explore it",
+    "hintTouch": "Drag to orbit · pinch to zoom · tap a node to explore it",
     "exit": "Exit 3D",
     "loading": "Loading 3D viewer…",
-    "overview": "Overview",
     "goTo": "Go to page",
     "viewProject": "View project",
-    "nodesLabel": "Planets in the system",
+    "nodesLabel": "Nodes you can explore",
     "unsupported": "Your browser cannot display 3D graphics (WebGL).",
     "nodes": {
       "inicio": {
         "label": "Ignacio",
-        "description": "The star of this system. Multimedia Engineer and frontend web developer: everything else orbits around me."
+        "description": "The centre of the map. Multimedia Engineer and frontend web developer: explore each branch to get to know my profile."
       },
       "sobre-mi": {
         "label": "About me",
-        "description": "Who I am, what I love doing and my Erasmus year in the Czech Republic."
+        "description": "Who I am, my professional experience, my education and my skills."
       },
       "experiencia": {
         "label": "Experience",
@@ -342,11 +341,11 @@
       },
       "proyectos": {
         "label": "Projects",
-        "description": "Its moons are my projects: the orbital pattern generator from my degree project and the FSUPV web platform."
+        "description": "My projects: the orbital pattern generator from my degree project and the FSUPV team web platform."
       },
       "habilidades": {
         "label": "Skills",
-        "description": "Frontend, backend, mobile, games, virtual reality and graphics: the technologies I work with."
+        "description": "Frontend, backend, mobile, games, virtual reality and graphics. These are the technologies I use most."
       },
       "formacion": {
         "label": "Education",
@@ -356,7 +355,10 @@
         "label": "Contact",
         "description": "Got a project or an offer? Drop me a line and let's talk."
       }
-    }
+    },
+    "back": "Back",
+    "explore": "Explore",
+    "pathLabel": "Path on the map"
   },
   "footer": {
     "builtWith": "Designed and built with Angular.",

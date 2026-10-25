@@ -75,3 +75,22 @@ export const TECH_ICONS: Record<string, TechIcon> = {
   Netlify: siNetlify,
   Jira: siJira,
 };
+
+// Fuera de estos márgenes el color de marca no se distingue sobre el fondo
+// (casi negro en tema oscuro, casi blanco en tema claro): se usa el del texto.
+const MIN_LUMINANCE_DARK = 0.12;
+const MAX_LUMINANCE_LIGHT = 0.75;
+
+function luminance(hex: string): number {
+  const [r, g, b] = [0, 2, 4].map((i) => {
+    const c = parseInt(hex.slice(i, i + 2), 16) / 255;
+    return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+export function techIconColor(hex: string, theme: 'light' | 'dark'): string {
+  const value = luminance(hex);
+  const unreadable = theme === 'dark' ? value < MIN_LUMINANCE_DARK : value > MAX_LUMINANCE_LIGHT;
+  return unreadable ? 'var(--text)' : '#' + hex;
+}

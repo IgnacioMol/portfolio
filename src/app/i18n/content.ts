@@ -147,10 +147,12 @@ export interface Content {
     hintTouch: string;
     exit: string;
     loading: string;
-    overview: string;
     goTo: string;
     viewProject: string;
     nodesLabel: string;
+    back: string;
+    explore: string;
+    pathLabel: string;
     unsupported: string;
     nodes: Record<'inicio' | 'sobre-mi' | 'experiencia' | 'proyectos' | 'habilidades' | 'formacion' | 'contacto', ViewerNode>;
   };

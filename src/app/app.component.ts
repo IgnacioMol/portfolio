@@ -5,15 +5,15 @@ import { NavigationStart, Router, RouterLink, RouterLinkActive, RouterOutlet, Sc
 import { CV_FILES, PROFILE, SOCIAL_LINKS } from './data/profile';
 import { I18nService } from './i18n/i18n.service';
 import { ParticleBackgroundComponent } from './shared/particle-background/particle-background.component';
-import { SolarViewerComponent } from './shared/solar-viewer/solar-viewer.component';
-import { ViewerNavigation } from './shared/solar-viewer/viewer-navigation';
-import { ViewerService } from './shared/solar-viewer/viewer.service';
+import { PortfolioMapComponent } from './shared/portfolio-map/portfolio-map.component';
+import { ViewerNavigation } from './shared/portfolio-map/viewer-navigation';
+import { ViewerService } from './shared/portfolio-map/viewer.service';
 import { ThemeService } from './shared/theme/theme.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, ParticleBackgroundComponent, SolarViewerComponent],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, ParticleBackgroundComponent, PortfolioMapComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

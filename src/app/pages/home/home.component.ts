@@ -4,7 +4,7 @@ import { CV_FILES, PROFILE, SOCIAL_LINKS } from '../../data/profile';
 import { PROJECTS } from '../../data/projects';
 import { I18nService } from '../../i18n/i18n.service';
 import { RevealDirective } from '../../shared/reveal.directive';
-import { ViewerService } from '../../shared/solar-viewer/viewer.service';
+import { ViewerService } from '../../shared/portfolio-map/viewer.service';
 import { TechIconComponent } from '../../shared/tech-icon/tech-icon.component';
 
 @Component({

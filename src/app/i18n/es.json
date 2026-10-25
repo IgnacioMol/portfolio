@@ -318,23 +318,22 @@
   "viewer": {
     "open": "Abrir visor 3D",
     "title": "Portfolio en 3D",
-    "hint": "Arrastra para orbitar · rueda para acercar · haz clic en un planeta para explorarlo",
-    "hintTouch": "Arrastra para orbitar · pellizca para acercar · toca un planeta para explorarlo",
+    "hint": "Arrastra para orbitar · rueda para acercar · haz clic en un nodo para explorarlo",
+    "hintTouch": "Arrastra para orbitar · pellizca para acercar · toca un nodo para explorarlo",
     "exit": "Salir del 3D",
     "loading": "Cargando visor 3D…",
-    "overview": "Vista general",
     "goTo": "Ir a la página",
     "viewProject": "Ver proyecto",
-    "nodesLabel": "Planetas del sistema",
+    "nodesLabel": "Nodos que puedes explorar",
     "unsupported": "Tu navegador no puede mostrar gráficos 3D (WebGL).",
     "nodes": {
       "inicio": {
         "label": "Ignacio",
-        "description": "La estrella de este sistema. Ingeniero Multimedia y desarrollador web frontend: todo lo demás gira a mi alrededor."
+        "description": "El centro del mapa. Ingeniero Multimedia y desarrollador web frontend: explora cada rama para conocer mi perfil."
       },
       "sobre-mi": {
         "label": "Sobre mí",
-        "description": "Quién soy, qué me apasiona y mi experiencia Erasmus en la República Checa."
+        "description": "Quién soy, mi experiencia profesional, mi formación y mis habilidades."
       },
       "experiencia": {
         "label": "Experiencia",
@@ -342,11 +341,11 @@
       },
       "proyectos": {
         "label": "Proyectos",
-        "description": "Sus lunas son mis proyectos: el generador de patrones orbitales de mi TFG y la plataforma web de FSUPV."
+        "description": "Mis proyectos: el generador de patrones orbitales de mi TFG y la plataforma web del equipo FSUPV."
       },
       "habilidades": {
         "label": "Habilidades",
-        "description": "Frontend, backend, móvil, videojuegos, realidad virtual y gráficos: las tecnologías con las que trabajo."
+        "description": "Frontend, backend, móvil, videojuegos, realidad virtual y gráficos. Aquí tienes las tecnologías que más uso."
       },
       "formacion": {
         "label": "Formación",
@@ -356,7 +355,10 @@
         "label": "Contacto",
         "description": "¿Tienes un proyecto o una oferta? Escríbeme y hablamos."
       }
-    }
+    },
+    "back": "Atrás",
+    "explore": "Explorar",
+    "pathLabel": "Ruta en el mapa"
   },
   "footer": {
     "builtWith": "Diseñado y desarrollado con Angular.",

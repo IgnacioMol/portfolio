@@ -81,7 +81,7 @@
 
 @if (viewerOpen()) {
   @defer (on immediate) {
-    <app-solar-viewer (closed)="closeViewer()" (navigate)="navigateFromViewer($event)" />
+    <app-portfolio-map (closed)="closeViewer()" (navigate)="navigateFromViewer($event)" />
   } @loading (minimum 300ms) {
     <div class="viewer-loading" role="status">{{ t.viewer.loading }}</div>
   }
