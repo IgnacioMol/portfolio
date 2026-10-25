@@ -29,6 +29,11 @@ export interface TimelineEntry {
   techs?: string[];
 }
 
+export interface ViewerNode {
+  label: string;
+  description: string;
+}
+
 export interface SkillGroup {
   title: string;
   icon: string;
@@ -109,6 +114,20 @@ export interface Content {
       success: string;
       error: string;
     };
+  };
+  viewer: {
+    open: string;
+    title: string;
+    hint: string;
+    hintTouch: string;
+    exit: string;
+    loading: string;
+    overview: string;
+    goTo: string;
+    viewProject: string;
+    nodesLabel: string;
+    unsupported: string;
+    nodes: Record<'inicio' | 'sobre-mi' | 'experiencia' | 'proyectos' | 'habilidades' | 'formacion' | 'contacto', ViewerNode>;
   };
   footer: { builtWith: string; backToTop: string };
   a11y: { opensNewTab: string; emailLabel: string };

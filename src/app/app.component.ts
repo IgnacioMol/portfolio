@@ -1,5 +1,5 @@
 import { DOCUMENT, ViewportScroller } from '@angular/common';
-import { Component, HostListener, computed, inject } from '@angular/core';
+import { Component, ElementRef, HostListener, computed, inject, signal, viewChild } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { filter, map } from 'rxjs';
@@ -7,11 +7,13 @@ import { PROFILE, SOCIAL_LINKS } from './data/profile';
 import { I18nService } from './i18n/i18n.service';
 import { ActiveSectionService } from './shared/active-section.service';
 import { ParticleBackgroundComponent } from './shared/particle-background/particle-background.component';
+import { SolarViewerComponent } from './shared/solar-viewer/solar-viewer.component';
+import { ViewerNavigation } from './shared/solar-viewer/viewer-navigation';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, ParticleBackgroundComponent],
+  imports: [RouterOutlet, RouterLink, ParticleBackgroundComponent, SolarViewerComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -27,6 +29,8 @@ export class AppComponent {
   readonly currentYear = new Date().getFullYear();
 
   menuOpen = false;
+  readonly viewerOpen = signal(false);
+  private readonly viewerButton = viewChild.required<ElementRef<HTMLButtonElement>>('viewerButton');
 
   private readonly url = toSignal(
     this.router.events.pipe(
@@ -70,6 +74,21 @@ export class AppComponent {
     event.preventDefault();
     this.document.defaultView?.scrollTo({ top: 0 });
     this.document.querySelector<HTMLElement>('.nav-brand')?.focus({ preventScroll: true });
+  }
+
+  openViewer(): void {
+    this.menuOpen = false;
+    this.viewerOpen.set(true);
+  }
+
+  closeViewer(): void {
+    this.viewerOpen.set(false);
+    this.viewerButton().nativeElement.focus();
+  }
+
+  navigateFromViewer({ commands, fragment }: ViewerNavigation): void {
+    this.viewerOpen.set(false);
+    this.router.navigate(commands, { fragment });
   }
 
   @HostListener('document:keydown.escape')

@@ -97,6 +97,46 @@ main:focus {
   gap: 0.5rem;
 }
 
+.viewer-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.viewer-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.viewer-toggle svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linejoin: round;
+}
+
+.viewer-loading {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  background: #05070d;
+  color: var(--text-muted);
+}
+
 .lang-toggle {
   display: flex;
   align-items: center;

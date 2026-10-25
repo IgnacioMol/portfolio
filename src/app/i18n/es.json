@@ -306,6 +306,49 @@
     "text": "La página que buscas no existe o ha cambiado de dirección.",
     "back": "Volver al inicio"
   },
+  "viewer": {
+    "open": "Abrir visor 3D",
+    "title": "Portfolio en 3D",
+    "hint": "Arrastra para orbitar · rueda para acercar · haz clic en un planeta para explorarlo",
+    "hintTouch": "Arrastra para orbitar · pellizca para acercar · toca un planeta para explorarlo",
+    "exit": "Salir del 3D",
+    "loading": "Cargando visor 3D…",
+    "overview": "Vista general",
+    "goTo": "Ir a la sección",
+    "viewProject": "Ver proyecto",
+    "nodesLabel": "Planetas del sistema",
+    "unsupported": "Tu navegador no puede mostrar gráficos 3D (WebGL).",
+    "nodes": {
+      "inicio": {
+        "label": "Ignacio",
+        "description": "La estrella de este sistema. Ingeniero Multimedia y desarrollador web frontend: todo lo demás gira a mi alrededor."
+      },
+      "sobre-mi": {
+        "label": "Sobre mí",
+        "description": "Quién soy, qué me apasiona y mi experiencia Erasmus en la República Checa."
+      },
+      "experiencia": {
+        "label": "Experiencia",
+        "description": "Desarrollador web freelance para el equipo FSUPV y prácticas de desarrollo web en MIP Informática."
+      },
+      "proyectos": {
+        "label": "Proyectos",
+        "description": "Sus lunas son mis proyectos: el generador de patrones orbitales de mi TFG y la plataforma web de FSUPV."
+      },
+      "habilidades": {
+        "label": "Habilidades",
+        "description": "Frontend, backend, móvil, videojuegos, realidad virtual y gráficos: las tecnologías con las que trabajo."
+      },
+      "formacion": {
+        "label": "Formación",
+        "description": "Grado en Ingeniería Multimedia por la Universitat de València y Máster en Diseño UX/UI en ESAT."
+      },
+      "contacto": {
+        "label": "Contacto",
+        "description": "¿Tienes un proyecto o una oferta? Escríbeme y hablamos."
+      }
+    }
+  },
   "footer": {
     "builtWith": "Hecho con Angular y mucho café.",
     "backToTop": "Volver arriba"

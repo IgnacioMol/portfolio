@@ -23,6 +23,19 @@
 
     <div class="nav-actions">
       <button
+        #viewerButton
+        class="viewer-toggle"
+        type="button"
+        (click)="openViewer()"
+        [attr.aria-label]="t.viewer.open"
+        [attr.title]="t.viewer.open"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M12 2.5 20 7v10l-8 4.5L4 17V7Zm0 9L4 7m8 4.5L20 7m-8 4.5V21.5" />
+        </svg>
+        <span>3D</span>
+      </button>
+      <button
         class="lang-toggle"
         type="button"
         (click)="i18n.toggle()"
@@ -45,6 +58,14 @@
     </div>
   </div>
 </nav>
+
+@if (viewerOpen()) {
+  @defer (on immediate) {
+    <app-solar-viewer (closed)="closeViewer()" (navigate)="navigateFromViewer($event)" />
+  } @loading (minimum 300ms) {
+    <div class="viewer-loading" role="status">{{ t.viewer.loading }}</div>
+  }
+}
 
 <div class="page">
   <main id="contenido" tabindex="-1">

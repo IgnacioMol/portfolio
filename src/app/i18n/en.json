@@ -306,6 +306,49 @@
     "text": "The page you are looking for does not exist or has moved.",
     "back": "Back to home"
   },
+  "viewer": {
+    "open": "Open 3D viewer",
+    "title": "Portfolio in 3D",
+    "hint": "Drag to orbit · scroll to zoom · click a planet to explore it",
+    "hintTouch": "Drag to orbit · pinch to zoom · tap a planet to explore it",
+    "exit": "Exit 3D",
+    "loading": "Loading 3D viewer…",
+    "overview": "Overview",
+    "goTo": "Go to section",
+    "viewProject": "View project",
+    "nodesLabel": "Planets in the system",
+    "unsupported": "Your browser cannot display 3D graphics (WebGL).",
+    "nodes": {
+      "inicio": {
+        "label": "Ignacio",
+        "description": "The star of this system. Multimedia Engineer and frontend web developer: everything else orbits around me."
+      },
+      "sobre-mi": {
+        "label": "About me",
+        "description": "Who I am, what I love doing and my Erasmus year in the Czech Republic."
+      },
+      "experiencia": {
+        "label": "Experience",
+        "description": "Freelance web developer for the FSUPV team and web development internship at MIP Informática."
+      },
+      "proyectos": {
+        "label": "Projects",
+        "description": "Its moons are my projects: the orbital pattern generator from my degree project and the FSUPV web platform."
+      },
+      "habilidades": {
+        "label": "Skills",
+        "description": "Frontend, backend, mobile, games, virtual reality and graphics: the technologies I work with."
+      },
+      "formacion": {
+        "label": "Education",
+        "description": "Bachelor's in Multimedia Engineering at the Universitat de València and Master's in UX/UI Design at ESAT."
+      },
+      "contacto": {
+        "label": "Contact",
+        "description": "Got a project or an offer? Drop me a line and let's talk."
+      }
+    }
+  },
   "footer": {
     "builtWith": "Built with Angular and plenty of coffee.",
     "backToTop": "Back to top"

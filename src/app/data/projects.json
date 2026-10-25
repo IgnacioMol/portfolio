@@ -7,6 +7,10 @@
       "es": "Generador de imágenes basadas en patrones orbitales",
       "en": "Orbital pattern image generator"
     },
+    "shortTitle": {
+      "es": "Patrones orbitales (TFG)",
+      "en": "Orbital patterns (thesis)"
+    },
     "context": {
       "es": "Trabajo Fin de Grado · 9/10",
       "en": "Final Degree Project · 9/10"
@@ -51,7 +55,15 @@
         "Quick-start guide and language selector."
       ]
     },
-    "techs": ["Angular", "TypeScript", "p5.js", "RxJS", "Bootstrap", "Vitest", "Netlify"],
+    "techs": [
+      "Angular",
+      "TypeScript",
+      "p5.js",
+      "RxJS",
+      "Bootstrap",
+      "Vitest",
+      "Netlify"
+    ],
     "cover": {
       "src": "images/projects/epicycloid/mandala.webp",
       "alt": {
@@ -76,8 +88,14 @@
       }
     ],
     "links": [
-      { "kind": "demo", "url": "https://epicycloidgenerator.netlify.app/" },
-      { "kind": "repo", "url": "https://github.com/IgnacioMol/Epicycloid_generator" }
+      {
+        "kind": "demo",
+        "url": "https://epicycloidgenerator.netlify.app/"
+      },
+      {
+        "kind": "repo",
+        "url": "https://github.com/IgnacioMol/Epicycloid_generator"
+      }
     ]
   },
   {
@@ -87,6 +105,10 @@
     "title": {
       "es": "Plataforma web del equipo FSUPV",
       "en": "FSUPV team web platform"
+    },
+    "shortTitle": {
+      "es": "Web FSUPV",
+      "en": "FSUPV website"
     },
     "context": {
       "es": "Desarrollo full stack · Formula Student UPV",

@@ -1,0 +1,51 @@
+<div class="solar-viewer" role="dialog" aria-modal="true" aria-labelledby="solar-title">
+  <div class="solar-stage" #stage></div>
+
+  <header class="solar-top">
+    <div>
+      <h2 id="solar-title">{{ t.viewer.title }}</h2>
+      @if (supported) {
+        <p class="solar-hint">{{ touch ? t.viewer.hintTouch : t.viewer.hint }}</p>
+      }
+    </div>
+    <button #exitButton type="button" class="solar-exit" (click)="closed.emit()">
+      {{ t.viewer.exit }} <span aria-hidden="true">&times;</span>
+    </button>
+  </header>
+
+  @if (!supported) {
+    <p class="solar-unsupported">{{ t.viewer.unsupported }}</p>
+  }
+
+  @if (selected(); as info) {
+    <aside class="solar-panel" aria-live="polite">
+      <h3>{{ info.label }}</h3>
+      <p>{{ info.description }}</p>
+      <div class="solar-panel-actions">
+        <button type="button" class="btn btn-primary" (click)="go(info.navigation)">
+          {{ info.action }} <span aria-hidden="true">&rarr;</span>
+        </button>
+        <button type="button" class="btn btn-ghost" (click)="select(null)">{{ t.viewer.overview }}</button>
+      </div>
+    </aside>
+  }
+
+  <nav class="solar-nav" [attr.aria-label]="t.viewer.nodesLabel">
+    <button type="button" [class.is-active]="!selectedId()" (click)="select(null)">{{ t.viewer.overview }}</button>
+    @for (id of sections; track id) {
+      <button type="button" [class.is-active]="selectedId() === id" (click)="select(id)">
+        {{ t.viewer.nodes[id].label }}
+      </button>
+    }
+    @for (project of projects; track project.slug) {
+      <button
+        type="button"
+        class="solar-nav-moon"
+        [class.is-active]="selectedId() === projectId(project.slug)"
+        (click)="select(projectId(project.slug))"
+      >
+        {{ i18n.localize(project.shortTitle) }}
+      </button>
+    }
+  </nav>
+</div>
