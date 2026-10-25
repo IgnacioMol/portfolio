@@ -1,0 +1,41 @@
+@let p = project();
+<article class="card project-card">
+  <div class="project-cover">
+    @if (p.cover) {
+      <img [src]="p.cover.src" [alt]="i18n.localize(p.cover.alt)" loading="lazy" width="1440" height="900" />
+    } @else {
+      <span class="project-cover-icon" aria-hidden="true">{{ p.icon }}</span>
+    }
+  </div>
+
+  <div class="project-body">
+    <div class="project-top">
+      <p class="card-tag">{{ i18n.localize(p.context) }}</p>
+      <span class="card-period">{{ i18n.localize(p.period) }}</span>
+    </div>
+    <h3>
+      <a class="project-title-link" [routerLink]="['/proyectos', p.slug]">{{ i18n.localize(p.title) }}</a>
+    </h3>
+    <p>{{ i18n.localize(p.summary) }}</p>
+
+    @if (p.techs.length) {
+      <ul class="tag-list">
+        @for (tech of visibleTechs(); track tech) {
+          <li class="tag"><app-tech-icon class="tag-icon" [name]="tech" />{{ tech }}</li>
+        }
+        @if (hiddenTechs()) {
+          <li class="tag tag-more">+{{ hiddenTechs() }}</li>
+        }
+      </ul>
+    }
+
+    <div class="project-actions">
+      <span class="card-link" aria-hidden="true">{{ t.projects.viewProject }} &rarr;</span>
+      @for (link of p.links; track link.url) {
+        <a class="project-external" [href]="link.url" target="_blank" rel="noopener">
+          {{ t.projects.links[link.kind] }}<span class="sr-only">{{ t.a11y.opensNewTab }}</span>
+        </a>
+      }
+    </div>
+  </div>
+</article>

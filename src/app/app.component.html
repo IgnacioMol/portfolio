@@ -1,224 +1,72 @@
 <app-particle-background></app-particle-background>
 
-<nav class="nav">
+<a class="skip-link" href="#contenido" (click)="skipToContent($event)">{{ t.nav.skipToContent }}</a>
+
+<nav class="nav" [attr.aria-label]="t.nav.mainNav">
   <div class="nav-inner">
-    <a class="nav-brand" href="#inicio">Nacho</a>
-    <div class="nav-links">
-      @for (link of navLinks; track link.href) {
-        <a [href]="link.href">{{ link.label }}</a>
+    <a class="nav-brand" routerLink="/" (click)="closeMenu()">
+      <span class="brand-mark">IM</span>
+      <span class="brand-name">{{ profile.firstName }}</span>
+    </a>
+
+    <div class="nav-links" id="nav-links" [class.open]="menuOpen">
+      @for (link of t.nav.links; track link.href) {
+        <a
+          routerLink="/"
+          [fragment]="link.href.slice(1)"
+          [class.active]="link.href === '#' + activeSection()"
+          [attr.aria-current]="link.href === '#' + activeSection() ? 'location' : null"
+          (click)="closeMenu()"
+        >{{ link.label }}</a>
       }
+    </div>
+
+    <div class="nav-actions">
+      <button
+        class="lang-toggle"
+        type="button"
+        (click)="i18n.toggle()"
+        [attr.aria-label]="t.nav.switchLang"
+      >
+        <span [class.on]="i18n.lang() === 'es'">ES</span>
+        <span class="lang-sep">/</span>
+        <span [class.on]="i18n.lang() === 'en'">EN</span>
+      </button>
+      <button
+        class="menu-toggle"
+        type="button"
+        (click)="toggleMenu()"
+        aria-controls="nav-links"
+        [attr.aria-expanded]="menuOpen"
+        [attr.aria-label]="menuOpen ? t.nav.closeMenu : t.nav.openMenu"
+      >
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
 </nav>
 
 <div class="page">
-  <header id="inicio" class="hero">
-    <p class="eyebrow">Hola, soy</p>
-    <h1>Nacho</h1>
-    <p class="tagline">
-      Ingeniero Multimedia &middot; Desarrollo de software y aplicaciones interactivas
-    </p>
-    <div class="cta">
-      <a class="btn btn-primary" href="#proyectos">Ver proyectos</a>
-      <a class="btn btn-ghost" href="#contacto">Contacto</a>
-    </div>
-  </header>
-
-  <main>
-    <section id="sobre-mi" class="section">
-      <h2>Sobre mí</h2>
-      <p>
-        Soy <strong>Nacho</strong>, graduado en <strong>Ingeniería Multimedia</strong>
-        por la <strong>Universitat de València</strong>, con interés en el desarrollo
-        de software, el desarrollo web y la creación de aplicaciones interactivas.
-      </p>
-      <p>
-        Durante mi formación he trabajado con diferentes tecnologías y áreas de la
-        informática, desde el desarrollo web y las aplicaciones frontend hasta la
-        programación gráfica y la visualización.
-      </p>
-      <p>
-        Me gusta especialmente trabajar en proyectos en los que pueda crear algo
-        interactivo, experimentar con nuevas tecnologías y convertir una idea en una
-        aplicación funcional.
-      </p>
-    </section>
-
-    <section id="proyectos" class="section">
-      <h2>Proyectos</h2>
-      <div class="cards">
-        @for (project of projects; track project.name) {
-          <article class="card project-card">
-            <div class="card-icon">{{ project.icon }}</div>
-            <div class="card-body">
-              @if (project.tag) {
-                <p class="card-tag">{{ project.tag }}</p>
-              }
-              <h3>{{ project.name }}</h3>
-              <p>{{ project.description }}</p>
-              @if (project.role) {
-                <p class="card-role"><strong>Mi trabajo:</strong> {{ project.role }}</p>
-              }
-              @if (project.techs.length) {
-                <ul class="tag-list">
-                  @for (tech of project.techs; track tech) {
-                    <li class="tag">{{ tech }}</li>
-                  }
-                </ul>
-              }
-              @if (project.link) {
-                <a class="card-link" [href]="project.link" target="_blank" rel="noopener">
-                  Ver proyecto &rarr;
-                </a>
-              }
-            </div>
-          </article>
-        }
-      </div>
-    </section>
-
-    <section id="experiencia" class="section">
-      <h2>Experiencia</h2>
-      <div class="cards">
-        @for (job of experience; track job.company) {
-          <article class="card">
-            <h3>{{ job.company }}</h3>
-            <p class="card-meta">{{ job.role }} &middot; {{ job.location }} &middot; {{ job.period }}</p>
-            <p>{{ job.description }}</p>
-          </article>
-        }
-      </div>
-    </section>
-
-    <section id="tecnologias" class="section">
-      <h2>Tecnologías</h2>
-      <div class="tech-groups">
-        @for (group of techGroups; track group.title) {
-          <div class="tech-group">
-            <h3>{{ group.title }}</h3>
-            <ul class="tag-list">
-              @for (item of group.items; track item) {
-                <li class="tag">{{ item }}</li>
-              }
-            </ul>
-          </div>
-        }
-      </div>
-    </section>
-
-    <section id="formacion" class="section">
-      <h2>Formación</h2>
-      <div class="cards">
-        @for (entry of education; track entry.title) {
-          <article class="card">
-            <h3>{{ entry.title }}</h3>
-            <p class="card-meta">{{ entry.place }}</p>
-            <p>{{ entry.description }}</p>
-            @if (entry.items.length) {
-              <ul class="tag-list">
-                @for (item of entry.items; track item) {
-                  <li class="tag">{{ item }}</li>
-                }
-              </ul>
-            }
-          </article>
-        }
-      </div>
-    </section>
-
-    <section id="habilidades" class="section">
-      <h2>Habilidades</h2>
-      <div class="cards">
-        @for (skill of skills; track skill.title) {
-          <article class="card">
-            <h3>{{ skill.title }}</h3>
-            <p>{{ skill.description }}</p>
-          </article>
-        }
-      </div>
-    </section>
-
-    <section id="logros" class="section">
-      <h2>Logros</h2>
-      <div class="cards achievements">
-        @for (achievement of achievements; track achievement.title) {
-          <article class="card achievement-card">
-            <div class="card-icon">{{ achievement.icon }}</div>
-            <div class="card-body">
-              <h3>{{ achievement.title }}</h3>
-              <p>{{ achievement.description }}</p>
-            </div>
-          </article>
-        }
-      </div>
-    </section>
-
-    <section id="contacto" class="section">
-      <h2>¿Hablamos?</h2>
-      <p>
-        Si quieres contactar conmigo para hablar sobre un proyecto, una oportunidad
-        profesional o simplemente conocer más sobre mi trabajo, puedes escribirme
-        directamente desde este formulario o encontrarme en:
-      </p>
-      <div class="contact-links">
-        <a class="btn btn-ghost" href="#" target="_blank" rel="noopener">GitHub</a>
-        <a class="btn btn-ghost" href="#" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="btn btn-ghost" [href]="'mailto:' + contactEmail">Email</a>
-      </div>
-
-      <form class="contact-form" #contactFormRef="ngForm" (ngSubmit)="onSubmitContact()">
-        <label>
-          Nombre
-          <input
-            type="text"
-            name="name"
-            required
-            [(ngModel)]="contactForm.name"
-            autocomplete="name"
-          />
-        </label>
-        <label>
-          Email
-          <input
-            type="email"
-            name="email"
-            required
-            [(ngModel)]="contactForm.email"
-            autocomplete="email"
-          />
-        </label>
-        <label>
-          Mensaje
-          <textarea
-            name="message"
-            rows="5"
-            required
-            [(ngModel)]="contactForm.message"
-          ></textarea>
-        </label>
-
-        <button
-          class="btn btn-primary"
-          type="submit"
-          [disabled]="contactFormRef.invalid || submitting"
-        >
-          {{ submitting ? 'Enviando…' : 'Enviar mensaje' }}
-        </button>
-
-        @if (submitStatus === 'success') {
-          <p class="form-status form-status-success">
-            ¡Gracias por tu mensaje! Te responderé lo antes posible.
-          </p>
-        }
-        @if (submitStatus === 'error') {
-          <p class="form-status form-status-error">
-            Ha ocurrido un error al enviar el mensaje. Puedes escribirme
-            directamente a <a [href]="'mailto:' + contactEmail">{{ contactEmail }}</a>.
-          </p>
-        }
-      </form>
-    </section>
+  <main id="contenido" tabindex="-1">
+    <router-outlet />
   </main>
-</div>
 
-<router-outlet />
+  <footer class="footer">
+    <p>&copy; {{ currentYear }} {{ profile.firstName }} {{ profile.lastName }} &middot; {{ t.footer.builtWith }}</p>
+    <ul class="social-icons">
+      @for (social of socialLinks; track social.label) {
+        <li>
+          <a
+            [href]="social.href"
+            [attr.target]="social.external ? '_blank' : null"
+            [attr.rel]="social.external ? 'noopener' : null"
+            [attr.aria-label]="social.label + (social.external ? t.a11y.opensNewTab : '')"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path [attr.d]="social.path" /></svg>
+          </a>
+        </li>
+      }
+    </ul>
+    <a class="back-to-top" href="#inicio" (click)="backToTop($event)">{{ t.footer.backToTop }} <span aria-hidden="true">&uarr;</span></a>
+  </footer>
+</div>

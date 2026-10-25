@@ -1,0 +1,127 @@
+[
+  {
+    "slug": "generador-patrones-orbitales",
+    "icon": "🌀",
+    "featured": true,
+    "title": {
+      "es": "Generador de imágenes basadas en patrones orbitales",
+      "en": "Orbital pattern image generator"
+    },
+    "context": {
+      "es": "Trabajo Fin de Grado · 9/10",
+      "en": "Final Degree Project · 9/10"
+    },
+    "period": {
+      "es": "Sep. 2025 – Jul. 2026",
+      "en": "Sep. 2025 – Jul. 2026"
+    },
+    "summary": {
+      "es": "Aplicación web interactiva, diseñada y desarrollada desde cero, para generar imágenes a partir de patrones orbitales y epicicloides.",
+      "en": "Interactive web application, designed and built from scratch, that generates images from orbital patterns and epicycloids."
+    },
+    "description": {
+      "es": [
+        "Aplicación web desarrollada como Trabajo Fin de Grado para crear composiciones artísticas a partir de patrones orbitales. El dibujo surge de la interferencia entre dos puntos que orbitan de forma independiente alrededor del mismo centro, y da lugar a figuras parecidas al string art y a las curvas de Lissajous.",
+        "Diseñé y desarrollé la aplicación desde cero: la interfaz y el panel de control con componentes standalone de Angular, el motor de dibujo en tiempo real con p5.js y la gestión del estado con RxJS. El objetivo era ofrecer una experiencia creativa e intuitiva, en la que cualquier persona pueda experimentar con los parámetros y ver el resultado al instante."
+      ],
+      "en": [
+        "Web application built as my Final Degree Project to create artistic compositions from orbital patterns. The drawing emerges from the interference between two points orbiting the same centre independently, producing figures similar to string art and Lissajous curves.",
+        "I designed and built the application from scratch: the interface and control panel with Angular standalone components, the real-time drawing engine with p5.js and state management with RxJS. The goal was a creative and intuitive experience where anyone can play with the parameters and see the result instantly."
+      ]
+    },
+    "features": {
+      "es": [
+        "Dos modos de visualización: intersección de líneas y curva epicicloidal.",
+        "Control de cada órbita: radio, velocidad angular, fase inicial, factor elíptico e inclinación.",
+        "Ajustes visuales de color, opacidad, grosor de trazo e intervalo entre líneas.",
+        "Ejemplos predefinidos y aleatorización de parámetros para inspirarse.",
+        "Simulación por un número exacto de vueltas y opción de deshacer la última sesión.",
+        "Zoom del lienzo sin perder calidad en el dibujo acumulado.",
+        "Exportación a PNG y exportación e importación del patrón en JSON.",
+        "Guía de inicio rápido y selector de idioma."
+      ],
+      "en": [
+        "Two display modes: line intersection and epicycloid curve.",
+        "Per-orbit control: radius, angular speed, initial phase, elliptical factor and tilt.",
+        "Visual settings for colour, opacity, stroke width and line interval.",
+        "Built-in examples and parameter randomisation for inspiration.",
+        "Simulation for an exact number of turns and undo for the last session.",
+        "Canvas zoom without losing quality in the accumulated drawing.",
+        "PNG export, plus pattern export and import as JSON.",
+        "Quick-start guide and language selector."
+      ]
+    },
+    "techs": ["Angular", "TypeScript", "p5.js", "RxJS", "Bootstrap", "Vitest", "Netlify"],
+    "cover": {
+      "src": "images/projects/epicycloid/mandala.webp",
+      "alt": {
+        "es": "Captura del generador dibujando una mandala elíptica amarilla, con el panel de control a la derecha.",
+        "en": "Screenshot of the generator drawing a yellow elliptical mandala, with the control panel on the right."
+      }
+    },
+    "gallery": [
+      {
+        "src": "images/projects/epicycloid/corona.webp",
+        "alt": {
+          "es": "Patrón «Corona» en modo intersección de líneas: miles de líneas doradas dentro de un círculo.",
+          "en": "“Crown” pattern in line intersection mode: thousands of golden lines inside a circle."
+        }
+      },
+      {
+        "src": "images/projects/epicycloid/flor.webp",
+        "alt": {
+          "es": "Patrón «Flor epicicloidal» en modo curva epicicloidal, con las dos órbitas visibles.",
+          "en": "“Epicycloid flower” pattern in epicycloid curve mode, with both orbits visible."
+        }
+      }
+    ],
+    "links": [
+      { "kind": "demo", "url": "https://epicycloidgenerator.netlify.app/" },
+      { "kind": "repo", "url": "https://github.com/IgnacioMol/Epicycloid_generator" }
+    ]
+  },
+  {
+    "slug": "plataforma-fsupv",
+    "icon": "🏎️",
+    "featured": true,
+    "title": {
+      "es": "Plataforma web del equipo FSUPV",
+      "en": "FSUPV team web platform"
+    },
+    "context": {
+      "es": "Desarrollo full stack · Formula Student UPV",
+      "en": "Full stack development · Formula Student UPV"
+    },
+    "period": {
+      "es": "Proyecto actual",
+      "en": "Ongoing"
+    },
+    "summary": {
+      "es": "Desarrollo y mejora de la aplicación web completa del equipo de Formula Student de la Universitat Politècnica de València.",
+      "en": "Development and improvement of the full web application of the Universitat Politècnica de València Formula Student team."
+    },
+    "description": {
+      "es": [
+        "Actualización completa de la página web del equipo de Formula Student de la Universitat Politècnica de València, abarcando frontend, backend e integración de funcionalidades.",
+        "Como desarrollador freelance del equipo, soy responsable del mantenimiento y la evolución futura de la plataforma."
+      ],
+      "en": [
+        "Complete overhaul of the Universitat Politècnica de València Formula Student team's website, covering frontend, backend and feature integration.",
+        "As the team's freelance developer, I'm responsible for the maintenance and future development of the platform."
+      ]
+    },
+    "features": {
+      "es": [
+        "Trabajo en frontend, backend e integración de las distintas funcionalidades de la plataforma.",
+        "Mantenimiento y evolución continua del sitio."
+      ],
+      "en": [
+        "Work across frontend, backend and the integration of the platform's features.",
+        "Ongoing maintenance and evolution of the site."
+      ]
+    },
+    "techs": [],
+    "gallery": [],
+    "links": []
+  }
+]

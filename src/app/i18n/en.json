@@ -1,0 +1,317 @@
+{
+  "meta": {
+    "title": "Ignacio Molina Gutiérrez · Portfolio",
+    "description": "Multimedia Engineer and frontend web developer. Interfaces, interactive applications, games and graphics."
+  },
+  "nav": {
+    "links": [
+      {
+        "label": "About",
+        "href": "#sobre-mi"
+      },
+      {
+        "label": "Experience",
+        "href": "#experiencia"
+      },
+      {
+        "label": "Projects",
+        "href": "#proyectos"
+      },
+      {
+        "label": "Skills",
+        "href": "#habilidades"
+      },
+      {
+        "label": "Education",
+        "href": "#formacion"
+      },
+      {
+        "label": "Contact",
+        "href": "#contacto"
+      }
+    ],
+    "mainNav": "Main navigation",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "switchLang": "Switch language to Spanish",
+    "skipToContent": "Skip to main content"
+  },
+  "hero": {
+    "greeting": "Hi! I'm",
+    "role": "Multimedia Engineer · Frontend Web Developer",
+    "intro": "I bring interfaces to life by combining functionality, creativity and a great user experience.",
+    "ctaProjects": "View projects",
+    "ctaCv": "Download CV",
+    "cvMenu": "Choose the CV language",
+    "ctaContact": "Contact"
+  },
+  "about": {
+    "title": "About me",
+    "paragraphs": [
+      "I'm a Multimedia Engineer passionate about programming in all its areas, especially when it blends creativity with building rich, memorable user experiences. While my specialisation is frontend development, my background and constant learning also let me work comfortably on backend, mobile apps, video games and virtual reality.",
+      "During my degree I spent a full academic year on Erasmus in the Czech Republic, an experience that gave me a great deal of autonomy and the ability to adapt to completely new environments.",
+      "At heart, I enjoy defining the logic that brings interfaces to life and looking for solutions that combine functionality, creativity and a good user experience. In my free time I make video games in Unity and experiment with personal programming projects."
+    ],
+    "highlights": [
+      {
+        "value": "9/10",
+        "label": "Final Degree Project grade"
+      },
+      {
+        "value": "1 year",
+        "label": "Erasmus in the Czech Republic"
+      },
+      {
+        "value": "2",
+        "label": "Web development roles"
+      },
+      {
+        "value": "B2",
+        "label": "English · Cambridge CAE"
+      }
+    ],
+    "languagesTitle": "Languages",
+    "languages": [
+      {
+        "name": "Spanish",
+        "level": "Native"
+      },
+      {
+        "name": "English",
+        "level": "B2",
+        "detail": "Cambridge CAE"
+      }
+    ]
+  },
+  "experience": {
+    "title": "Experience",
+    "currentLabel": "Current",
+    "entries": [
+      {
+        "title": "Freelance Web Developer",
+        "org": "FSUPV Team · Formula Student UPV",
+        "location": "Valencia",
+        "period": "Present",
+        "current": true,
+        "highlights": [
+          "Complete overhaul of the Universitat Politècnica de València Formula Student team's website, covering frontend, backend and feature integration.",
+          "Responsible for the maintenance and future development of the platform."
+        ]
+      },
+      {
+        "title": "Web Development Intern",
+        "org": "MIP Informática",
+        "location": "Paterna, Valencia",
+        "period": "Oct. 2025 – Dec. 2025",
+        "highlights": [
+          "Built websites for clients using WordPress.",
+          "Improved and updated the company's internal web platform, including the migration from Filament 3 to Filament 4."
+        ],
+        "techs": [
+          "WordPress",
+          "Laravel",
+          "Filament",
+          "React",
+          "GitHub"
+        ]
+      }
+    ]
+  },
+  "projects": {
+    "title": "Projects",
+    "subtitle": "Every project I have worked on. Click any of them to see the details.",
+    "featuredTitle": "Projects",
+    "featuredSubtitle": "A selection of projects I have worked on.",
+    "seeAll": "See all projects",
+    "viewProject": "View project",
+    "links": {
+      "demo": "Live demo",
+      "repo": "GitHub repository"
+    },
+    "detail": {
+      "breadcrumb": "Breadcrumb",
+      "home": "Home",
+      "back": "Back to projects",
+      "about": "About the project",
+      "features": "Features",
+      "technologies": "Technologies",
+      "gallery": "Gallery",
+      "enlarge": "Enlarge image:",
+      "close": "Close",
+      "projectLinks": "Project links",
+      "next": "Next project"
+    }
+  },
+  "skills": {
+    "title": "Skills",
+    "subtitle": "A quick look at the technologies and tools I work with.",
+    "featuredTitle": "Featured skills",
+    "featured": [
+      "Angular",
+      "TypeScript",
+      "React",
+      "JavaScript",
+      "HTML",
+      "CSS",
+      "p5.js",
+      "Unity",
+      "Laravel",
+      "Figma",
+      "Git",
+      "Docker"
+    ],
+    "allTitle": "All skills",
+    "groups": [
+      {
+        "title": "Frontend",
+        "icon": "🖥️",
+        "items": [
+          "HTML",
+          "CSS",
+          "JavaScript",
+          "TypeScript",
+          "Angular",
+          "React",
+          "Bootstrap",
+          "SCSS",
+          "RxJS",
+          "Vite"
+        ]
+      },
+      {
+        "title": "Backend & Databases",
+        "icon": "🗄️",
+        "items": [
+          "PHP",
+          "Laravel",
+          "Java",
+          "C#",
+          "SQL",
+          "MySQL",
+          "MongoDB",
+          "Firebase"
+        ]
+      },
+      {
+        "title": "Mobile apps",
+        "icon": "📱",
+        "items": [
+          "Android Studio",
+          "Kotlin",
+          "React Native"
+        ]
+      },
+      {
+        "title": "UX/UI & Web development",
+        "icon": "🎨",
+        "items": [
+          "Figma",
+          "WordPress",
+          "Filament",
+          "Responsive design"
+        ]
+      },
+      {
+        "title": "Games & Virtual reality",
+        "icon": "🎮",
+        "items": [
+          "Unity",
+          "C#",
+          "Meta SDK",
+          "XR Interaction Toolkit",
+          "Vuforia"
+        ]
+      },
+      {
+        "title": "Graphics & Procedural generation",
+        "icon": "✨",
+        "items": [
+          "p5.js",
+          "GLSL",
+          "ShaderLab",
+          "Procedural generation"
+        ]
+      },
+      {
+        "title": "Other languages",
+        "icon": "⌨️",
+        "items": [
+          "C++",
+          "Python"
+        ]
+      },
+      {
+        "title": "Tools & Version control",
+        "icon": "🛠️",
+        "items": [
+          "Git",
+          "GitHub",
+          "Docker",
+          "Netlify"
+        ]
+      },
+      {
+        "title": "Project management",
+        "icon": "📋",
+        "items": [
+          "Jira",
+          "Microsoft Project",
+          "Agile (SCRUM)"
+        ]
+      }
+    ]
+  },
+  "education": {
+    "title": "Education",
+    "currentLabel": "Upcoming",
+    "entries": [
+      {
+        "title": "Master's in UX/UI Design",
+        "org": "Escuela Superior de Arte y Tecnología (ESAT)",
+        "location": "Valencia",
+        "period": "Starts Nov. 2026",
+        "current": true,
+        "highlights": []
+      },
+      {
+        "title": "Bachelor's in Multimedia Engineering",
+        "org": "ETSE · Universitat de València",
+        "location": "Valencia",
+        "period": "2021 – 2026",
+        "highlights": [
+          "Multidisciplinary training in programming, web development, mobile apps, video games, visualisation and computer graphics.",
+          "Full academic year on Erasmus exchange in Brno, Czech Republic.",
+          "Final Degree Project graded 9/10."
+        ]
+      }
+    ]
+  },
+  "contact": {
+    "title": "Let's talk",
+    "text": "If you have a project in mind, a job opportunity or just want to know more about my work, drop me a line and I'll get back to you as soon as possible.",
+    "locationLabel": "Location",
+    "location": "Meliana · Valencia, Spain",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "submit": "Send message",
+      "sending": "Sending…",
+      "success": "Thanks for your message! I'll get back to you soon.",
+      "error": "Something went wrong while sending the message. You can email me directly at"
+    }
+  },
+  "notFound": {
+    "title": "Page not found",
+    "text": "The page you are looking for does not exist or has moved.",
+    "back": "Back to home"
+  },
+  "footer": {
+    "builtWith": "Built with Angular and plenty of coffee.",
+    "backToTop": "Back to top"
+  },
+  "a11y": {
+    "opensNewTab": " (opens in a new tab)",
+    "emailLabel": "Send an email"
+  }
+}

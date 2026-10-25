@@ -1,0 +1,317 @@
+{
+  "meta": {
+    "title": "Ignacio Molina Gutiérrez · Portfolio",
+    "description": "Ingeniero Multimedia y desarrollador web frontend. Interfaces, aplicaciones interactivas, videojuegos y gráficos."
+  },
+  "nav": {
+    "links": [
+      {
+        "label": "Sobre mí",
+        "href": "#sobre-mi"
+      },
+      {
+        "label": "Experiencia",
+        "href": "#experiencia"
+      },
+      {
+        "label": "Proyectos",
+        "href": "#proyectos"
+      },
+      {
+        "label": "Habilidades",
+        "href": "#habilidades"
+      },
+      {
+        "label": "Formación",
+        "href": "#formacion"
+      },
+      {
+        "label": "Contacto",
+        "href": "#contacto"
+      }
+    ],
+    "mainNav": "Navegación principal",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "switchLang": "Cambiar idioma a inglés",
+    "skipToContent": "Saltar al contenido principal"
+  },
+  "hero": {
+    "greeting": "¡Hola! Me llamo",
+    "role": "Ingeniero Multimedia · Desarrollador Web Frontend",
+    "intro": "Doy vida a interfaces que combinan funcionalidad, creatividad y una buena experiencia de usuario.",
+    "ctaProjects": "Ver proyectos",
+    "ctaCv": "Descargar CV",
+    "cvMenu": "Elige el idioma del CV",
+    "ctaContact": "Contacto"
+  },
+  "about": {
+    "title": "Sobre mí",
+    "paragraphs": [
+      "Ingeniero Multimedia apasionado por la programación en sus distintas áreas, especialmente cuando combina la creatividad con el desarrollo de experiencias ricas y memorables para el usuario. Aunque mi especialización se centra en el desarrollo frontend, gracias a mi formación y aprendizaje constante también me desenvuelvo con soltura en backend, aplicaciones móviles, videojuegos y realidad virtual.",
+      "Durante el grado realicé un Erasmus de un curso completo en la República Checa, una experiencia que me aportó una gran autonomía y capacidad de adaptación ante entornos completamente nuevos.",
+      "En esencia, disfruto definiendo la lógica que da vida a las interfaces y buscando soluciones que combinen funcionalidad, creatividad y una buena experiencia de usuario. En mi tiempo libre desarrollo videojuegos en Unity y experimento con proyectos personales de programación."
+    ],
+    "highlights": [
+      {
+        "value": "9/10",
+        "label": "Nota del Trabajo Fin de Grado"
+      },
+      {
+        "value": "1 curso",
+        "label": "Erasmus en la República Checa"
+      },
+      {
+        "value": "2",
+        "label": "Experiencias en desarrollo web"
+      },
+      {
+        "value": "B2",
+        "label": "Inglés · Cambridge CAE"
+      }
+    ],
+    "languagesTitle": "Idiomas",
+    "languages": [
+      {
+        "name": "Español",
+        "level": "Nativo"
+      },
+      {
+        "name": "Inglés",
+        "level": "B2",
+        "detail": "Cambridge CAE"
+      }
+    ]
+  },
+  "experience": {
+    "title": "Experiencia",
+    "currentLabel": "Actual",
+    "entries": [
+      {
+        "title": "Desarrollador Web Freelance",
+        "org": "FSUPV Team · Formula Student UPV",
+        "location": "Valencia",
+        "period": "Actualidad",
+        "current": true,
+        "highlights": [
+          "Actualización completa de la página web del equipo de Formula Student de la Universitat Politècnica de València, abarcando frontend, backend e integración de funcionalidades.",
+          "Responsable del mantenimiento y la evolución futura de la plataforma."
+        ]
+      },
+      {
+        "title": "Prácticas en empresa · Desarrollo Web",
+        "org": "MIP Informática",
+        "location": "Paterna, Valencia",
+        "period": "Oct. 2025 – Dic. 2025",
+        "highlights": [
+          "Creación de páginas web para clientes utilizando WordPress.",
+          "Mejora y actualización de la web interna de la empresa, incluida la migración de Filament 3 a Filament 4."
+        ],
+        "techs": [
+          "WordPress",
+          "Laravel",
+          "Filament",
+          "React",
+          "GitHub"
+        ]
+      }
+    ]
+  },
+  "projects": {
+    "title": "Proyectos",
+    "subtitle": "Todos los proyectos en los que he trabajado. Haz clic en cualquiera para ver los detalles.",
+    "featuredTitle": "Proyectos",
+    "featuredSubtitle": "Una selección de los proyectos en los que he trabajado.",
+    "seeAll": "Ver todos los proyectos",
+    "viewProject": "Ver proyecto",
+    "links": {
+      "demo": "Ver demo",
+      "repo": "Repositorio en GitHub"
+    },
+    "detail": {
+      "breadcrumb": "Miga de pan",
+      "home": "Inicio",
+      "back": "Volver a proyectos",
+      "about": "Sobre el proyecto",
+      "features": "Funcionalidades",
+      "technologies": "Tecnologías",
+      "gallery": "Galería",
+      "enlarge": "Ampliar imagen:",
+      "close": "Cerrar",
+      "projectLinks": "Enlaces del proyecto",
+      "next": "Siguiente proyecto"
+    }
+  },
+  "skills": {
+    "title": "Habilidades",
+    "subtitle": "Un vistazo rápido a las tecnologías y herramientas con las que trabajo.",
+    "featuredTitle": "Habilidades destacadas",
+    "featured": [
+      "Angular",
+      "TypeScript",
+      "React",
+      "JavaScript",
+      "HTML",
+      "CSS",
+      "p5.js",
+      "Unity",
+      "Laravel",
+      "Figma",
+      "Git",
+      "Docker"
+    ],
+    "allTitle": "Todas las habilidades",
+    "groups": [
+      {
+        "title": "Frontend",
+        "icon": "🖥️",
+        "items": [
+          "HTML",
+          "CSS",
+          "JavaScript",
+          "TypeScript",
+          "Angular",
+          "React",
+          "Bootstrap",
+          "SCSS",
+          "RxJS",
+          "Vite"
+        ]
+      },
+      {
+        "title": "Backend & Bases de datos",
+        "icon": "🗄️",
+        "items": [
+          "PHP",
+          "Laravel",
+          "Java",
+          "C#",
+          "SQL",
+          "MySQL",
+          "MongoDB",
+          "Firebase"
+        ]
+      },
+      {
+        "title": "Aplicaciones móviles",
+        "icon": "📱",
+        "items": [
+          "Android Studio",
+          "Kotlin",
+          "React Native"
+        ]
+      },
+      {
+        "title": "UX/UI & Desarrollo web",
+        "icon": "🎨",
+        "items": [
+          "Figma",
+          "WordPress",
+          "Filament",
+          "Diseño responsive"
+        ]
+      },
+      {
+        "title": "Videojuegos & Realidad virtual",
+        "icon": "🎮",
+        "items": [
+          "Unity",
+          "C#",
+          "Meta SDK",
+          "XR Interaction Toolkit",
+          "Vuforia"
+        ]
+      },
+      {
+        "title": "Gráficos & Generación procedural",
+        "icon": "✨",
+        "items": [
+          "p5.js",
+          "GLSL",
+          "ShaderLab",
+          "Generación procedural"
+        ]
+      },
+      {
+        "title": "Otros lenguajes",
+        "icon": "⌨️",
+        "items": [
+          "C++",
+          "Python"
+        ]
+      },
+      {
+        "title": "Herramientas & Control de versiones",
+        "icon": "🛠️",
+        "items": [
+          "Git",
+          "GitHub",
+          "Docker",
+          "Netlify"
+        ]
+      },
+      {
+        "title": "Gestión de proyectos",
+        "icon": "📋",
+        "items": [
+          "Jira",
+          "Microsoft Project",
+          "Metodologías ágiles (SCRUM)"
+        ]
+      }
+    ]
+  },
+  "education": {
+    "title": "Formación",
+    "currentLabel": "Próximamente",
+    "entries": [
+      {
+        "title": "Máster en Diseño UX/UI",
+        "org": "Escuela Superior de Arte y Tecnología (ESAT)",
+        "location": "Valencia",
+        "period": "Inicio nov. 2026",
+        "current": true,
+        "highlights": []
+      },
+      {
+        "title": "Grado en Ingeniería Multimedia",
+        "org": "ETSE · Universitat de València",
+        "location": "Valencia",
+        "period": "2021 – 2026",
+        "highlights": [
+          "Formación multidisciplinar en programación, desarrollo web, aplicaciones móviles, videojuegos, visualización y gráficos por ordenador.",
+          "Curso completo de movilidad Erasmus en Brno, República Checa.",
+          "Trabajo Fin de Grado calificado con un 9/10."
+        ]
+      }
+    ]
+  },
+  "contact": {
+    "title": "¿Hablamos?",
+    "text": "Si tienes un proyecto en mente, una oportunidad profesional o simplemente quieres conocer más sobre mi trabajo, escríbeme y te responderé lo antes posible.",
+    "locationLabel": "Ubicación",
+    "location": "Meliana · Valencia, España",
+    "form": {
+      "name": "Nombre",
+      "email": "Email",
+      "message": "Mensaje",
+      "submit": "Enviar mensaje",
+      "sending": "Enviando…",
+      "success": "¡Gracias por tu mensaje! Te responderé lo antes posible.",
+      "error": "Ha ocurrido un error al enviar el mensaje. Puedes escribirme directamente a"
+    }
+  },
+  "notFound": {
+    "title": "Página no encontrada",
+    "text": "La página que buscas no existe o ha cambiado de dirección.",
+    "back": "Volver al inicio"
+  },
+  "footer": {
+    "builtWith": "Hecho con Angular y mucho café.",
+    "backToTop": "Volver arriba"
+  },
+  "a11y": {
+    "opensNewTab": " (se abre en una pestaña nueva)",
+    "emailLabel": "Enviar un email"
+  }
+}

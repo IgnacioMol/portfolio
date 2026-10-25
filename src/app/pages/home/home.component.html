@@ -1,0 +1,274 @@
+<header id="inicio" class="hero">
+  <p class="eyebrow">{{ t.hero.greeting }}</p>
+  <h1>{{ profile.firstName }} <span class="accent">{{ profile.lastName }}</span></h1>
+  <p class="tagline">{{ t.hero.role }}</p>
+  <p class="hero-intro">{{ t.hero.intro }}</p>
+  <div class="cta">
+    <a class="btn btn-primary" routerLink="/" fragment="proyectos">{{ t.hero.ctaProjects }}</a>
+    @if (cvFiles.length === 1) {
+      <a class="btn btn-ghost" [href]="cvFiles[0].href" [attr.hreflang]="cvFiles[0].lang" download>
+        {{ t.hero.ctaCv }} <span aria-hidden="true">&darr;</span>
+      </a>
+    } @else {
+      <div class="cv-menu">
+        <button
+          class="btn btn-ghost"
+          type="button"
+          aria-haspopup="menu"
+          aria-controls="cv-options"
+          [attr.aria-expanded]="cvMenuOpen"
+          (click)="toggleCvMenu()"
+        >
+          {{ t.hero.ctaCv }} <span aria-hidden="true">&darr;</span>
+        </button>
+        @if (cvMenuOpen) {
+          <ul class="cv-options" id="cv-options" role="menu" [attr.aria-label]="t.hero.cvMenu">
+            @for (cv of cvFiles; track cv.lang) {
+              <li role="none">
+                <a role="menuitem" [href]="cv.href" [attr.hreflang]="cv.lang" download (click)="cvMenuOpen = false">
+                  <span class="cv-lang">{{ cv.lang }}</span> {{ cv.label }}
+                </a>
+              </li>
+            }
+          </ul>
+        }
+      </div>
+    }
+    <a class="btn btn-ghost" routerLink="/" fragment="contacto">{{ t.hero.ctaContact }}</a>
+  </div>
+  <ul class="social-icons hero-social">
+    @for (social of socialLinks; track social.label) {
+      <li>
+        <a
+          [href]="social.href"
+          [attr.target]="social.external ? '_blank' : null"
+          [attr.rel]="social.external ? 'noopener' : null"
+          [attr.aria-label]="social.label + (social.external ? t.a11y.opensNewTab : '')"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path [attr.d]="social.path" /></svg>
+        </a>
+      </li>
+    }
+  </ul>
+</header>
+
+  <section id="sobre-mi" class="section">
+    <h2 class="reveal">{{ t.about.title }}</h2>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        @for (paragraph of t.about.paragraphs; track $index) {
+          <p>{{ paragraph }}</p>
+        }
+      </div>
+      <aside class="about-side reveal">
+        <div class="highlights">
+          @for (item of t.about.highlights; track $index) {
+            <div class="highlight">
+              <span class="highlight-value">{{ item.value }}</span>
+              <span class="highlight-label">{{ item.label }}</span>
+            </div>
+          }
+        </div>
+        <div class="card languages">
+          <h3>{{ t.about.languagesTitle }}</h3>
+          <ul>
+            @for (language of t.about.languages; track language.name) {
+              <li>
+                <span>{{ language.name }}</span>
+                <span class="language-level">
+                  {{ language.level }}
+                  @if (language.detail) {
+                    <small>· {{ language.detail }}</small>
+                  }
+                </span>
+              </li>
+            }
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="experiencia" class="section">
+    <h2 class="reveal">{{ t.experience.title }}</h2>
+    <ol class="timeline">
+      @for (job of t.experience.entries; track job.title) {
+        <li class="timeline-item reveal" [class.current]="job.current">
+          <div class="timeline-head">
+            <h3>{{ job.title }}</h3>
+            <span class="timeline-period">
+              @if (job.current) {
+                <span class="badge">{{ t.experience.currentLabel }}</span>
+              }
+              {{ job.period }}
+            </span>
+          </div>
+          <p class="timeline-org">{{ job.org }} <span>&middot; {{ job.location }}</span></p>
+          <ul class="bullets">
+            @for (point of job.highlights; track $index) {
+              <li>{{ point }}</li>
+            }
+          </ul>
+          @if (job.techs?.length) {
+            <ul class="tag-list">
+              @for (tech of job.techs; track tech) {
+                <li class="tag"><app-tech-icon class="tag-icon" [name]="tech" />{{ tech }}</li>
+              }
+            </ul>
+          }
+        </li>
+      }
+    </ol>
+  </section>
+
+  <section id="proyectos" class="section">
+    <h2 class="reveal">{{ t.projects.featuredTitle }}</h2>
+    <p class="section-subtitle reveal">{{ t.projects.featuredSubtitle }}</p>
+    <div class="cards projects">
+      @for (project of featuredProjects; track project.slug) {
+        <app-project-card class="reveal" [project]="project" />
+      }
+    </div>
+    <p class="see-all reveal">
+      <a class="card-link" routerLink="/proyectos">{{ t.projects.seeAll }} <span aria-hidden="true">&rarr;</span></a>
+    </p>
+  </section>
+
+  <section id="habilidades" class="section">
+    <h2 class="reveal">{{ t.skills.title }}</h2>
+    <p class="section-subtitle reveal">{{ t.skills.subtitle }}</p>
+
+    <h3 class="skills-heading reveal">{{ t.skills.featuredTitle }}</h3>
+    <ul class="featured-skills reveal">
+      @for (skill of t.skills.featured; track skill) {
+        <li class="featured-skill">
+          <app-tech-icon class="featured-icon" [name]="skill" />
+          <span>{{ skill }}</span>
+        </li>
+      }
+    </ul>
+
+    <h3 class="skills-heading reveal">{{ t.skills.allTitle }}</h3>
+    <div class="skill-groups">
+      @for (group of t.skills.groups; track $index) {
+        <div class="card skill-group reveal">
+          <h3><span class="skill-icon" aria-hidden="true">{{ group.icon }}</span> {{ group.title }}</h3>
+          <ul class="tag-list">
+            @for (item of group.items; track item) {
+              <li class="tag"><app-tech-icon class="tag-icon" [name]="item" />{{ item }}</li>
+            }
+          </ul>
+        </div>
+      }
+    </div>
+  </section>
+
+  <section id="formacion" class="section">
+    <h2 class="reveal">{{ t.education.title }}</h2>
+    <ol class="timeline">
+      @for (entry of t.education.entries; track entry.title) {
+        <li class="timeline-item reveal" [class.current]="entry.current">
+          <div class="timeline-head">
+            <h3>{{ entry.title }}</h3>
+            <span class="timeline-period">
+              @if (entry.current) {
+                <span class="badge">{{ t.education.currentLabel }}</span>
+              }
+              {{ entry.period }}
+            </span>
+          </div>
+          <p class="timeline-org">{{ entry.org }} <span>&middot; {{ entry.location }}</span></p>
+          @if (entry.highlights.length) {
+            <ul class="bullets">
+              @for (point of entry.highlights; track $index) {
+                <li>{{ point }}</li>
+              }
+            </ul>
+          }
+        </li>
+      }
+    </ol>
+  </section>
+
+  <section id="contacto" class="section">
+    <h2 class="reveal">{{ t.contact.title }}</h2>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <p>{{ t.contact.text }}</p>
+        <ul class="contact-list">
+          <li>
+            <span class="contact-label">Email</span>
+            <a [href]="'mailto:' + profile.email">{{ profile.email }}</a>
+          </li>
+          <li>
+            <span class="contact-label">GitHub</span>
+            <a [href]="profile.githubUrl" target="_blank" rel="noopener">
+              github.com/IgnacioMol<span class="sr-only">{{ t.a11y.opensNewTab }}</span>
+            </a>
+          </li>
+          <li>
+            <span class="contact-label">LinkedIn</span>
+            <a [href]="profile.linkedinUrl" target="_blank" rel="noopener">
+              in/ignacio-molina-ba7334370<span class="sr-only">{{ t.a11y.opensNewTab }}</span>
+            </a>
+          </li>
+          <li>
+            <span class="contact-label">{{ t.contact.locationLabel }}</span>
+            <span>{{ t.contact.location }}</span>
+          </li>
+        </ul>
+      </div>
+
+      <form class="contact-form card reveal" #contactFormRef="ngForm" (ngSubmit)="onSubmitContact()">
+        <label>
+          {{ t.contact.form.name }}
+          <input
+            type="text"
+            name="name"
+            required
+            [(ngModel)]="contactForm.name"
+            autocomplete="name"
+          />
+        </label>
+        <label>
+          {{ t.contact.form.email }}
+          <input
+            type="email"
+            name="email"
+            required
+            [(ngModel)]="contactForm.email"
+            autocomplete="email"
+          />
+        </label>
+        <label>
+          {{ t.contact.form.message }}
+          <textarea
+            name="message"
+            rows="5"
+            required
+            [(ngModel)]="contactForm.message"
+          ></textarea>
+        </label>
+
+        <button
+          class="btn btn-primary"
+          type="submit"
+          [disabled]="contactFormRef.invalid || submitting"
+        >
+          {{ submitting ? t.contact.form.sending : t.contact.form.submit }}
+        </button>
+
+        @if (submitStatus === 'success') {
+          <p class="form-status form-status-success" role="status">
+            {{ t.contact.form.success }}
+          </p>
+        }
+        @if (submitStatus === 'error') {
+          <p class="form-status form-status-error" role="status">
+            {{ t.contact.form.error }}
+            <a [href]="'mailto:' + profile.email">{{ profile.email }}</a>.
+          </p>
+        }
+      </form>
+    </div>
+  </section>
