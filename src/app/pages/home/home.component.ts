@@ -19,12 +19,11 @@ import { TechIconComponent } from '../../shared/tech-icon/tech-icon.component';
 
 // Envío del formulario con EmailJS (https://www.emailjs.com). Los tres
 // identificadores son públicos por diseño: EmailJS limita el uso por dominio.
-// TODO: completa templateId (Email Templates) y publicKey (Account → General).
 const EMAILJS = {
   endpoint: 'https://api.emailjs.com/api/v1.0/email/send',
   serviceId: 'service_7qjteeb',
-  templateId: 'TU_TEMPLATE_ID',
-  publicKey: 'TU_PUBLIC_KEY',
+  templateId: 'template_f87lran',
+  publicKey: 'hm78MTytyud08Syrx',
 };
 const EMAILJS_CONFIGURED = !EMAILJS.templateId.startsWith('TU_') && !EMAILJS.publicKey.startsWith('TU_');
 // Nadie rellena nombre, email y mensaje en menos tiempo: un envío más rápido
