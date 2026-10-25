@@ -77,7 +77,9 @@
         </button>
       </figure>
     } @else {
-      <div class="detail-cover detail-cover-placeholder" aria-hidden="true">{{ i18n.localize(p.shortTitle) }}</div>
+      <div class="detail-cover detail-cover-placeholder" aria-hidden="true">
+        <span class="cover-placeholder">{{ i18n.localize(p.shortTitle) }}</span>
+      </div>
     }
 
     <div class="detail-grid">

@@ -30,6 +30,8 @@ export interface ProjectData {
   // Tiene una demo 3D que se abre en el visor de la propia web.
   demo3d?: boolean;
   cover?: ProjectImage;
+  // Versión de la portada para el tema oscuro, si la hay.
+  coverDark?: string;
   gallery: ProjectImage[];
   links: ProjectLink[];
 }

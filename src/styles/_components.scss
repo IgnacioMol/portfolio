@@ -11,8 +11,13 @@ h1,
 h2,
 h3 {
   color: var(--text);
-  letter-spacing: -0.02em;
-  line-height: 1.2;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 h1 {
@@ -43,7 +48,7 @@ h3 {
 }
 
 .lead {
-  max-width: 62ch;
+  max-width: 60ch;
   margin: 0;
   color: var(--text-muted);
   font-size: 1.125rem;
@@ -295,6 +300,53 @@ h3 {
   .reveal {
     opacity: 1;
     transform: none;
+    transition: none;
+  }
+}
+
+// Brillo que sigue al puntero (directiva appSpotlight).
+
+.spotlight {
+  position: relative;
+  isolation: isolate;
+}
+
+.spotlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(
+    420px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    var(--accent-soft),
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .spotlight:hover::before {
+    opacity: 1;
+  }
+}
+
+// Las flechas de enlaces y botones se desplazan un poco al pasar por encima.
+.arrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+a:hover > .arrow,
+button:hover > .arrow,
+.project-card:hover .arrow {
+  transform: translateX(3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arrow {
     transition: none;
   }
 }

@@ -3,12 +3,13 @@ import { RouterLink } from '@angular/router';
 import { CV_FILES } from '../../data/profile';
 import { I18nService } from '../../i18n/i18n.service';
 import { RevealDirective } from '../../shared/reveal.directive';
+import { SpotlightDirective } from '../../shared/spotlight.directive';
 import { TechIconComponent } from '../../shared/tech-icon/tech-icon.component';
 
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [RouterLink, RevealDirective, TechIconComponent],
+  imports: [RouterLink, RevealDirective, SpotlightDirective, TechIconComponent],
   templateUrl: './about.component.html',
   styleUrl: './about.component.scss',
 })

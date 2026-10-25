@@ -1,10 +1,16 @@
 @let p = project();
-<article class="card project-card">
+<article class="card project-card" appSpotlight>
   <div class="project-cover">
     @if (p.cover) {
-      <img [src]="p.cover.src" [alt]="i18n.localize(p.cover.alt)" loading="lazy" width="1440" height="900" />
+      <img
+        [src]="theme.theme() === 'dark' && p.coverDark ? p.coverDark : p.cover.src"
+        [alt]="i18n.localize(p.cover.alt)"
+        loading="lazy"
+        width="1440"
+        height="900"
+      />
     } @else {
-      <span class="project-cover-placeholder" aria-hidden="true">{{ i18n.localize(p.shortTitle) }}</span>
+      <span class="cover-placeholder project-cover-placeholder" aria-hidden="true">{{ i18n.localize(p.shortTitle) }}</span>
     }
   </div>
 
@@ -30,7 +36,7 @@
     }
 
     <div class="project-actions">
-      <span class="text-link" aria-hidden="true">{{ t.projects.viewProject }} &rarr;</span>
+      <span class="text-link" aria-hidden="true">{{ t.projects.viewProject }} <span class="arrow">&rarr;</span></span>
       @for (link of p.links; track link.url) {
         <a class="project-external" [href]="link.url" target="_blank" rel="noopener">
           {{ t.projects.links[link.kind] }}<span class="sr-only">{{ t.a11y.opensNewTab }}</span>

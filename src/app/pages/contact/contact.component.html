@@ -12,6 +12,7 @@
           <li>
             <a
               class="info-item"
+              appSpotlight
               [href]="social.href"
               [attr.target]="social.external ? '_blank' : null"
               [attr.rel]="social.external ? 'noopener' : null"
@@ -41,7 +42,7 @@
       </ul>
     </section>
 
-    <section class="contact-form-card card" appReveal>
+    <section class="contact-form-card card" appReveal appSpotlight>
       <h2>{{ t.contact.formTitle }}</h2>
       <app-contact-form />
     </section>

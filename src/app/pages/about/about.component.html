@@ -25,7 +25,7 @@
     <h2 appReveal>{{ t.experience.title }}</h2>
     <ol class="entries">
       @for (job of t.experience.entries; track job.title) {
-        <li class="entry" appReveal>
+        <li class="entry" appReveal appSpotlight>
           <div class="entry-head">
             <h3>{{ job.title }}</h3>
             <span class="entry-period">{{ job.period }}</span>
@@ -52,7 +52,7 @@
     <h2 appReveal>{{ t.education.title }}</h2>
     <ol class="entries">
       @for (entry of t.education.entries; track entry.title) {
-        <li class="entry" appReveal>
+        <li class="entry" appReveal appSpotlight>
           <div class="entry-head">
             <h3>{{ entry.title }}</h3>
             <span class="entry-period">

@@ -39,7 +39,8 @@
     "ctaCv": "Descargar CV",
     "cvMenu": "Elige el idioma del CV",
     "ctaContact": "Contactar",
-    "location": "Meliana · Valencia, España"
+    "location": "Meliana · Valencia, España",
+    "status": "Abierto a nuevas oportunidades"
   },
   "home": {
     "featuredTitle": "Proyectos destacados",
@@ -50,7 +51,15 @@
     "ctaTitle": "¿Trabajamos juntos?",
     "ctaText": "Estoy abierto a nuevas oportunidades y colaboraciones. Si tienes un proyecto o una oferta, escríbeme y te responderé lo antes posible.",
     "ctaButton": "Contactar",
-    "aboutLink": "Conoce mi trayectoria"
+    "aboutLink": "Conoce mi trayectoria",
+    "showcase": "Ver el proyecto",
+    "eyebrowWork": "Trabajo seleccionado",
+    "eyebrowCareer": "Trayectoria",
+    "eyebrowStack": "Stack",
+    "eyebrowContact": "Contacto",
+    "experienceTitle": "Experiencia",
+    "experienceSubtitle": "Dónde he trabajado y qué he hecho en cada sitio.",
+    "experienceLink": "Ver trayectoria completa"
   },
   "about": {
     "title": "Sobre mí",
@@ -60,10 +69,6 @@
       "En esencia, disfruto definiendo la lógica que da vida a las interfaces y buscando soluciones que combinen funcionalidad, creatividad y una buena experiencia de usuario. En mi tiempo libre desarrollo videojuegos en Unity y experimento con proyectos personales de programación."
     ],
     "highlights": [
-      {
-        "value": "9/10",
-        "label": "Nota del Trabajo Fin de Grado"
-      },
       {
         "value": "1 curso",
         "label": "Erasmus en la República Checa"
@@ -75,6 +80,10 @@
       {
         "value": "B2",
         "label": "Inglés · Cambridge CAE"
+      },
+      {
+        "value": "UX/UI",
+        "label": "Máster en ESAT · nov. 2026"
       }
     ],
     "languagesTitle": "Idiomas",
@@ -285,8 +294,7 @@
         "period": "2021 – 2026",
         "highlights": [
           "Formación multidisciplinar en programación, desarrollo web, aplicaciones móviles, videojuegos, visualización y gráficos por ordenador.",
-          "Curso completo de movilidad Erasmus en Brno, República Checa.",
-          "Trabajo Fin de Grado calificado con un 9/10."
+          "Curso completo de movilidad Erasmus en Brno, República Checa."
         ]
       }
     ]

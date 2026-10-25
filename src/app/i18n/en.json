@@ -39,7 +39,8 @@
     "ctaCv": "Download CV",
     "cvMenu": "Choose the CV language",
     "ctaContact": "Get in touch",
-    "location": "Meliana · Valencia, Spain"
+    "location": "Meliana · Valencia, Spain",
+    "status": "Open to new opportunities"
   },
   "home": {
     "featuredTitle": "Featured projects",
@@ -50,7 +51,15 @@
     "ctaTitle": "Let's work together",
     "ctaText": "I'm open to new opportunities and collaborations. If you have a project or an offer, drop me a line and I'll get back to you as soon as possible.",
     "ctaButton": "Get in touch",
-    "aboutLink": "See my background"
+    "aboutLink": "See my background",
+    "showcase": "View the project",
+    "eyebrowWork": "Selected work",
+    "eyebrowCareer": "Career",
+    "eyebrowStack": "Stack",
+    "eyebrowContact": "Contact",
+    "experienceTitle": "Experience",
+    "experienceSubtitle": "Where I have worked and what I did at each place.",
+    "experienceLink": "See full background"
   },
   "about": {
     "title": "About me",
@@ -60,10 +69,6 @@
       "At heart, I enjoy defining the logic that brings interfaces to life and looking for solutions that combine functionality, creativity and a good user experience. In my free time I make video games in Unity and experiment with personal programming projects."
     ],
     "highlights": [
-      {
-        "value": "9/10",
-        "label": "Final Degree Project grade"
-      },
       {
         "value": "1 year",
         "label": "Erasmus in the Czech Republic"
@@ -75,6 +80,10 @@
       {
         "value": "B2",
         "label": "English · Cambridge CAE"
+      },
+      {
+        "value": "UX/UI",
+        "label": "Master's at ESAT · Nov. 2026"
       }
     ],
     "languagesTitle": "Languages",
@@ -285,8 +294,7 @@
         "period": "2021 – 2026",
         "highlights": [
           "Multidisciplinary training in programming, web development, mobile apps, video games, visualisation and computer graphics.",
-          "Full academic year on Erasmus exchange in Brno, Czech Republic.",
-          "Final Degree Project graded 9/10."
+          "Full academic year on Erasmus exchange in Brno, Czech Republic."
         ]
       }
     ]

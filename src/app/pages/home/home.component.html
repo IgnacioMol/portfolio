@@ -1,18 +1,18 @@
 @let profileData = profile;
 <section class="hero container">
   <div class="hero-text">
+    <p class="status-pill"><span class="status-dot" aria-hidden="true"></span>{{ t.hero.status }}</p>
     <p class="hero-greeting">{{ t.hero.greeting }}</p>
     <h1>{{ profileData.firstName }} <span class="accent">{{ profileData.lastName }}</span></h1>
     <p class="hero-role">{{ t.hero.role }}</p>
     <p class="lead">{{ t.hero.intro }}</p>
 
     <div class="hero-cta">
-      <a class="btn btn-primary" routerLink="/proyectos">{{ t.hero.ctaProjects }}</a>
+      <a class="btn btn-primary" routerLink="/proyectos">{{ t.hero.ctaProjects }} <span class="arrow" aria-hidden="true">&rarr;</span></a>
       <a class="btn btn-secondary" [href]="cv.href" [attr.hreflang]="cv.lang" download>
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 19h14" /></svg>
         {{ t.hero.ctaCv }}
       </a>
-      <a class="btn btn-secondary" routerLink="/contacto">{{ t.hero.ctaContact }}</a>
     </div>
 
     <div class="hero-meta">
@@ -37,26 +37,46 @@
     </div>
   </div>
 
-  <aside class="hero-card card" appReveal>
-    <ul class="facts">
-      @for (item of t.about.highlights; track $index) {
-        <li>
-          <span class="fact-value">{{ item.value }}</span>
-          <span class="fact-label">{{ item.label }}</span>
-        </li>
-      }
-    </ul>
-    <a class="text-link" routerLink="/sobre-mi">{{ t.home.aboutLink }} <span aria-hidden="true">&rarr;</span></a>
-  </aside>
+  <!-- Trabajo real enmarcado como una ventana de navegador. -->
+  @if (showcase.cover; as cover) {
+    <a class="showcase" [routerLink]="['/proyectos', showcase.slug]" appReveal>
+      <span class="showcase-bar" aria-hidden="true"><i></i><i></i><i></i></span>
+      <img
+        [src]="theme.theme() === 'dark' && showcase.coverDark ? showcase.coverDark : cover.src"
+        [alt]="i18n.localize(cover.alt)"
+        width="1440"
+        height="900"
+      />
+      <span class="showcase-caption">
+        <span>
+          <span class="showcase-context">{{ i18n.localize(showcase.context) }}</span>
+          <span class="showcase-title">{{ i18n.localize(showcase.shortTitle) }}</span>
+        </span>
+        <span class="showcase-link">{{ t.home.showcase }} <span class="arrow" aria-hidden="true">&rarr;</span></span>
+      </span>
+    </a>
+  }
 </section>
+
+<div class="container">
+  <ul class="facts" appReveal>
+    @for (item of t.about.highlights; track $index) {
+      <li>
+        <span class="fact-value">{{ item.value }}</span>
+        <span class="fact-label">{{ item.label }}</span>
+      </li>
+    }
+  </ul>
+</div>
 
 <section class="section container">
   <div class="section-head" appReveal>
     <div>
+      <p class="eyebrow">{{ t.home.eyebrowWork }}</p>
       <h2>{{ t.home.featuredTitle }}</h2>
       <p>{{ t.home.featuredSubtitle }}</p>
     </div>
-    <a class="text-link" routerLink="/proyectos">{{ t.projects.seeAll }} <span aria-hidden="true">&rarr;</span></a>
+    <a class="text-link" routerLink="/proyectos">{{ t.projects.seeAll }} <span class="arrow" aria-hidden="true">&rarr;</span></a>
   </div>
 
   <div class="featured">
@@ -66,7 +86,7 @@
           @if (project.cover) {
             <img [src]="project.cover.src" alt="" loading="lazy" width="1440" height="900" />
           } @else {
-            <span class="featured-placeholder">{{ i18n.localize(project.shortTitle) }}</span>
+            <span class="cover-placeholder featured-placeholder">{{ i18n.localize(project.shortTitle) }}</span>
           }
         </a>
         <div class="featured-body">
@@ -82,7 +102,7 @@
           }
           <div class="featured-actions">
             <a class="btn btn-primary btn-sm" [routerLink]="['/proyectos', project.slug]">
-              {{ t.projects.viewProject }} <span aria-hidden="true">&rarr;</span>
+              {{ t.projects.viewProject }} <span class="arrow" aria-hidden="true">&rarr;</span>
             </a>
             @for (link of project.links; track link.url) {
               <a class="btn btn-secondary btn-sm" [href]="link.url" target="_blank" rel="noopener">
@@ -99,14 +119,44 @@
 <section class="section container">
   <div class="section-head" appReveal>
     <div>
+      <p class="eyebrow">{{ t.home.eyebrowCareer }}</p>
+      <h2>{{ t.home.experienceTitle }}</h2>
+      <p>{{ t.home.experienceSubtitle }}</p>
+    </div>
+    <a class="text-link" routerLink="/sobre-mi" fragment="experiencia">{{ t.home.experienceLink }} <span class="arrow" aria-hidden="true">&rarr;</span></a>
+  </div>
+  <ol class="jobs">
+    @for (job of t.experience.entries; track job.title) {
+      <li class="job" appReveal appSpotlight>
+        <span class="job-period">{{ job.period }}</span>
+        <div>
+          <h3>{{ job.title }} <span class="job-org">&middot; {{ job.org.split(' · ')[0] }}</span></h3>
+          <p class="muted">{{ job.highlights[0] }}</p>
+          @if (job.techs?.length) {
+            <ul class="tag-list">
+              @for (tech of job.techs; track tech) {
+                <li class="tag"><app-tech-icon class="tag-icon" [name]="tech" />{{ tech }}</li>
+              }
+            </ul>
+          }
+        </div>
+      </li>
+    }
+  </ol>
+</section>
+
+<section class="section container">
+  <div class="section-head" appReveal>
+    <div>
+      <p class="eyebrow">{{ t.home.eyebrowStack }}</p>
       <h2>{{ t.home.skillsTitle }}</h2>
       <p>{{ t.home.skillsSubtitle }}</p>
     </div>
-    <a class="text-link" routerLink="/sobre-mi" fragment="habilidades">{{ t.home.allSkills }} <span aria-hidden="true">&rarr;</span></a>
+    <a class="text-link" routerLink="/sobre-mi" fragment="habilidades">{{ t.home.allSkills }} <span class="arrow" aria-hidden="true">&rarr;</span></a>
   </div>
   <ul class="skill-grid" appReveal>
     @for (skill of t.skills.featured; track skill) {
-      <li>
+      <li appSpotlight>
         <app-tech-icon class="skill-icon" [name]="skill" />
         <span>{{ skill }}</span>
       </li>
@@ -115,13 +165,14 @@
 </section>
 
 <section class="section container">
-  <div class="cta card" appReveal>
+  <div class="cta card" appReveal appSpotlight>
     <div>
+      <p class="eyebrow">{{ t.home.eyebrowContact }}</p>
       <h2>{{ t.home.ctaTitle }}</h2>
       <p class="muted">{{ t.home.ctaText }}</p>
     </div>
     <div class="cta-actions">
-      <a class="btn btn-primary" routerLink="/contacto">{{ t.home.ctaButton }}</a>
+      <a class="btn btn-primary" routerLink="/contacto">{{ t.home.ctaButton }} <span class="arrow" aria-hidden="true">&rarr;</span></a>
       <a class="btn btn-secondary" [href]="'mailto:' + profileData.email">{{ profileData.email }}</a>
     </div>
   </div>

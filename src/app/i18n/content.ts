@@ -62,6 +62,7 @@ export interface Content {
     cvMenu: string;
     ctaContact: string;
     location: string;
+    status: string;
   };
   home: {
     featuredTitle: string;
@@ -73,6 +74,14 @@ export interface Content {
     ctaText: string;
     ctaButton: string;
     aboutLink: string;
+    showcase: string;
+    eyebrowWork: string;
+    eyebrowCareer: string;
+    eyebrowStack: string;
+    eyebrowContact: string;
+    experienceTitle: string;
+    experienceSubtitle: string;
+    experienceLink: string;
   };
   about: {
     title: string;

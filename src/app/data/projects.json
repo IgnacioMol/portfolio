@@ -12,8 +12,8 @@
       "en": "Orbital patterns (thesis)"
     },
     "context": {
-      "es": "Trabajo Fin de Grado · 9/10",
-      "en": "Final Degree Project · 9/10"
+      "es": "Trabajo Fin de Grado",
+      "en": "Final Degree Project"
     },
     "role": {
       "es": "Diseño y desarrollo completo (proyecto individual)",
@@ -232,6 +232,7 @@
         "en": "3D desk with monitor, laptop, bookshelf, corkboard and VR headset, each object labelled."
       }
     },
+    "coverDark": "images/projects/portfolio-3d/escritorio-oscuro.webp",
     "gallery": [
       {
         "src": "images/projects/portfolio-3d/escritorio-oscuro.webp",
