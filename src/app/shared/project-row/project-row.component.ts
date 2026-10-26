@@ -1,6 +1,6 @@
 import { Component, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ProjectData } from '../../data/projects';
+import { ProjectData, responsiveSrcset } from '../../data/projects';
 import { I18nService } from '../../i18n/i18n.service';
 import { TechIconComponent } from '../tech-icon/tech-icon.component';
 
@@ -14,6 +14,7 @@ import { TechIconComponent } from '../tech-icon/tech-icon.component';
 })
 export class ProjectRowComponent {
   readonly i18n = inject(I18nService);
+  readonly srcset = responsiveSrcset;
   readonly project = input.required<ProjectData>();
   // Imagen a la derecha en lugar de a la izquierda (para alternar filas).
   readonly reverse = input(false);

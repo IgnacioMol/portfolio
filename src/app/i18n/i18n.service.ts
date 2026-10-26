@@ -1,5 +1,5 @@
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { Injectable, PLATFORM_ID, computed, effect, inject, signal } from '@angular/core';
+import { ApplicationRef, Injectable, PLATFORM_ID, computed, effect, inject, signal } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { Content, Lang, Localized } from './content';
 import en from './en.json';
@@ -18,12 +18,20 @@ export class I18nService {
   private readonly meta = inject(Meta);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
-  readonly lang = signal<Lang>(this.initialLang());
+  // Arranca en español, igual que el HTML prerenderizado, para que la
+  // hidratación coincida; después se aplica el idioma del visitante.
+  readonly lang = signal<Lang>('es');
   readonly t = computed(() => TRANSLATIONS[this.lang()]);
   // Título propio de la página actual; null en la portada.
   readonly pageTitle = signal<string | null>(null);
 
   constructor() {
+    if (this.isBrowser) {
+      inject(ApplicationRef)
+        .whenStable()
+        .then(() => this.lang.set(this.initialLang()));
+    }
+
     // Mantiene <html lang>, el título y la descripción sincronizados con el idioma.
     effect(() => {
       const lang = this.lang();
@@ -50,11 +58,6 @@ export class I18nService {
   }
 
   private initialLang(): Lang {
-    // Las páginas se prerenderizan en español; el navegador aplica después el
-    // idioma guardado o el suyo.
-    if (!this.isBrowser) {
-      return 'es';
-    }
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored === 'es' || stored === 'en') {

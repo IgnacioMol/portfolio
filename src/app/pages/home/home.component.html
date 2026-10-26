@@ -38,7 +38,7 @@
   </div>
 
   <!-- Perfil resumido como un objeto TypeScript, en una ventana de editor. -->
-  <figure class="code-card" appReveal>
+  <figure class="code-card">
     <div class="code-bar">
       <span class="code-dots" aria-hidden="true"><i></i><i></i><i></i></span>
       <span class="code-file">{{ t.home.code.file }}</span>
@@ -53,7 +53,7 @@
 </section>
 
 <div class="container">
-  <ul class="facts" appReveal>
+  <ul class="facts">
     @for (item of t.about.highlights; track $index) {
       <li>
         <span class="fact-value">{{ item.value }}</span>

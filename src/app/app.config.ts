@@ -8,6 +8,7 @@ import {
 } from '@angular/router';
 
 import { routes } from './app.routes';
+import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -23,5 +24,8 @@ export const appConfig: ApplicationConfig = {
       // Fundido entre páginas en los navegadores que lo soportan.
       withViewTransitions({ skipInitialTransition: true }),
     ),
+    // Reutiliza el HTML prerenderizado en lugar de volver a pintarlo, y
+    // reproduce los clics hechos antes de que arranque la app.
+    provideClientHydration(withEventReplay()),
   ],
 };

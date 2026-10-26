@@ -2,7 +2,15 @@
 <article class="featured-item" [class.reverse]="reverse()">
   <a class="featured-media" [routerLink]="['/proyectos', p.slug]" tabindex="-1" aria-hidden="true">
     @if (p.cover) {
-      <img [src]="p.cover.src" alt="" loading="lazy" width="1440" height="900" />
+      <img
+        [src]="p.cover.src"
+        [attr.srcset]="srcset(p.cover.src)"
+        sizes="(max-width: 820px) 92vw, 560px"
+        alt=""
+        loading="lazy"
+        width="1440"
+        height="900"
+      />
     } @else {
       <span class="cover-placeholder featured-placeholder">{{ i18n.localize(p.shortTitle) }}</span>
     }

@@ -87,6 +87,7 @@ export interface Content {
   about: {
     title: string;
     lead: string;
+    photoAlt: string;
     paragraphs: string[];
     highlights: Highlight[];
     languagesTitle: string;

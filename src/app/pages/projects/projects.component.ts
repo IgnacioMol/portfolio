@@ -10,7 +10,7 @@ import { RevealDirective } from '../../shared/reveal.directive';
   imports: [ProjectRowComponent, RevealDirective],
   template: `
     <section class="container page-section">
-      <header class="page-header" appReveal>
+      <header class="page-header">
         <h1>{{ t.projects.title }}</h1>
         <p class="lead">{{ t.projects.subtitle }}</p>
       </header>

@@ -64,7 +64,15 @@
     @if (p.cover) {
       <figure class="detail-cover">
         <button type="button" class="image-button" (click)="openImage(p.cover)">
-          <img [src]="p.cover.src" [alt]="i18n.localize(p.cover.alt)" width="1440" height="900" />
+          <img
+            [src]="p.cover.src"
+            [attr.srcset]="srcset(p.cover.src)"
+            sizes="(max-width: 1120px) 94vw, 1072px"
+            [alt]="i18n.localize(p.cover.alt)"
+            fetchpriority="high"
+            width="1440"
+            height="900"
+          />
           <span class="sr-only">{{ t.projects.detail.enlarge }} {{ i18n.localize(p.cover.alt) }}</span>
         </button>
       </figure>
@@ -104,7 +112,15 @@
           @for (image of p.gallery; track image.src) {
             <li>
               <button type="button" class="image-button" (click)="openImage(image)">
-                <img [src]="image.src" [alt]="i18n.localize(image.alt)" loading="lazy" width="1440" height="900" />
+                <img
+                  [src]="image.src"
+                  [attr.srcset]="srcset(image.src)"
+                  sizes="(max-width: 640px) 94vw, 528px"
+                  [alt]="i18n.localize(image.alt)"
+                  loading="lazy"
+                  width="1440"
+                  height="900"
+                />
                 <span class="sr-only">{{ t.projects.detail.enlarge }} {{ i18n.localize(image.alt) }}</span>
               </button>
             </li>

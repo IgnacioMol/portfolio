@@ -27,6 +27,9 @@
   position: relative;
   z-index: 1;
   flex: 1;
+  // Ocupa al menos la pantalla: mientras carga una página el pie de página no
+  // sube a la vista para luego volver a bajar (salto de diseño).
+  min-height: calc(100vh - 64px);
 }
 
 .main:focus {
@@ -143,6 +146,19 @@
 }
 
 .menu-toggle {
+  display: none;
+}
+
+// En tema oscuro se ofrece el sol (pasar a claro) y en claro, la luna.
+.theme-icon-sun {
+  display: none;
+}
+
+:host-context([data-theme='dark']) .theme-icon-sun {
+  display: block;
+}
+
+:host-context([data-theme='dark']) .theme-icon-moon {
   display: none;
 }
 

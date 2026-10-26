@@ -1,8 +1,17 @@
 <div class="container page-section">
-  <header class="about-header" appReveal>
+  <header class="about-header">
     <div>
       <p class="eyebrow">{{ t.hero.role }}</p>
       <h1>{{ t.about.title }}</h1>
+      <img
+        class="about-photo"
+        src="images/profile/ignacio-400.webp"
+        srcset="images/profile/ignacio-400.webp 400w, images/profile/ignacio-800.webp 800w"
+        sizes="(max-width: 820px) 60vw, 300px"
+        width="400"
+        height="500"
+        [alt]="t.about.photoAlt"
+      />
     </div>
     <div class="about-intro">
       <p class="about-lead">{{ t.about.lead }}</p>

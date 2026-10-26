@@ -10,7 +10,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { PROJECTS, ProjectImage, findProject } from '../../data/projects';
+import { PROJECTS, ProjectImage, findProject, responsiveSrcset } from '../../data/projects';
 import { I18nService } from '../../i18n/i18n.service';
 import { TechIconComponent } from '../../shared/tech-icon/tech-icon.component';
 import { NotFoundComponent } from '../not-found/not-found.component';
@@ -24,6 +24,7 @@ import { NotFoundComponent } from '../not-found/not-found.component';
 })
 export class ProjectDetailComponent implements OnDestroy {
   readonly i18n = inject(I18nService);
+  readonly srcset = responsiveSrcset;
 
   // Viene del parámetro :slug de la ruta (withComponentInputBinding).
   readonly slug = input<string>();
